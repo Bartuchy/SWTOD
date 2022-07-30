@@ -1,5 +1,6 @@
 package com.example.swtod.security;
 
+import com.example.swtod.entity.User;
 import com.example.swtod.exception.UserNotFoundException;
 import com.example.swtod.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return (UserDetails) userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
+        User user =  userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
+        return new UserDetailsImpl(user);
     }
 }

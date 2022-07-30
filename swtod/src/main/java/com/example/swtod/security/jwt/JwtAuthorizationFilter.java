@@ -2,6 +2,7 @@ package com.example.swtod.security.jwt;
 
 import com.example.swtod.entity.User;
 import com.example.swtod.security.UserDetailsServiceImpl;
+import com.example.swtod.service.UserService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.Collections;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
@@ -25,22 +27,23 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     public static final String TOKEN_PREFIX = "Bearer ";
 
     private final UserDetailsServiceImpl userDetailsService;
+    private final UserService userService;
     private final JwtToken jwtToken;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
         String requestTokenHeader = request.getHeader(AUTHORIZATION);
-        String email = null;
+        String username = null;
         String token = null;
 
         if (requestTokenHeader != null && requestTokenHeader.startsWith(TOKEN_PREFIX)) {
             token = requestTokenHeader.substring(7);
-            email = jwtToken.extractUsername(token);
+            username = jwtToken.extractUsername(token);
 
         }
 
-        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            User user = (User) this.userDetailsService.loadUserByUsername(email);
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            User user = userService.login(username);
 
             if (jwtToken.validateToken(token, user)) {
                 menageAuthentication(user, request);
@@ -51,7 +54,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private void menageAuthentication(User user, HttpServletRequest request) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
-                = new UsernamePasswordAuthenticationToken(user, null, null);
+                = new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
         usernamePasswordAuthenticationToken
                 .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
