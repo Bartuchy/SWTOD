@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "position")
 @Data
@@ -16,4 +17,11 @@ public class Position {
     private Long id;
     private String name;
     private String description;
+
+    @OneToMany(mappedBy = "position")
+    private List<User> users;
+
+    public Position(Long id) {
+        this.id = id;
+    }
 }

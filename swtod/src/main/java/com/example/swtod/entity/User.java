@@ -25,7 +25,20 @@ public class User {
     private int pensum;
     private String title;
     private boolean is_admin;
+    @ManyToOne
+    private Position position;
 
-    @OneToMany
-    private Set<Position> positions;
+    public User(String username, String name, String surname, String password, LocalDate dob, String title, Position position) {
+        this.username = username;
+        this.name = name;
+        this.surname = surname;
+        this.password = password;
+        this.dob = dob;
+        this.title = title;
+        this.position = position;
+
+        this.is_active = true;
+        this.pensum = 0;
+        this.is_admin = false;
+    }
 }
