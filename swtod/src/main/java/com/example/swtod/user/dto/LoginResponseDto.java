@@ -1,6 +1,6 @@
-package com.example.swtod.dto;
+package com.example.swtod.user.dto;
 
-import com.example.swtod.entity.User;
+import com.example.swtod.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

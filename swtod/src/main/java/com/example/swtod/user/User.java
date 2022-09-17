@@ -1,5 +1,6 @@
-package com.example.swtod.entity;
+package com.example.swtod.user;
 
+import com.example.swtod.entity.Position;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Set;
+
+import static java.util.Collections.emptySet;
 
 @Entity(name = "users")
 @Data
@@ -28,4 +31,18 @@ public class User {
 
     @OneToMany
     private Set<Position> positions;
+
+    public User(String title, String username, String name, String surname,
+                LocalDate dob, boolean is_admin, String password) {
+        this.username = username;
+        this.name = name;
+        this.surname = surname;
+        this.password = password;
+        this.is_active = true;
+        this.dob = dob;
+        this.pensum = 0;
+        this.title = title;
+        this.is_admin = is_admin;
+        this.positions = emptySet();
+    }
 }

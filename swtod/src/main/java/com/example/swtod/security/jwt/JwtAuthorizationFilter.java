@@ -1,8 +1,7 @@
 package com.example.swtod.security.jwt;
 
-import com.example.swtod.entity.User;
-import com.example.swtod.security.UserDetailsServiceImpl;
-import com.example.swtod.service.UserService;
+import com.example.swtod.user.User;
+import com.example.swtod.user.UserService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,7 +14,6 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 import java.util.Collections;
 
@@ -25,8 +23,6 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @RequiredArgsConstructor
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
     public static final String TOKEN_PREFIX = "Bearer ";
-
-    private final UserDetailsServiceImpl userDetailsService;
     private final UserService userService;
     private final JwtToken jwtToken;
 

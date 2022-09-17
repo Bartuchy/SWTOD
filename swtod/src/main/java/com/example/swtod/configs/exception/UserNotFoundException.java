@@ -1,4 +1,4 @@
-package com.example.swtod.exception;
+package com.example.swtod.configs.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

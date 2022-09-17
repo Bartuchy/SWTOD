@@ -1,6 +1,5 @@
-package com.example.swtod.repository;
+package com.example.swtod.user;
 
-import com.example.swtod.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
