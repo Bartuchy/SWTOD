@@ -35,6 +35,12 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/reset-password")
+    public ResponseEntity<Void> resetPassword(@RequestParam String username) {
+        userService.resetPassword(username);
+        return ResponseEntity.ok().build();
+    }
+
     private void authenticate(String username, String password) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
     }
