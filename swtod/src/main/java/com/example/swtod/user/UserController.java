@@ -41,6 +41,12 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/change-password")
+    public ResponseEntity<Void> changePassword(@RequestParam String password, String username) {
+        userService.updatePassword(password, username);
+        return ResponseEntity.ok().build();
+    }
+
     private void authenticate(String username, String password) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
     }

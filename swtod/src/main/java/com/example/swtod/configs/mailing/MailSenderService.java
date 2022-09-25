@@ -33,6 +33,6 @@ public class MailSenderService {
     }
 
     private String generateMessage(String username, String password) {
-        return "Login: " + username + "Hasło: " + password;
+        return "Login: " + username + "\nHasło: " + password;
     }
 }

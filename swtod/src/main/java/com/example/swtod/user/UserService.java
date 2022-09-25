@@ -23,6 +23,7 @@ public class UserService {
         return userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
     }
 
+    @Transactional
     public void createUser(CreateUserDto userDto) {
         String encodedPassword  = createPasswordAndSendEmail(userDto.getUsername());
         User user = CreateUserDto.mapToUser(userDto, encodedPassword);
@@ -33,6 +34,12 @@ public class UserService {
     @Transactional
     public void resetPassword(String username) {
         String encodedPassword = createPasswordAndSendEmail(username);
+        userRepository.changePassword(encodedPassword, username);
+    }
+
+    @Transactional
+    public void updatePassword(String password, String username) {
+        String encodedPassword = passwordEncoder.encode(password);
         userRepository.changePassword(encodedPassword, username);
     }
 

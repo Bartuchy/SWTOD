@@ -29,7 +29,7 @@ public class User {
     private String title;
     private boolean is_admin;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Position> positions;
 
     public User(String title, String username, String name, String surname,
