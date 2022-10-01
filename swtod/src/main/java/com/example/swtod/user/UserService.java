@@ -43,6 +43,16 @@ public class UserService {
         userRepository.changePassword(encodedPassword, username);
     }
 
+    @Transactional
+    public void deactivateAccount(Long id) {
+        userRepository.modifyAccountActivationFlag(id, false);
+    }
+
+    @Transactional
+    public void activateAccount(Long id) {
+        userRepository.modifyAccountActivationFlag(id, true);
+    }
+
     private String createPasswordAndSendEmail(String username) {
         String password = generatePassword();
         log.info(password);

@@ -10,10 +10,10 @@ import java.util.List;
 
 @Getter
 @Setter
-@Entity(name = "classes_type")
+@Entity(name = "status")
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClassesType {
+public class Status {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,9 +21,6 @@ public class ClassesType {
     @Column(length = 50, nullable = false)
     private String name;
 
-    @Column(columnDefinition = "TEXT")
-    private String description;
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "classesType")
-    private List<PlanYearSubject> planYearSubject;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "status")
+    private List<PlanYearSubjectUser> planYearSubjectUsers;
 }

@@ -64,7 +64,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                         null,
                         List.of((GrantedAuthority) () -> "USER"));
 
-        if (user.is_admin()) {
+        if (user.isAdmin()) {
             usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                     user,
                     null,

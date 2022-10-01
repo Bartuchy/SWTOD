@@ -51,4 +51,10 @@ public class UserController {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
     }
 
+    @PutMapping("/deactivate-account/{id}")
+    public ResponseEntity<Void> deactivateAccount(@PathVariable Long id) {
+        userService.deactivateAccount(id);
+        return ResponseEntity.ok().build();
+    }
+
 }

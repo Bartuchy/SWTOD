@@ -10,10 +10,10 @@ import java.util.List;
 
 @Getter
 @Setter
-@Entity(name = "classes_type")
+@Entity(name = "field_of_studies")
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClassesType {
+public class FieldOfStudies {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,6 +24,9 @@ public class ClassesType {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "classesType")
-    private List<PlanYearSubject> planYearSubject;
+    @Column(nullable = false)
+    private Integer degree;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "fieldOfStudies")
+    private List<Subject> subjects;
 }
