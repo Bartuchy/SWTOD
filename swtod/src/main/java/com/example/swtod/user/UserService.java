@@ -1,7 +1,9 @@
 package com.example.swtod.user;
 
+import com.example.swtod.configs.exception.PasswordsNotEqualException;
 import com.example.swtod.configs.exception.UserNotFoundException;
 import com.example.swtod.configs.mailing.MailSenderService;
+import com.example.swtod.user.dto.ChangePasswordDto;
 import com.example.swtod.user.dto.CreateUserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +23,7 @@ public class UserService {
 
     public User login(String username) {
         return userRepository
-                .findByUsername(username)
+                .findUserByUsername(username)
                 .orElseThrow(() ->
                         new UserNotFoundException(String.format("User with username '%s' not found", username)));
     }
@@ -41,9 +43,15 @@ public class UserService {
     }
 
     @Transactional
-    public void updatePassword(String password, String username) {
-        String encodedPassword = passwordEncoder.encode(password);
-        userRepository.changePassword(encodedPassword, username);
+    public void updatePassword(ChangePasswordDto passwordDto) {
+        String newPassword = passwordDto.getNewPassword();
+        String repeatedNewPassword = passwordDto.getRepeatedNewPassword();
+
+        if (!newPassword.equals(repeatedNewPassword))
+            throw new PasswordsNotEqualException("Given passwords are not equal");
+
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        userRepository.changePassword(encodedPassword, passwordDto.getUsername());
     }
 
     @Transactional

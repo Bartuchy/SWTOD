@@ -1,6 +1,7 @@
 package com.example.swtod.user;
 
 import com.example.swtod.security.jwt.JwtToken;
+import com.example.swtod.user.dto.ChangePasswordDto;
 import com.example.swtod.user.dto.CreateUserDto;
 import com.example.swtod.user.dto.LoginRequestDto;
 import com.example.swtod.user.dto.LoginResponseDto;
@@ -34,31 +35,31 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/reset-password")
-    public ResponseEntity<Void> resetPassword(@RequestParam String username) {
+    @PatchMapping("/reset-password/{username}")
+    public ResponseEntity<Void> resetPassword(@PathVariable String username) {
         userService.resetPassword(username);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/change-password")
-    public ResponseEntity<Void> changePassword(@RequestParam String password, String username) {
-        userService.updatePassword(password, username);
+    public ResponseEntity<Void> changePassword(@RequestBody ChangePasswordDto passwordDto) {
+        userService.updatePassword(passwordDto);
         return ResponseEntity.ok().build();
     }
 
-    private void authenticate(String username, String password) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-    }
-
-    @PutMapping("/deactivate-account/{id}")
+    @PatchMapping("/deactivate-account/{id}")
     public ResponseEntity<Void> deactivateAccount(@PathVariable Long id) {
         userService.deactivateAccount(id);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/activate-account/{id}")
+    @PatchMapping("/activate-account/{id}")
     public ResponseEntity<Void> activateAccount(@PathVariable Long id) {
         userService.activateAccount(id);
         return ResponseEntity.ok().build();
+    }
+
+    private void authenticate(String username, String password) {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
     }
 }
