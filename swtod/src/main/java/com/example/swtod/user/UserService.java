@@ -20,7 +20,10 @@ public class UserService {
     private final MailSenderService mailSenderService;
 
     public User login(String username) {
-        return userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
+        return userRepository
+                .findByUsername(username)
+                .orElseThrow(() ->
+                        new UserNotFoundException(String.format("User with username '%s' not found", username)));
     }
 
     @Transactional

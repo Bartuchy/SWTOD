@@ -13,15 +13,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 @CrossOrigin
-@RequestMapping("api")
+@RequestMapping("api/user")
 public class UserController {
     private final AuthenticationManager authenticationManager;
     private final JwtToken jwtToken;
     private final UserService userService;
 
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
-        System.out.println(loginRequestDto.getPassword());
+    @PostMapping(value = "/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequestDto loginRequestDto) {
         authenticate(loginRequestDto.getUsername(), loginRequestDto.getPassword());
         User user = userService.login(loginRequestDto.getUsername());
         String token = jwtToken.generateToken(user);
@@ -29,7 +28,7 @@ public class UserController {
         return ResponseEntity.ok(LoginResponseDto.mapToDto(user, token));
     }
 
-    @PostMapping("/create-user")
+    @PostMapping("/create")
     public ResponseEntity<Void> createNewUser(@RequestBody CreateUserDto userDto) {
         userService.createUser(userDto);
         return ResponseEntity.ok().build();
@@ -57,4 +56,9 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/activate-account/{id}")
+    public ResponseEntity<Void> activateAccount(@PathVariable Long id) {
+        userService.activateAccount(id);
+        return ResponseEntity.ok().build();
+    }
 }

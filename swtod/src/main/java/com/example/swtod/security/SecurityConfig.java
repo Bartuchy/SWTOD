@@ -15,7 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static com.example.swtod.security.SecurityPaths.PERMITTED_ALL_PATHS;
+import static com.example.swtod.security.SecurityConstants.*;
 
 @Configuration
 @EnableWebSecurity
@@ -39,8 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers(PERMITTED_ALL_PATHS).permitAll()
-                .antMatchers("/api/change-password", "/api/update-profile-data").hasAnyAuthority("USER", "ADMIN")
-                .antMatchers("/api/create-user").hasAnyAuthority("ADMIN")
+                .antMatchers(USER_PATHS).hasAnyAuthority(USER_AUTH, ADMIN_AUTH)
+                .antMatchers(ADMIN_PATHS).hasAuthority(ADMIN_AUTH)
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and().sessionManagement()
