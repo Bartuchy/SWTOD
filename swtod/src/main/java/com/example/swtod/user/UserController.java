@@ -1,10 +1,7 @@
 package com.example.swtod.user;
 
 import com.example.swtod.security.jwt.JwtToken;
-import com.example.swtod.user.dto.ChangePasswordDto;
-import com.example.swtod.user.dto.CreateUserDto;
-import com.example.swtod.user.dto.LoginRequestDto;
-import com.example.swtod.user.dto.LoginResponseDto;
+import com.example.swtod.user.dto.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,8 +18,9 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping(value = "/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequestDto loginRequestDto) {
+    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
         authenticate(loginRequestDto.getUsername(), loginRequestDto.getPassword());
+
         User user = userService.login(loginRequestDto.getUsername());
         String token = jwtToken.generateToken(user);
 
@@ -35,14 +33,21 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("{id}/update")
+    public ResponseEntity<Void> updateUserData(@PathVariable Long id, @RequestBody UpdateUserDto updateUserDto) {
+        userService.updateUserData(id, updateUserDto);
+        return ResponseEntity.ok().build();
+    }
+
     @PatchMapping("/reset-password/{username}")
     public ResponseEntity<Void> resetPassword(@PathVariable String username) {
         userService.resetPassword(username);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/change-password")
+    @PatchMapping("/change-password")
     public ResponseEntity<Void> changePassword(@RequestBody ChangePasswordDto passwordDto) {
+        authenticate(passwordDto.getUsername(), passwordDto.getOldPassword());
         userService.updatePassword(passwordDto);
         return ResponseEntity.ok().build();
     }

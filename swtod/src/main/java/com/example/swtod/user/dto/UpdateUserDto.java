@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
-public class CreateUserDto {
+public class UpdateUserDto {
     private String username;
     private String name;
     private String surname;
@@ -17,15 +17,12 @@ public class CreateUserDto {
     private String title;
     private Long positionId;
 
-    public static User mapToUser(CreateUserDto userDto, String password) {
-        return new User(
-                userDto.title,
-                userDto.username,
-                userDto.name,
-                userDto.surname,
-                userDto.dob,
-                password,
-                new Position(userDto.positionId)
-        );
+    public static void mapToUser(User user, UpdateUserDto userDto) {
+        user.setUsername(userDto.getUsername());
+        user.setTitle(userDto.getTitle());
+        user.setName(userDto.getName());
+        user.setSurname(userDto.getSurname());
+        user.setDob(userDto.getDob());
+        user.setPosition(new Position(userDto.getPositionId()));
     }
 }

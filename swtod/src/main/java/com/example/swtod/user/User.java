@@ -62,7 +62,16 @@ public class User {
         this.dob = dob;
         this.pensum = 0;
         this.title = title;
-        this.isAdmin = false;
+        this.isAdmin = true;
+        this.position = position;
+    }
+
+    public User(String title, String username, String name, String surname, LocalDate dob, Position position) {
+        this.username = username;
+        this.name = name;
+        this.surname = surname;
+        this.dob = dob;
+        this.title = title;
         this.position = position;
     }
 }

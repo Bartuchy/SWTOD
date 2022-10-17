@@ -5,6 +5,7 @@ import com.example.swtod.configs.exception.UserNotFoundException;
 import com.example.swtod.configs.mailing.MailSenderService;
 import com.example.swtod.user.dto.ChangePasswordDto;
 import com.example.swtod.user.dto.CreateUserDto;
+import com.example.swtod.user.dto.UpdateUserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,8 +33,18 @@ public class UserService {
     public void createUser(CreateUserDto userDto) {
         String encodedPassword  = createPasswordAndSendEmail(userDto.getUsername());
         User user = CreateUserDto.mapToUser(userDto, encodedPassword);
-
         userRepository.save(user);
+    }
+
+    @Transactional
+    public void updateUserData(Long id, UpdateUserDto userDto) {
+        User user = userRepository
+                .findById(id)
+                .orElseThrow(() -> new UserNotFoundException(String.format("User with id '%s' not found", id)));
+
+        UpdateUserDto.mapToUser(user, userDto);
+        userRepository.save(user);
+
     }
 
     @Transactional

@@ -27,4 +27,8 @@ public class Position {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "position")
     private List<User> user;
+
+    public Position(Long id) {
+        this.id = id;
+    }
 }
