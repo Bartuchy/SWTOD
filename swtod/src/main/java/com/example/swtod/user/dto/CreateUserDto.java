@@ -15,7 +15,6 @@ public class CreateUserDto {
     private String surname;
     private LocalDate dob;
     private String title;
-    private boolean is_admin;
     private Position position;
 
     public static User mapToUser(CreateUserDto userDto, String password) {
@@ -25,7 +24,6 @@ public class CreateUserDto {
                 userDto.name,
                 userDto.surname,
                 userDto.dob,
-                userDto.is_admin,
                 password,
                 userDto.position
         );

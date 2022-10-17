@@ -53,7 +53,7 @@ public class User {
     private List<PlanYearSubjectUser> planYearSubjectUsers;
 
     public User(String title, String username, String name, String surname,
-                LocalDate dob, boolean is_admin, String password, Position position) {
+                LocalDate dob, String password, Position position) {
         this.username = username;
         this.name = name;
         this.surname = surname;
@@ -62,7 +62,7 @@ public class User {
         this.dob = dob;
         this.pensum = 0;
         this.title = title;
-        this.isAdmin = is_admin;
+        this.isAdmin = false;
         this.position = position;
     }
 }
