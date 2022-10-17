@@ -1,48 +1,68 @@
 package com.example.swtod.user;
 
+import com.example.swtod.entity.PlanYearSubjectUser;
 import com.example.swtod.entity.Position;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
-import static java.util.Collections.emptySet;
 
+@Getter
+@Setter
 @Entity(name = "users")
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "email", length = 128, nullable = false, unique = true)
     private String username;
+
+    @Column(length = 50, nullable = false)
     private String name;
+
+    @Column(length = 50, nullable = false)
     private String surname;
+
+    @Column(nullable = false)
     private String password;
-    private boolean is_active;
+
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive;
+
     private LocalDate dob;
+
+    @Column(nullable = false)
     private int pensum;
     private String title;
-    private boolean is_admin;
 
-    @OneToMany
-    private Set<Position> positions;
+    @Column(name = "is_admin", nullable = false)
+    private boolean isAdmin;
+
+    @ManyToOne
+    private Position position;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    private List<PlanYearSubjectUser> planYearSubjectUsers;
 
     public User(String title, String username, String name, String surname,
-                LocalDate dob, boolean is_admin, String password) {
+                LocalDate dob, String password, Position position) {
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.password = password;
-        this.is_active = true;
+        this.isActive = true;
         this.dob = dob;
         this.pensum = 0;
         this.title = title;
-        this.is_admin = is_admin;
-        this.positions = emptySet();
+        this.isAdmin = false;
+        this.position = position;
     }
 }

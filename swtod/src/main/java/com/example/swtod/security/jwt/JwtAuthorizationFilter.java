@@ -5,6 +5,7 @@ import com.example.swtod.user.UserService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -15,7 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collections;
+import java.util.List;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
@@ -35,7 +36,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         if (requestTokenHeader != null && requestTokenHeader.startsWith(TOKEN_PREFIX)) {
             token = requestTokenHeader.substring(7);
             username = jwtToken.extractUsername(token);
-
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -49,10 +49,29 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     }
 
     private void menageAuthentication(User user, HttpServletRequest request) {
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
-                = new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = setUPAToken(user);
+
         usernamePasswordAuthenticationToken
                 .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+    }
+
+    private UsernamePasswordAuthenticationToken setUPAToken(User user) {
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                new UsernamePasswordAuthenticationToken(
+                        user,
+                        null,
+                        List.of((GrantedAuthority) () -> "USER"));
+
+        if (user.isAdmin()) {
+            usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                    user,
+                    null,
+                    List.of(
+                            (GrantedAuthority) () -> "USER",
+                            (GrantedAuthority) () -> "ADMIN"));
+        }
+        return usernamePasswordAuthenticationToken;
     }
 }
