@@ -1,4 +1,4 @@
-package com.example.swtod.user.dto;
+package com.example.swtod.user.admin.dto;
 
 import com.example.swtod.entity.Position;
 import com.example.swtod.user.User;
