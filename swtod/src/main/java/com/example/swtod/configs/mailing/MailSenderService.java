@@ -14,18 +14,18 @@ public class MailSenderService {
     @Value("${mail.host}")
     private String mailHost;
 
-    public void sendEmail(String to, String password) {
-        String message = generateMessage(to, password);
-        SimpleMailMessage simpleMailMessage = mailConfig(to, message);
+    public void sendEmail(String receiver, String password) {
+        String message = generateMessage(receiver, password);
+        SimpleMailMessage simpleMailMessage = mailConfig(receiver, message);
 
         this.mailSender.send(simpleMailMessage);
     }
 
-    private SimpleMailMessage mailConfig(String to, String message) {
+    private SimpleMailMessage mailConfig(String receiver, String message) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
 
         simpleMailMessage.setFrom(mailHost);
-        simpleMailMessage.setTo(to);
+        simpleMailMessage.setTo(receiver);
         simpleMailMessage.setSubject(SUBJECT);
         simpleMailMessage.setText(message);
 

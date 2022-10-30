@@ -1,6 +1,6 @@
 package com.example.swtod.security;
 
-import com.example.swtod.user.User;
+import com.example.swtod.domain.user.User;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

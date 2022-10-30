@@ -24,5 +24,6 @@ public final class SecurityConstants {
             "/api/admin/{id}/activate-account",
             "/api/admin/{id}/deactivate-account",
             "/api/admin/{id}/update",
+            "/api/plan-year-subject/all"
     };
 }

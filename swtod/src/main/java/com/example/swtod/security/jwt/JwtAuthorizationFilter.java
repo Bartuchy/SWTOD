@@ -1,7 +1,7 @@
 package com.example.swtod.security.jwt;
 
-import com.example.swtod.user.User;
-import com.example.swtod.user.UserService;
+import com.example.swtod.domain.user.User;
+import com.example.swtod.domain.user.UserService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

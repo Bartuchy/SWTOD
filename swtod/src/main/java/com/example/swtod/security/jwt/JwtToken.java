@@ -1,6 +1,6 @@
 package com.example.swtod.security.jwt;
 
-import com.example.swtod.user.User;
+import com.example.swtod.domain.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
