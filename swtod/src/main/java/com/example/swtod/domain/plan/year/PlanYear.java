@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.List;
@@ -28,7 +30,7 @@ public class PlanYear {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "planYear")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "planYear", cascade = CascadeType.ALL)
     private List<PlanYearSubject> planYearSubject;
 
     public PlanYear(String name, int year) {

@@ -23,4 +23,8 @@ public class SubjectService {
                 field,
                 semesterOfStudies));
     }
+
+    public void removeAllData() {
+        subjectRepository.deleteAll();
+    }
 }

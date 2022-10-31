@@ -12,4 +12,8 @@ public class PlanYearService {
         PlanYear planYear = new PlanYear(name, year);
         return planYearRepository.save(planYear);
     }
+
+    public void removeAllData() {
+        planYearRepository.deleteAll();
+    }
 }
