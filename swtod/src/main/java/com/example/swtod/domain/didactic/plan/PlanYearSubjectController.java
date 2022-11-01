@@ -1,11 +1,13 @@
 package com.example.swtod.domain.didactic.plan;
 
+import com.example.swtod.domain.didactic.plan.dto.PlanYearSubjectDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -30,8 +32,9 @@ public class PlanYearSubjectController {
         return ResponseEntity.ok().build();
     }
 
-//    @GetMapping("/all")
-//    public ResponseEntity<List<PlanYearSubjectDto>> get() {
-//        return ResponseEntity.ok(planYearSubjectCsvReader.writeDataFromFile());
-//    }
+    @GetMapping("/all")
+    public ResponseEntity<List<PlanYearSubjectDto>> get() {
+        List<PlanYearSubjectDto> planYearSubjectDtos = planYearSubjectService.getDidacticPlan();
+        return ResponseEntity.ok(planYearSubjectDtos);
+    }
 }

@@ -1,7 +1,6 @@
 package com.example.swtod.domain.didactic.plan.management;
 
 import com.example.swtod.configs.csv.CsvMapper;
-import com.example.swtod.domain.classes.type.ClassesType;
 import com.example.swtod.domain.classes.type.ClassesTypeRepository;
 import com.example.swtod.domain.didactic.plan.PlanYearSubject;
 import com.example.swtod.domain.didactic.plan.dto.PlanYearSubjectDto;
@@ -22,6 +21,7 @@ public class PlanYearSubjectMapper implements CsvMapper {
 
     private final ClassesTypeRepository classesTypeRepository;
     private final PYSRelatedEntitiesSupplier supplier;
+    private final PYSEntitiesManager entitiesManager;
 
     public List<PlanYearSubjectDto> mapRecordsToDtos(List<List<String>> records, String facultyName) {
 
@@ -45,137 +45,57 @@ public class PlanYearSubjectMapper implements CsvMapper {
         return planYearSubjects;
     }
 
+    public List<PlanYearSubjectDto> mapEntitiesToDtos(List<PlanYearSubject> planYearSubjects) {
+        List<PlanYearSubjectDto> planYearSubjectDtos = new ArrayList<>();
+        boolean isDtoPresentInListPresent;
+
+        for (PlanYearSubject planYearSubject : planYearSubjects) {
+            isDtoPresentInListPresent = checkDtoPresence(planYearSubject, planYearSubjectDtos);
+
+            if (!isDtoPresentInListPresent)
+                addDtosIfPossible(planYearSubjectDtos, planYearSubject);
+        }
+
+        return planYearSubjectDtos;
+    }
+
     private void splitDtoIntoEntities(List<PlanYearSubject> planYearSubjects, PlanYearSubjectDto planYearSubjectDto) {
         PYSRelatedEntitiesTransporter transporter = supplier.getAllRelatedEntities(planYearSubjectDto);
         addEntitiesIfPossible(planYearSubjects, planYearSubjectDto, transporter);
     }
 
     private void addEntitiesIfPossible(List<PlanYearSubject> planYearSubjects, PlanYearSubjectDto planYearSubjectDto, PYSRelatedEntitiesTransporter transporter) {
-        addLectureEntityIfPossible(planYearSubjects, planYearSubjectDto, transporter);
-        addExerciseEntityIfPossible(planYearSubjects, planYearSubjectDto, transporter);
-        addLaboratoryEntityIfPossible(planYearSubjects, planYearSubjectDto, transporter);
-        addProjectEntityIfPossible(planYearSubjects, planYearSubjectDto, transporter);
-        addSeminaryEntityIfPossible(planYearSubjects, planYearSubjectDto, transporter);
+        entitiesManager.addLectureEntityIfPossible(planYearSubjects, planYearSubjectDto, transporter);
+        entitiesManager.addExerciseEntityIfPossible(planYearSubjects, planYearSubjectDto, transporter);
+        entitiesManager.addLaboratoryEntityIfPossible(planYearSubjects, planYearSubjectDto, transporter);
+        entitiesManager.addProjectEntityIfPossible(planYearSubjects, planYearSubjectDto, transporter);
+        entitiesManager.addSeminaryEntityIfPossible(planYearSubjects, planYearSubjectDto, transporter);
     }
 
-    private void addLectureEntityIfPossible(List<PlanYearSubject> planYearSubjects,
-                                            PlanYearSubjectDto planYearSubjectDto,
-                                            PYSRelatedEntitiesTransporter transporter) {
-        if (planYearSubjectDto.getLectureHoursNumber() != 0) {
-            ClassesType classesType = classesTypeRepository.findClassesTypeByName("W").orElseThrow();
-
-            planYearSubjects.add(
-                    new PlanYearSubject(
-                            planYearSubjectDto.getGroupsPerLecture(),
-                            planYearSubjectDto.getWeeksPerSemester(),
-                            planYearSubjectDto.getLectureHoursNumberPerWeek(),
-                            planYearSubjectDto.getNumberOfStudents(),
-                            planYearSubjectDto.getSemesterType().charAt(0),
-                            planYearSubjectDto.getYear(),
-                            classesType,
-                            transporter.getStudiesType(),
-                            transporter.getPlanYear(),
-                            transporter.getSubject(),
-                            transporter.getFaculty()
-                    )
-            );
-        }
+    private void setDtoClassesTypeFields(PlanYearSubjectDto planYearSubjectDto, PlanYearSubject planYearSubject) {
+        entitiesManager.setDtosLectureFields(planYearSubjectDto, planYearSubject);
+        entitiesManager.setDtosExerciseFields(planYearSubjectDto, planYearSubject);
+        entitiesManager.setDtosLaboratoryFields(planYearSubjectDto, planYearSubject);
+        entitiesManager.setDtosProjectFields(planYearSubjectDto, planYearSubject);
+        entitiesManager.setDtosSeminaryFields(planYearSubjectDto, planYearSubject);
     }
 
-    private void addExerciseEntityIfPossible(List<PlanYearSubject> planYearSubjects,
-                                             PlanYearSubjectDto planYearSubjectDto,
-                                             PYSRelatedEntitiesTransporter transporter) {
-        if (planYearSubjectDto.getExerciseHoursNumber() != 0) {
-            ClassesType classesType = classesTypeRepository.findClassesTypeByName("E").orElseThrow();
-
-            planYearSubjects.add(
-                    new PlanYearSubject(
-                            planYearSubjectDto.getGroupsPerExercise(),
-                            planYearSubjectDto.getWeeksPerSemester(),
-                            planYearSubjectDto.getExerciseHoursNumberPerWeek(),
-                            planYearSubjectDto.getNumberOfStudents(),
-                            planYearSubjectDto.getSemesterType().charAt(0),
-                            planYearSubjectDto.getYear(),
-                            classesType,
-                            transporter.getStudiesType(),
-                            transporter.getPlanYear(),
-                            transporter.getSubject(),
-                            transporter.getFaculty()
-                    )
-            );
+    private boolean checkDtoPresence(PlanYearSubject planYearSubject, List<PlanYearSubjectDto> planYearSubjectDtos) {
+        for (PlanYearSubjectDto planYearSubjectDto : planYearSubjectDtos) {
+            if (planYearSubjectDto.getSubjectName().equals(planYearSubject.getSubject().getName())) {
+                setDtoClassesTypeFields(planYearSubjectDto, planYearSubject);
+                return true;
+            }
         }
+        return false;
     }
 
-    private void addLaboratoryEntityIfPossible(List<PlanYearSubject> planYearSubjects,
-                                               PlanYearSubjectDto planYearSubjectDto,
-                                               PYSRelatedEntitiesTransporter transporter) {
-        if (planYearSubjectDto.getLaboratoryHoursNumber() != 0) {
-            ClassesType classesType = classesTypeRepository.findClassesTypeByName("L").orElseThrow();
-
-            planYearSubjects.add(
-                    new PlanYearSubject(
-                            planYearSubjectDto.getGroupsPerLaboratory(),
-                            planYearSubjectDto.getWeeksPerSemester(),
-                            planYearSubjectDto.getLaboratoryHoursNumberPerWeek(),
-                            planYearSubjectDto.getNumberOfStudents(),
-                            planYearSubjectDto.getSemesterType().charAt(0),
-                            planYearSubjectDto.getYear(),
-                            classesType,
-                            transporter.getStudiesType(),
-                            transporter.getPlanYear(),
-                            transporter.getSubject(),
-                            transporter.getFaculty()
-                    )
-            );
-        }
-    }
-
-    private void addProjectEntityIfPossible(List<PlanYearSubject> planYearSubjects,
-                                            PlanYearSubjectDto planYearSubjectDto,
-                                            PYSRelatedEntitiesTransporter transporter) {
-        if (planYearSubjectDto.getProjectHoursNumber() != 0) {
-            ClassesType classesType = classesTypeRepository.findClassesTypeByName("P").orElseThrow();
-
-            planYearSubjects.add(
-                    new PlanYearSubject(
-                            planYearSubjectDto.getGroupsPerProject(),
-                            planYearSubjectDto.getWeeksPerSemester(),
-                            planYearSubjectDto.getProjectHoursNumberPerWeek(),
-                            planYearSubjectDto.getNumberOfStudents(),
-                            planYearSubjectDto.getSemesterType().charAt(0),
-                            planYearSubjectDto.getYear(),
-                            classesType,
-                            transporter.getStudiesType(),
-                            transporter.getPlanYear(),
-                            transporter.getSubject(),
-                            transporter.getFaculty()
-                    )
-            );
-        }
-    }
-
-    private void addSeminaryEntityIfPossible(List<PlanYearSubject> planYearSubjects,
-                                             PlanYearSubjectDto planYearSubjectDto,
-                                             PYSRelatedEntitiesTransporter transporter) {
-        if (planYearSubjectDto.getSeminaryHoursNumber() != 0) {
-            ClassesType classesType = classesTypeRepository.findClassesTypeByName("S").orElseThrow();
-
-            planYearSubjects.add(
-                    new PlanYearSubject(
-                            planYearSubjectDto.getGroupsPerSeminary(),
-                            planYearSubjectDto.getWeeksPerSemester(),
-                            planYearSubjectDto.getSeminaryHoursNumberPerWeek(),
-                            planYearSubjectDto.getNumberOfStudents(),
-                            planYearSubjectDto.getSemesterType().charAt(0),
-                            planYearSubjectDto.getYear(),
-                            classesType,
-                            transporter.getStudiesType(),
-                            transporter.getPlanYear(),
-                            transporter.getSubject(),
-                            transporter.getFaculty()
-                    )
-            );
-        }
+    private void addDtosIfPossible(List<PlanYearSubjectDto> planYearSubjectDtos, PlanYearSubject planYearSubject) {
+        entitiesManager.addLectureDtoIfPossible(planYearSubjectDtos, planYearSubject);
+        entitiesManager.addExerciseDtoIfPossible(planYearSubjectDtos, planYearSubject);
+        entitiesManager.addLaboratoryDtoIfPossible(planYearSubjectDtos, planYearSubject);
+        entitiesManager.addProjectDtoIfPossible(planYearSubjectDtos, planYearSubject);
+        entitiesManager.addSeminaryDtoIfPossible(planYearSubjectDtos, planYearSubject);
     }
 
     private List<String> mapEmptyValuesToZeros(List<String> values) {

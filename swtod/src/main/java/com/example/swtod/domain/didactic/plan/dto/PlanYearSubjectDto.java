@@ -19,31 +19,31 @@ public class PlanYearSubjectDto {
     private String subjectName;
 
     private Integer weeksPerSemester;
-    private Integer lectureHoursNumberPerWeek;
-    private Integer exerciseHoursNumberPerWeek;
-    private Integer laboratoryHoursNumberPerWeek;
-    private Integer projectHoursNumberPerWeek;
-    private Integer seminaryHoursNumberPerWeek;
+    private Double lectureHoursNumberPerWeek;
+    private Double exerciseHoursNumberPerWeek;
+    private Double laboratoryHoursNumberPerWeek;
+    private Double projectHoursNumberPerWeek;
+    private Double seminaryHoursNumberPerWeek;
     private Integer numberOfStudents;
 
     private Integer groupsPerLecture;
-    private Integer lectureHoursNumber;
+    private Double lectureHoursNumber;
 
     private Integer groupsPerExercise;
-    private Integer exerciseHoursNumber;
+    private Double exerciseHoursNumber;
 
     private Integer groupsPerLaboratory;
-    private Integer laboratoryHoursNumber;
+    private Double laboratoryHoursNumber;
 
     private Integer groupsPerProject;
-    private Integer projectHoursNumber;
+    private Double projectHoursNumber;
 
     private Integer groupsPerSeminary;
-    private Integer seminaryHoursNumber;
+    private Double seminaryHoursNumber;
 
     private String semesterType;
 
-    private Integer hoursTotal;
+    private Double hoursTotal;
 
     public PlanYearSubjectDto(List<String> records, String facultyName) {
         for(String record: records) {
@@ -56,23 +56,23 @@ public class PlanYearSubjectDto {
         this.typeOfStudiesName = records.get(2);
         this.subjectName = records.get(3);
         this.weeksPerSemester = Integer.parseInt(records.get(4));
-        this.lectureHoursNumberPerWeek = Integer.parseInt(records.get(5));
-        this.exerciseHoursNumberPerWeek = Integer.parseInt(records.get(6));
-        this.laboratoryHoursNumberPerWeek = Integer.parseInt(records.get(7));
-        this.projectHoursNumberPerWeek = Integer.parseInt(records.get(8));
-        this.seminaryHoursNumberPerWeek = Integer.parseInt(records.get(9));
+        this.lectureHoursNumberPerWeek = Double.parseDouble(records.get(5));
+        this.exerciseHoursNumberPerWeek = Double.parseDouble(records.get(6));
+        this.laboratoryHoursNumberPerWeek = Double.parseDouble(records.get(7));
+        this.projectHoursNumberPerWeek = Double.parseDouble(records.get(8));
+        this.seminaryHoursNumberPerWeek = Double.parseDouble(records.get(9));
         this.numberOfStudents = Integer.parseInt(records.get(10));
         this.groupsPerLecture = Integer.parseInt(records.get(11));
-        this.lectureHoursNumber = Integer.parseInt(records.get(12));
+        this.lectureHoursNumber = Double.parseDouble(records.get(12));
         this.groupsPerExercise = Integer.parseInt(records.get(13));
-        this.exerciseHoursNumber = Integer.parseInt(records.get(14));
+        this.exerciseHoursNumber = Double.parseDouble(records.get(14));
         this.groupsPerLaboratory = Integer.parseInt(records.get(15));
-        this.laboratoryHoursNumber = Integer.parseInt(records.get(16));
+        this.laboratoryHoursNumber = Double.parseDouble(records.get(16));
         this.groupsPerProject = Integer.parseInt(records.get(17));
-        this.projectHoursNumber = Integer.parseInt(records.get(18));
+        this.projectHoursNumber = Double.parseDouble(records.get(18));
         this.groupsPerSeminary = Integer.parseInt(records.get(19));
-        this.seminaryHoursNumber = Integer.parseInt(records.get(20));
+        this.seminaryHoursNumber = Double.parseDouble(records.get(20));
         this.semesterType = records.get(21);
-        this.hoursTotal = Integer.parseInt(records.get(22));
+        this.hoursTotal = Double.parseDouble(records.get(22));
     }
 }

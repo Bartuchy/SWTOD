@@ -9,4 +9,6 @@ public interface PlanYearSubjectRepository extends JpaRepository<PlanYearSubject
     @Modifying
     @Query("delete from plan_year_subject where 1=1")
     void deleteAll();
+
+
 }
