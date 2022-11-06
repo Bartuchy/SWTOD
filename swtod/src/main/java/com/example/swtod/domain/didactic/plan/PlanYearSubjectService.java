@@ -52,11 +52,55 @@ public class PlanYearSubjectService {
         return mapper.mapEntitiesToDtos(planYearSubjects);
     }
 
+    public void savePlanYearSubjectSingle(PlanYearSubjectRecordDto recordDto) {
+        List<PlanYearSubject> planYearSubjects = mapper.mapDtosToEntities(List.of(recordDto));
+        planYearSubjectRepository.saveAll(planYearSubjects);
+    }
+
+    public void updatePlanYearSubjectSingle(Long subjectId, PlanYearSubjectRecordDto updatingDto) {
+        List<PlanYearSubject> planYearSubjects = planYearSubjectRepository
+                .findPlanYearSubjectBySubjectId(subjectId);
+        List<PlanYearSubjectRecordDto> recordDtos = mapper.mapEntitiesToDtos(planYearSubjects);
+
+
+        recordDtos.forEach(recordDto -> updatePlanYearSubjectData(recordDto, updatingDto));
+        List<PlanYearSubject> planYearSubjectsUpdated = mapper.mapDtosToEntities(recordDtos);
+        planYearSubjectRepository.saveAll(planYearSubjectsUpdated);
+    }
+
     private void removeSingleRelatedEntities(PlanYearSubject planYearSubject) {
         Long planYearId = planYearSubject.getPlanYear().getId();
         Long subjectId = planYearSubject.getSubject().getId();
 
         planYearService.removeById(planYearId);
         subjectService.removeById(subjectId);
+    }
+
+    private void updatePlanYearSubjectData(PlanYearSubjectRecordDto recordDto, PlanYearSubjectRecordDto updatingDto) {
+        recordDto.setFacultyName(updatingDto.getFacultyName());
+        recordDto.setYear(updatingDto.getYear());
+        recordDto.setFieldOfStudiesName(updatingDto.getFieldOfStudiesName());
+        recordDto.setTypeOfStudiesName(updatingDto.getTypeOfStudiesName());
+        recordDto.setSubjectName(updatingDto.getSubjectName());
+        recordDto.setWeeksPerSemester(updatingDto.getWeeksPerSemester());
+        recordDto.setLectureHoursNumberPerWeek(updatingDto.getLectureHoursNumberPerWeek());
+        recordDto.setExerciseHoursNumberPerWeek(updatingDto.getExerciseHoursNumberPerWeek());
+        recordDto.setLaboratoryHoursNumberPerWeek(updatingDto.getLaboratoryHoursNumberPerWeek());
+        recordDto.setProjectHoursNumberPerWeek(updatingDto.getProjectHoursNumberPerWeek());
+        recordDto.setSeminaryHoursNumberPerWeek(updatingDto.getSeminaryHoursNumberPerWeek());
+        recordDto.setNumberOfStudents(updatingDto.getNumberOfStudents());
+        recordDto.setGroupsPerLecture(updatingDto.getGroupsPerLecture());
+        recordDto.setLectureHoursNumber(updatingDto.getLectureHoursNumber());
+        recordDto.setGroupsPerExercise(updatingDto.getGroupsPerExercise());
+        recordDto.setExerciseHoursNumber(updatingDto.getExerciseHoursNumber());
+        recordDto.setGroupsPerLaboratory(updatingDto.getGroupsPerLaboratory());
+        recordDto.setLaboratoryHoursNumber(updatingDto.getLaboratoryHoursNumber());
+        recordDto.setGroupsPerProject(updatingDto.getGroupsPerProject());
+        recordDto.setProjectHoursNumber(updatingDto.getProjectHoursNumber());
+        recordDto.setGroupsPerSeminary(updatingDto.getGroupsPerSeminary());
+        recordDto.setSeminaryHoursNumber(updatingDto.getSeminaryHoursNumber());
+        recordDto.setSemesterType(updatingDto.getSemesterType());
+        recordDto.setHoursTotal(updatingDto.getHoursTotal());
+
     }
 }

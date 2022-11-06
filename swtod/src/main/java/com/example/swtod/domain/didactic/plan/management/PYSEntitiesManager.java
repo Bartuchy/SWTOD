@@ -141,6 +141,7 @@ public class PYSEntitiesManager {
         if (planYearSubject.getClassesType().getName().equals("W")) {
             planYearSubjectRecordDtos.add(
                     new PlanYearSubjectRecordDto(
+                            planYearSubject.getId(),
                             planYearSubject.getSubject().getId(),
                             planYearSubject.getFaculty().getName(),
                             planYearSubject.getPlanYear().getYear(),
@@ -176,6 +177,7 @@ public class PYSEntitiesManager {
         if (planYearSubject.getClassesType().getName().equals("C")) {
             planYearSubjectRecordDtos.add(
                     new PlanYearSubjectRecordDto(
+                            planYearSubject.getId(),
                             planYearSubject.getSubject().getId(),
                             planYearSubject.getFaculty().getName(),
                             planYearSubject.getPlanYear().getYear(),
@@ -211,6 +213,7 @@ public class PYSEntitiesManager {
         if (planYearSubject.getClassesType().getName().equals("L")) {
             planYearSubjectRecordDtos.add(
                     new PlanYearSubjectRecordDto(
+                            planYearSubject.getId(),
                             planYearSubject.getSubject().getId(),
                             planYearSubject.getFaculty().getName(),
                             planYearSubject.getPlanYear().getYear(),
@@ -246,6 +249,7 @@ public class PYSEntitiesManager {
         if (planYearSubject.getClassesType().getName().equals("P")) {
             planYearSubjectRecordDtos.add(
                     new PlanYearSubjectRecordDto(
+                            planYearSubject.getId(),
                             planYearSubject.getSubject().getId(),
                             planYearSubject.getFaculty().getName(),
                             planYearSubject.getPlanYear().getYear(),
@@ -281,6 +285,7 @@ public class PYSEntitiesManager {
         if (planYearSubject.getClassesType().getName().equals("S")) {
             planYearSubjectRecordDtos.add(
                     new PlanYearSubjectRecordDto(
+                            planYearSubject.getId(),
                             planYearSubject.getSubject().getId(),
                             planYearSubject.getFaculty().getName(),
                             planYearSubject.getPlanYear().getYear(),

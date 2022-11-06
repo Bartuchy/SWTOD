@@ -1,17 +1,15 @@
 package com.example.swtod.domain.didactic.plan.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
-
+@ToString
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class PlanYearSubjectRecordDto {
+    private Long id;
     private Long subjectId;
     private String facultyName;
     private Integer year;

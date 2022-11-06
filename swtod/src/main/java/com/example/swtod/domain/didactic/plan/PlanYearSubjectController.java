@@ -39,12 +39,14 @@ public class PlanYearSubjectController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> addPlanYearSubjectSingle() {
+    public ResponseEntity<Void> addPlanYearSubjectSingle(@RequestBody PlanYearSubjectRecordDto recordDto) {
+        planYearSubjectService.savePlanYearSubjectSingle(recordDto);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/{subjectId}/edit")
-    public ResponseEntity<Void> editPlanYearSubjectSingle(@PathVariable Long subjectId) {
+    @PutMapping("/{subjectId}/update")
+    public ResponseEntity<Void> editPlanYearSubjectSingle(@PathVariable Long subjectId, @RequestBody PlanYearSubjectRecordDto recordDto) {
+        planYearSubjectService.updatePlanYearSubjectSingle(subjectId, recordDto);
         return ResponseEntity.ok().build();
     }
 

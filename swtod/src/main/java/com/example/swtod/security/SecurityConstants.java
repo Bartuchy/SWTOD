@@ -28,7 +28,7 @@ public final class SecurityConstants {
             "/api/plan-year-subject/delete-all",
             "/api/plan-year-subject/all",
             "/api/plan-year-subject/add",
-            "/api/plan-year-subject/{id}/edit",
+            "/api/plan-year-subject/{id}/update",
             "/api/plan-year-subject/{id}/delete"
     };
 }
