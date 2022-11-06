@@ -1,7 +1,7 @@
 package com.example.swtod.domain.didactic.plan;
 
 import com.example.swtod.domain.classes.type.ClassesType;
-import com.example.swtod.domain.entity.*;
+import com.example.swtod.domain.entity.PlanYearSubjectUser;
 import com.example.swtod.domain.faculty.Faculty;
 import com.example.swtod.domain.plan.year.PlanYear;
 import com.example.swtod.domain.studies.type.StudiesType;
@@ -10,8 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.List;

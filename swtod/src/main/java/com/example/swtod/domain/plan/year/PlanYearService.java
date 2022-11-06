@@ -16,4 +16,8 @@ public class PlanYearService {
     public void removeAllData() {
         planYearRepository.deleteAll();
     }
+
+    public void removeById(Long id) {
+        planYearRepository.deleteById(id);
+    }
 }

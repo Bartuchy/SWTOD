@@ -1,6 +1,6 @@
 package com.example.swtod.domain.didactic.plan;
 
-import com.example.swtod.domain.didactic.plan.dto.PlanYearSubjectDto;
+import com.example.swtod.domain.didactic.plan.dto.PlanYearSubjectRecordDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ public class PlanYearSubjectController {
     private final PlanYearSubjectService planYearSubjectService;
 
     @PostMapping(value = "/upload-file", consumes = "multipart/form-data")
-    public ResponseEntity<Void> uploadCsv(@RequestParam("PZD") MultipartFile csvFile, @RequestParam String facultyName) {
+    public ResponseEntity<Void> uploadPlanYearSubjectCsv(@RequestParam("PZD") MultipartFile csvFile, @RequestParam String facultyName) {
         try {
             planYearSubjectService.savePlanYearSubjects(csvFile, facultyName);
         } catch (IOException e) {
@@ -33,8 +33,24 @@ public class PlanYearSubjectController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<PlanYearSubjectDto>> get() {
-        List<PlanYearSubjectDto> planYearSubjectDtos = planYearSubjectService.getDidacticPlan();
-        return ResponseEntity.ok(planYearSubjectDtos);
+    public ResponseEntity<List<PlanYearSubjectRecordDto>> get() {
+        List<PlanYearSubjectRecordDto> planYearSubjectRecordDtos = planYearSubjectService.getDidacticPlan();
+        return ResponseEntity.ok(planYearSubjectRecordDtos);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<Void> addPlanYearSubjectSingle() {
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{subjectId}/edit")
+    public ResponseEntity<Void> editPlanYearSubjectSingle(@PathVariable Long subjectId) {
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{subjectId}/delete")
+    public ResponseEntity<Void> deletePlanYearSubjectSingle(@PathVariable Long subjectId) {
+        planYearSubjectService.removeDidacticPlanSingle(subjectId);
+        return ResponseEntity.ok().build();
     }
 }

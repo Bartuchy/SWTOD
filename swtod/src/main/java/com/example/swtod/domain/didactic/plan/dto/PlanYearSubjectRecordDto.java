@@ -11,7 +11,8 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PlanYearSubjectDto {
+public class PlanYearSubjectRecordDto {
+    private Long subjectId;
     private String facultyName;
     private Integer year;
     private String fieldOfStudiesName;
@@ -45,7 +46,7 @@ public class PlanYearSubjectDto {
 
     private Double hoursTotal;
 
-    public PlanYearSubjectDto(List<String> records, String facultyName) {
+    public PlanYearSubjectRecordDto(List<String> records, String facultyName) {
         for(String record: records) {
             System.out.println(record);
         }

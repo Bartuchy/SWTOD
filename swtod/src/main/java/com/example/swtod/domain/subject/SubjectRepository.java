@@ -14,4 +14,8 @@ public interface SubjectRepository extends JpaRepository<Subject, Long> {
     @Modifying
     @Query("delete from subject where 1=1")
     void deleteAll();
+
+    @Modifying
+    @Query("delete from subject where id=:id")
+    void deleteSubjectById(Long id);
 }

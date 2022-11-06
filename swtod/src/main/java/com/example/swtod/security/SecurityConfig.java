@@ -41,9 +41,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(PERMITTED_ALL_PATHS).permitAll()
                 .antMatchers(USER_PATHS).hasAnyAuthority(USER_AUTH, ADMIN_AUTH)
                 .antMatchers(ADMIN_PATHS).hasAuthority(ADMIN_AUTH)
-                .anyRequest().authenticated()
+                .anyRequest()
+                .authenticated()
                 .and()
-                .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).and().sessionManagement()
+                .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
+                .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         httpSecurity.addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class);

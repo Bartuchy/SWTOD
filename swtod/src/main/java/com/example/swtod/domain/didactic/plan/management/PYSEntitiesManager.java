@@ -3,7 +3,7 @@ package com.example.swtod.domain.didactic.plan.management;
 import com.example.swtod.domain.classes.type.ClassesType;
 import com.example.swtod.domain.classes.type.ClassesTypeRepository;
 import com.example.swtod.domain.didactic.plan.PlanYearSubject;
-import com.example.swtod.domain.didactic.plan.dto.PlanYearSubjectDto;
+import com.example.swtod.domain.didactic.plan.dto.PlanYearSubjectRecordDto;
 import com.example.swtod.domain.didactic.plan.management.transfer.PYSRelatedEntitiesTransporter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -17,19 +17,19 @@ public class PYSEntitiesManager {
     private final ClassesTypeRepository classesTypeRepository;
 
     public void addLectureEntityIfPossible(List<PlanYearSubject> planYearSubjects,
-                                           PlanYearSubjectDto planYearSubjectDto,
+                                           PlanYearSubjectRecordDto planYearSubjectRecordDto,
                                            PYSRelatedEntitiesTransporter transporter) {
-        if (planYearSubjectDto.getLectureHoursNumber() != 0) {
+        if (planYearSubjectRecordDto.getLectureHoursNumber() != 0) {
             ClassesType classesType = classesTypeRepository.findClassesTypeByName("W").orElseThrow();
 
             planYearSubjects.add(
                     new PlanYearSubject(
-                            planYearSubjectDto.getGroupsPerLecture(),
-                            planYearSubjectDto.getWeeksPerSemester(),
-                            planYearSubjectDto.getLectureHoursNumberPerWeek(),
-                            planYearSubjectDto.getNumberOfStudents(),
-                            planYearSubjectDto.getSemesterType().charAt(0),
-                            planYearSubjectDto.getYear(),
+                            planYearSubjectRecordDto.getGroupsPerLecture(),
+                            planYearSubjectRecordDto.getWeeksPerSemester(),
+                            planYearSubjectRecordDto.getLectureHoursNumberPerWeek(),
+                            planYearSubjectRecordDto.getNumberOfStudents(),
+                            planYearSubjectRecordDto.getSemesterType().charAt(0),
+                            planYearSubjectRecordDto.getYear(),
                             classesType,
                             transporter.getStudiesType(),
                             transporter.getPlanYear(),
@@ -41,19 +41,19 @@ public class PYSEntitiesManager {
     }
 
     public void addExerciseEntityIfPossible(List<PlanYearSubject> planYearSubjects,
-                                            PlanYearSubjectDto planYearSubjectDto,
+                                            PlanYearSubjectRecordDto planYearSubjectRecordDto,
                                             PYSRelatedEntitiesTransporter transporter) {
-        if (planYearSubjectDto.getExerciseHoursNumber() != 0) {
+        if (planYearSubjectRecordDto.getExerciseHoursNumber() != 0) {
             ClassesType classesType = classesTypeRepository.findClassesTypeByName("C").orElseThrow();
 
             planYearSubjects.add(
                     new PlanYearSubject(
-                            planYearSubjectDto.getGroupsPerExercise(),
-                            planYearSubjectDto.getWeeksPerSemester(),
-                            planYearSubjectDto.getExerciseHoursNumberPerWeek(),
-                            planYearSubjectDto.getNumberOfStudents(),
-                            planYearSubjectDto.getSemesterType().charAt(0),
-                            planYearSubjectDto.getYear(),
+                            planYearSubjectRecordDto.getGroupsPerExercise(),
+                            planYearSubjectRecordDto.getWeeksPerSemester(),
+                            planYearSubjectRecordDto.getExerciseHoursNumberPerWeek(),
+                            planYearSubjectRecordDto.getNumberOfStudents(),
+                            planYearSubjectRecordDto.getSemesterType().charAt(0),
+                            planYearSubjectRecordDto.getYear(),
                             classesType,
                             transporter.getStudiesType(),
                             transporter.getPlanYear(),
@@ -65,19 +65,19 @@ public class PYSEntitiesManager {
     }
 
     public void addLaboratoryEntityIfPossible(List<PlanYearSubject> planYearSubjects,
-                                              PlanYearSubjectDto planYearSubjectDto,
+                                              PlanYearSubjectRecordDto planYearSubjectRecordDto,
                                               PYSRelatedEntitiesTransporter transporter) {
-        if (planYearSubjectDto.getLaboratoryHoursNumber() != 0) {
+        if (planYearSubjectRecordDto.getLaboratoryHoursNumber() != 0) {
             ClassesType classesType = classesTypeRepository.findClassesTypeByName("L").orElseThrow();
 
             planYearSubjects.add(
                     new PlanYearSubject(
-                            planYearSubjectDto.getGroupsPerLaboratory(),
-                            planYearSubjectDto.getWeeksPerSemester(),
-                            planYearSubjectDto.getLaboratoryHoursNumberPerWeek(),
-                            planYearSubjectDto.getNumberOfStudents(),
-                            planYearSubjectDto.getSemesterType().charAt(0),
-                            planYearSubjectDto.getYear(),
+                            planYearSubjectRecordDto.getGroupsPerLaboratory(),
+                            planYearSubjectRecordDto.getWeeksPerSemester(),
+                            planYearSubjectRecordDto.getLaboratoryHoursNumberPerWeek(),
+                            planYearSubjectRecordDto.getNumberOfStudents(),
+                            planYearSubjectRecordDto.getSemesterType().charAt(0),
+                            planYearSubjectRecordDto.getYear(),
                             classesType,
                             transporter.getStudiesType(),
                             transporter.getPlanYear(),
@@ -89,19 +89,19 @@ public class PYSEntitiesManager {
     }
 
     public void addProjectEntityIfPossible(List<PlanYearSubject> planYearSubjects,
-                                           PlanYearSubjectDto planYearSubjectDto,
+                                           PlanYearSubjectRecordDto planYearSubjectRecordDto,
                                            PYSRelatedEntitiesTransporter transporter) {
-        if (planYearSubjectDto.getProjectHoursNumber() != 0) {
+        if (planYearSubjectRecordDto.getProjectHoursNumber() != 0) {
             ClassesType classesType = classesTypeRepository.findClassesTypeByName("P").orElseThrow();
 
             planYearSubjects.add(
                     new PlanYearSubject(
-                            planYearSubjectDto.getGroupsPerProject(),
-                            planYearSubjectDto.getWeeksPerSemester(),
-                            planYearSubjectDto.getProjectHoursNumberPerWeek(),
-                            planYearSubjectDto.getNumberOfStudents(),
-                            planYearSubjectDto.getSemesterType().charAt(0),
-                            planYearSubjectDto.getYear(),
+                            planYearSubjectRecordDto.getGroupsPerProject(),
+                            planYearSubjectRecordDto.getWeeksPerSemester(),
+                            planYearSubjectRecordDto.getProjectHoursNumberPerWeek(),
+                            planYearSubjectRecordDto.getNumberOfStudents(),
+                            planYearSubjectRecordDto.getSemesterType().charAt(0),
+                            planYearSubjectRecordDto.getYear(),
                             classesType,
                             transporter.getStudiesType(),
                             transporter.getPlanYear(),
@@ -113,19 +113,19 @@ public class PYSEntitiesManager {
     }
 
     public void addSeminaryEntityIfPossible(List<PlanYearSubject> planYearSubjects,
-                                            PlanYearSubjectDto planYearSubjectDto,
+                                            PlanYearSubjectRecordDto planYearSubjectRecordDto,
                                             PYSRelatedEntitiesTransporter transporter) {
-        if (planYearSubjectDto.getSeminaryHoursNumber() != 0) {
+        if (planYearSubjectRecordDto.getSeminaryHoursNumber() != 0) {
             ClassesType classesType = classesTypeRepository.findClassesTypeByName("S").orElseThrow();
 
             planYearSubjects.add(
                     new PlanYearSubject(
-                            planYearSubjectDto.getGroupsPerSeminary(),
-                            planYearSubjectDto.getWeeksPerSemester(),
-                            planYearSubjectDto.getSeminaryHoursNumberPerWeek(),
-                            planYearSubjectDto.getNumberOfStudents(),
-                            planYearSubjectDto.getSemesterType().charAt(0),
-                            planYearSubjectDto.getYear(),
+                            planYearSubjectRecordDto.getGroupsPerSeminary(),
+                            planYearSubjectRecordDto.getWeeksPerSemester(),
+                            planYearSubjectRecordDto.getSeminaryHoursNumberPerWeek(),
+                            planYearSubjectRecordDto.getNumberOfStudents(),
+                            planYearSubjectRecordDto.getSemesterType().charAt(0),
+                            planYearSubjectRecordDto.getYear(),
                             classesType,
                             transporter.getStudiesType(),
                             transporter.getPlanYear(),
@@ -136,11 +136,12 @@ public class PYSEntitiesManager {
         }
     }
 
-    public void addLectureDtoIfPossible(List<PlanYearSubjectDto> planYearSubjectDtos,
+    public void addLectureDtoIfPossible(List<PlanYearSubjectRecordDto> planYearSubjectRecordDtos,
                                         PlanYearSubject planYearSubject) {
         if (planYearSubject.getClassesType().getName().equals("W")) {
-            planYearSubjectDtos.add(
-                    new PlanYearSubjectDto(
+            planYearSubjectRecordDtos.add(
+                    new PlanYearSubjectRecordDto(
+                            planYearSubject.getSubject().getId(),
                             planYearSubject.getFaculty().getName(),
                             planYearSubject.getPlanYear().getYear(),
                             planYearSubject.getSubject().getFieldOfStudies().getName(),
@@ -170,11 +171,12 @@ public class PYSEntitiesManager {
         }
     }
 
-    public void addExerciseDtoIfPossible(List<PlanYearSubjectDto> planYearSubjectDtos,
+    public void addExerciseDtoIfPossible(List<PlanYearSubjectRecordDto> planYearSubjectRecordDtos,
                                          PlanYearSubject planYearSubject) {
         if (planYearSubject.getClassesType().getName().equals("C")) {
-            planYearSubjectDtos.add(
-                    new PlanYearSubjectDto(
+            planYearSubjectRecordDtos.add(
+                    new PlanYearSubjectRecordDto(
+                            planYearSubject.getSubject().getId(),
                             planYearSubject.getFaculty().getName(),
                             planYearSubject.getPlanYear().getYear(),
                             planYearSubject.getSubject().getFieldOfStudies().getName(),
@@ -204,11 +206,12 @@ public class PYSEntitiesManager {
         }
     }
 
-    public void addLaboratoryDtoIfPossible(List<PlanYearSubjectDto> planYearSubjectDtos,
+    public void addLaboratoryDtoIfPossible(List<PlanYearSubjectRecordDto> planYearSubjectRecordDtos,
                                            PlanYearSubject planYearSubject) {
         if (planYearSubject.getClassesType().getName().equals("L")) {
-            planYearSubjectDtos.add(
-                    new PlanYearSubjectDto(
+            planYearSubjectRecordDtos.add(
+                    new PlanYearSubjectRecordDto(
+                            planYearSubject.getSubject().getId(),
                             planYearSubject.getFaculty().getName(),
                             planYearSubject.getPlanYear().getYear(),
                             planYearSubject.getSubject().getFieldOfStudies().getName(),
@@ -238,11 +241,12 @@ public class PYSEntitiesManager {
         }
     }
 
-    public void addProjectDtoIfPossible(List<PlanYearSubjectDto> planYearSubjectDtos,
+    public void addProjectDtoIfPossible(List<PlanYearSubjectRecordDto> planYearSubjectRecordDtos,
                                         PlanYearSubject planYearSubject) {
         if (planYearSubject.getClassesType().getName().equals("P")) {
-            planYearSubjectDtos.add(
-                    new PlanYearSubjectDto(
+            planYearSubjectRecordDtos.add(
+                    new PlanYearSubjectRecordDto(
+                            planYearSubject.getSubject().getId(),
                             planYearSubject.getFaculty().getName(),
                             planYearSubject.getPlanYear().getYear(),
                             planYearSubject.getSubject().getFieldOfStudies().getName(),
@@ -272,11 +276,12 @@ public class PYSEntitiesManager {
         }
     }
 
-    public void addSeminaryDtoIfPossible(List<PlanYearSubjectDto> planYearSubjectDtos,
+    public void addSeminaryDtoIfPossible(List<PlanYearSubjectRecordDto> planYearSubjectRecordDtos,
                                          PlanYearSubject planYearSubject) {
         if (planYearSubject.getClassesType().getName().equals("S")) {
-            planYearSubjectDtos.add(
-                    new PlanYearSubjectDto(
+            planYearSubjectRecordDtos.add(
+                    new PlanYearSubjectRecordDto(
+                            planYearSubject.getSubject().getId(),
                             planYearSubject.getFaculty().getName(),
                             planYearSubject.getPlanYear().getYear(),
                             planYearSubject.getSubject().getFieldOfStudies().getName(),
@@ -306,49 +311,49 @@ public class PYSEntitiesManager {
         }
     }
 
-    public void setDtosLectureFields(PlanYearSubjectDto planYearSubjectDto,
+    public void setDtosLectureFields(PlanYearSubjectRecordDto planYearSubjectRecordDto,
                                      PlanYearSubject planYearSubject) {
         if (planYearSubject.getClassesType().getName().equals("W")) {
-            planYearSubjectDto.setLectureHoursNumberPerWeek(planYearSubject.getHoursPerWeek());
-            planYearSubjectDto.setGroupsPerLecture(planYearSubject.getGroupsNumber());
-            planYearSubjectDto.setLectureHoursNumber(planYearSubject.getHoursPerWeek() * planYearSubject.getWeeksNumber());
+            planYearSubjectRecordDto.setLectureHoursNumberPerWeek(planYearSubject.getHoursPerWeek());
+            planYearSubjectRecordDto.setGroupsPerLecture(planYearSubject.getGroupsNumber());
+            planYearSubjectRecordDto.setLectureHoursNumber(planYearSubject.getHoursPerWeek() * planYearSubject.getWeeksNumber());
         }
     }
 
-    public void setDtosExerciseFields(PlanYearSubjectDto planYearSubjectDto,
+    public void setDtosExerciseFields(PlanYearSubjectRecordDto planYearSubjectRecordDto,
                                       PlanYearSubject planYearSubject) {
         if (planYearSubject.getClassesType().getName().equals("C")) {
-            planYearSubjectDto.setExerciseHoursNumberPerWeek(planYearSubject.getHoursPerWeek());
-            planYearSubjectDto.setGroupsPerExercise(planYearSubject.getGroupsNumber());
-            planYearSubjectDto.setExerciseHoursNumber(planYearSubject.getHoursPerWeek() * planYearSubject.getWeeksNumber());
+            planYearSubjectRecordDto.setExerciseHoursNumberPerWeek(planYearSubject.getHoursPerWeek());
+            planYearSubjectRecordDto.setGroupsPerExercise(planYearSubject.getGroupsNumber());
+            planYearSubjectRecordDto.setExerciseHoursNumber(planYearSubject.getHoursPerWeek() * planYearSubject.getWeeksNumber());
         }
     }
 
-    public void setDtosLaboratoryFields(PlanYearSubjectDto planYearSubjectDto,
+    public void setDtosLaboratoryFields(PlanYearSubjectRecordDto planYearSubjectRecordDto,
                                         PlanYearSubject planYearSubject) {
         if (planYearSubject.getClassesType().getName().equals("L")) {
 
-            planYearSubjectDto.setLaboratoryHoursNumberPerWeek(planYearSubject.getHoursPerWeek());
-            planYearSubjectDto.setGroupsPerLaboratory(planYearSubject.getGroupsNumber());
-            planYearSubjectDto.setLaboratoryHoursNumber(planYearSubject.getHoursPerWeek() * planYearSubject.getWeeksNumber());
+            planYearSubjectRecordDto.setLaboratoryHoursNumberPerWeek(planYearSubject.getHoursPerWeek());
+            planYearSubjectRecordDto.setGroupsPerLaboratory(planYearSubject.getGroupsNumber());
+            planYearSubjectRecordDto.setLaboratoryHoursNumber(planYearSubject.getHoursPerWeek() * planYearSubject.getWeeksNumber());
         }
     }
 
-    public void setDtosProjectFields(PlanYearSubjectDto planYearSubjectDto,
+    public void setDtosProjectFields(PlanYearSubjectRecordDto planYearSubjectRecordDto,
                                      PlanYearSubject planYearSubject) {
         if (planYearSubject.getClassesType().getName().equals("P")) {
-            planYearSubjectDto.setProjectHoursNumberPerWeek(planYearSubject.getHoursPerWeek());
-            planYearSubjectDto.setGroupsPerProject(planYearSubject.getGroupsNumber());
-            planYearSubjectDto.setProjectHoursNumber(planYearSubject.getHoursPerWeek() * planYearSubject.getWeeksNumber());
+            planYearSubjectRecordDto.setProjectHoursNumberPerWeek(planYearSubject.getHoursPerWeek());
+            planYearSubjectRecordDto.setGroupsPerProject(planYearSubject.getGroupsNumber());
+            planYearSubjectRecordDto.setProjectHoursNumber(planYearSubject.getHoursPerWeek() * planYearSubject.getWeeksNumber());
         }
     }
 
-    public void setDtosSeminaryFields(PlanYearSubjectDto planYearSubjectDto,
+    public void setDtosSeminaryFields(PlanYearSubjectRecordDto planYearSubjectRecordDto,
                                       PlanYearSubject planYearSubject) {
         if (planYearSubject.getClassesType().getName().equals("S")) {
-            planYearSubjectDto.setLectureHoursNumberPerWeek(planYearSubject.getHoursPerWeek());
-            planYearSubjectDto.setGroupsPerLecture(planYearSubject.getGroupsNumber());
-            planYearSubjectDto.setLectureHoursNumber(planYearSubject.getHoursPerWeek() * planYearSubject.getWeeksNumber());
+            planYearSubjectRecordDto.setLectureHoursNumberPerWeek(planYearSubject.getHoursPerWeek());
+            planYearSubjectRecordDto.setGroupsPerLecture(planYearSubject.getGroupsNumber());
+            planYearSubjectRecordDto.setLectureHoursNumber(planYearSubject.getHoursPerWeek() * planYearSubject.getWeeksNumber());
         }
     }
 }

@@ -3,7 +3,7 @@ package com.example.swtod.domain.didactic.plan.management;
 import com.example.swtod.configs.csv.CsvMapper;
 import com.example.swtod.domain.classes.type.ClassesTypeRepository;
 import com.example.swtod.domain.didactic.plan.PlanYearSubject;
-import com.example.swtod.domain.didactic.plan.dto.PlanYearSubjectDto;
+import com.example.swtod.domain.didactic.plan.dto.PlanYearSubjectRecordDto;
 import com.example.swtod.domain.didactic.plan.management.transfer.PYSRelatedEntitiesSupplier;
 import com.example.swtod.domain.didactic.plan.management.transfer.PYSRelatedEntitiesTransporter;
 import lombok.RequiredArgsConstructor;
@@ -23,79 +23,79 @@ public class PlanYearSubjectMapper implements CsvMapper {
     private final PYSRelatedEntitiesSupplier supplier;
     private final PYSEntitiesManager entitiesManager;
 
-    public List<PlanYearSubjectDto> mapRecordsToDtos(List<List<String>> records, String facultyName) {
+    public List<PlanYearSubjectRecordDto> mapRecordsToDtos(List<List<String>> records, String facultyName) {
 
-        List<PlanYearSubjectDto> planYearSubjectDtos = new ArrayList<>();
+        List<PlanYearSubjectRecordDto> planYearSubjectRecordDtos = new ArrayList<>();
 
         for (List<String> record : records) {
             List<String> recordsWithZeros = mapEmptyValuesToZeros(record);
-            planYearSubjectDtos.add(new PlanYearSubjectDto(recordsWithZeros, facultyName));
+            planYearSubjectRecordDtos.add(new PlanYearSubjectRecordDto(recordsWithZeros, facultyName));
         }
 
-        return planYearSubjectDtos;
+        return planYearSubjectRecordDtos;
     }
 
-    public List<PlanYearSubject> mapDtosToEntities(List<PlanYearSubjectDto> planYearSubjectDtos) {
+    public List<PlanYearSubject> mapDtosToEntities(List<PlanYearSubjectRecordDto> planYearSubjectRecordDtos) {
         List<PlanYearSubject> planYearSubjects = new ArrayList<>();
 
-        for (PlanYearSubjectDto planYearSubjectDto : planYearSubjectDtos) {
-            splitDtoIntoEntities(planYearSubjects, planYearSubjectDto);
+        for (PlanYearSubjectRecordDto planYearSubjectRecordDto : planYearSubjectRecordDtos) {
+            splitDtoIntoEntities(planYearSubjects, planYearSubjectRecordDto);
         }
 
         return planYearSubjects;
     }
 
-    public List<PlanYearSubjectDto> mapEntitiesToDtos(List<PlanYearSubject> planYearSubjects) {
-        List<PlanYearSubjectDto> planYearSubjectDtos = new ArrayList<>();
+    public List<PlanYearSubjectRecordDto> mapEntitiesToDtos(List<PlanYearSubject> planYearSubjects) {
+        List<PlanYearSubjectRecordDto> planYearSubjectRecordDtos = new ArrayList<>();
         boolean isDtoPresentInListPresent;
 
         for (PlanYearSubject planYearSubject : planYearSubjects) {
-            isDtoPresentInListPresent = checkDtoPresence(planYearSubject, planYearSubjectDtos);
+            isDtoPresentInListPresent = checkDtoPresence(planYearSubject, planYearSubjectRecordDtos);
 
             if (!isDtoPresentInListPresent)
-                addDtosIfPossible(planYearSubjectDtos, planYearSubject);
+                addDtosIfPossible(planYearSubjectRecordDtos, planYearSubject);
         }
 
-        return planYearSubjectDtos;
+        return planYearSubjectRecordDtos;
     }
 
-    private void splitDtoIntoEntities(List<PlanYearSubject> planYearSubjects, PlanYearSubjectDto planYearSubjectDto) {
-        PYSRelatedEntitiesTransporter transporter = supplier.getAllRelatedEntities(planYearSubjectDto);
-        addEntitiesIfPossible(planYearSubjects, planYearSubjectDto, transporter);
+    private void splitDtoIntoEntities(List<PlanYearSubject> planYearSubjects, PlanYearSubjectRecordDto planYearSubjectRecordDto) {
+        PYSRelatedEntitiesTransporter transporter = supplier.getAllRelatedEntities(planYearSubjectRecordDto);
+        addEntitiesIfPossible(planYearSubjects, planYearSubjectRecordDto, transporter);
     }
 
-    private void addEntitiesIfPossible(List<PlanYearSubject> planYearSubjects, PlanYearSubjectDto planYearSubjectDto, PYSRelatedEntitiesTransporter transporter) {
-        entitiesManager.addLectureEntityIfPossible(planYearSubjects, planYearSubjectDto, transporter);
-        entitiesManager.addExerciseEntityIfPossible(planYearSubjects, planYearSubjectDto, transporter);
-        entitiesManager.addLaboratoryEntityIfPossible(planYearSubjects, planYearSubjectDto, transporter);
-        entitiesManager.addProjectEntityIfPossible(planYearSubjects, planYearSubjectDto, transporter);
-        entitiesManager.addSeminaryEntityIfPossible(planYearSubjects, planYearSubjectDto, transporter);
+    private void addEntitiesIfPossible(List<PlanYearSubject> planYearSubjects, PlanYearSubjectRecordDto planYearSubjectRecordDto, PYSRelatedEntitiesTransporter transporter) {
+        entitiesManager.addLectureEntityIfPossible(planYearSubjects, planYearSubjectRecordDto, transporter);
+        entitiesManager.addExerciseEntityIfPossible(planYearSubjects, planYearSubjectRecordDto, transporter);
+        entitiesManager.addLaboratoryEntityIfPossible(planYearSubjects, planYearSubjectRecordDto, transporter);
+        entitiesManager.addProjectEntityIfPossible(planYearSubjects, planYearSubjectRecordDto, transporter);
+        entitiesManager.addSeminaryEntityIfPossible(planYearSubjects, planYearSubjectRecordDto, transporter);
     }
 
-    private void setDtoClassesTypeFields(PlanYearSubjectDto planYearSubjectDto, PlanYearSubject planYearSubject) {
-        entitiesManager.setDtosLectureFields(planYearSubjectDto, planYearSubject);
-        entitiesManager.setDtosExerciseFields(planYearSubjectDto, planYearSubject);
-        entitiesManager.setDtosLaboratoryFields(planYearSubjectDto, planYearSubject);
-        entitiesManager.setDtosProjectFields(planYearSubjectDto, planYearSubject);
-        entitiesManager.setDtosSeminaryFields(planYearSubjectDto, planYearSubject);
+    private void setDtoClassesTypeFields(PlanYearSubjectRecordDto planYearSubjectRecordDto, PlanYearSubject planYearSubject) {
+        entitiesManager.setDtosLectureFields(planYearSubjectRecordDto, planYearSubject);
+        entitiesManager.setDtosExerciseFields(planYearSubjectRecordDto, planYearSubject);
+        entitiesManager.setDtosLaboratoryFields(planYearSubjectRecordDto, planYearSubject);
+        entitiesManager.setDtosProjectFields(planYearSubjectRecordDto, planYearSubject);
+        entitiesManager.setDtosSeminaryFields(planYearSubjectRecordDto, planYearSubject);
     }
 
-    private boolean checkDtoPresence(PlanYearSubject planYearSubject, List<PlanYearSubjectDto> planYearSubjectDtos) {
-        for (PlanYearSubjectDto planYearSubjectDto : planYearSubjectDtos) {
-            if (planYearSubjectDto.getSubjectName().equals(planYearSubject.getSubject().getName())) {
-                setDtoClassesTypeFields(planYearSubjectDto, planYearSubject);
+    private boolean checkDtoPresence(PlanYearSubject planYearSubject, List<PlanYearSubjectRecordDto> planYearSubjectRecordDtos) {
+        for (PlanYearSubjectRecordDto planYearSubjectRecordDto : planYearSubjectRecordDtos) {
+            if (planYearSubjectRecordDto.getSubjectName().equals(planYearSubject.getSubject().getName())) {
+                setDtoClassesTypeFields(planYearSubjectRecordDto, planYearSubject);
                 return true;
             }
         }
         return false;
     }
 
-    private void addDtosIfPossible(List<PlanYearSubjectDto> planYearSubjectDtos, PlanYearSubject planYearSubject) {
-        entitiesManager.addLectureDtoIfPossible(planYearSubjectDtos, planYearSubject);
-        entitiesManager.addExerciseDtoIfPossible(planYearSubjectDtos, planYearSubject);
-        entitiesManager.addLaboratoryDtoIfPossible(planYearSubjectDtos, planYearSubject);
-        entitiesManager.addProjectDtoIfPossible(planYearSubjectDtos, planYearSubject);
-        entitiesManager.addSeminaryDtoIfPossible(planYearSubjectDtos, planYearSubject);
+    private void addDtosIfPossible(List<PlanYearSubjectRecordDto> planYearSubjectRecordDtos, PlanYearSubject planYearSubject) {
+        entitiesManager.addLectureDtoIfPossible(planYearSubjectRecordDtos, planYearSubject);
+        entitiesManager.addExerciseDtoIfPossible(planYearSubjectRecordDtos, planYearSubject);
+        entitiesManager.addLaboratoryDtoIfPossible(planYearSubjectRecordDtos, planYearSubject);
+        entitiesManager.addProjectDtoIfPossible(planYearSubjectRecordDtos, planYearSubject);
+        entitiesManager.addSeminaryDtoIfPossible(planYearSubjectRecordDtos, planYearSubject);
     }
 
     private List<String> mapEmptyValuesToZeros(List<String> values) {

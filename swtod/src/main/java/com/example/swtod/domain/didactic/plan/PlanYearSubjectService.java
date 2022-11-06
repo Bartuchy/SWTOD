@@ -1,9 +1,8 @@
 package com.example.swtod.domain.didactic.plan;
 
-import com.example.swtod.domain.didactic.plan.dto.PlanYearSubjectDto;
+import com.example.swtod.domain.didactic.plan.dto.PlanYearSubjectRecordDto;
 import com.example.swtod.domain.didactic.plan.management.PlanYearSubjectCsvProcessor;
 import com.example.swtod.domain.didactic.plan.management.PlanYearSubjectMapper;
-import com.example.swtod.domain.plan.year.PlanYear;
 import com.example.swtod.domain.plan.year.PlanYearService;
 import com.example.swtod.domain.subject.SubjectService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -37,8 +35,28 @@ public class PlanYearSubjectService {
         subjectService.removeAllData();
     }
 
-    public List<PlanYearSubjectDto> getDidacticPlan() {
+    @Transactional
+    public void removeDidacticPlanSingle(Long subjectId) {
+        List<PlanYearSubject> planYearSubjects = planYearSubjectRepository
+                .findPlanYearSubjectBySubjectId(subjectId);
+
+        planYearSubjects.forEach(planYearSubject -> planYearSubjectRepository
+                .deletePlanYearSubjectById(planYearSubject.getId()));
+
+        if (planYearSubjects.size() > 0)
+            removeSingleRelatedEntities(planYearSubjects.get(0));
+    }
+
+    public List<PlanYearSubjectRecordDto> getDidacticPlan() {
         List<PlanYearSubject> planYearSubjects = planYearSubjectRepository.findAll();
         return mapper.mapEntitiesToDtos(planYearSubjects);
+    }
+
+    private void removeSingleRelatedEntities(PlanYearSubject planYearSubject) {
+        Long planYearId = planYearSubject.getPlanYear().getId();
+        Long subjectId = planYearSubject.getSubject().getId();
+
+        planYearService.removeById(planYearId);
+        subjectService.removeById(subjectId);
     }
 }
