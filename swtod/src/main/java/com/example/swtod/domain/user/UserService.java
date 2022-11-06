@@ -44,7 +44,8 @@ public class UserService {
                         user.getTitle(),
                         user.getPosition().getName(),
                         user.getDob().toString(),
-                        user.isAdmin()))
+                        user.isAdmin(),
+                        user.isActive()))
                 .toList();
     }
 
@@ -62,7 +63,8 @@ public class UserService {
                 user.getTitle(),
                 user.getPosition().getName(),
                 user.getDob().toString(),
-                user.isAdmin());
+                user.isAdmin(),
+                user.isActive());
     }
 
     @Transactional

@@ -14,4 +14,5 @@ public class UserDto {
     private String positionName;
     private String dob;
     private Boolean isAdmin;
+    private Boolean isActive;
 }
