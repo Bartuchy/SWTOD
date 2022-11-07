@@ -69,8 +69,12 @@ public class UserService {
 
     @Transactional
     public void createUser(CreateUserDto userDto) {
-        String encodedPassword = createPasswordAndSendEmail(userDto.getUsername());
+        String password = generatePassword();
+        mailSenderService.sendEmail(userDto.getUsername(), password);
+
+        String encodedPassword = passwordEncoder.encode(password);
         User user = CreateUserDto.mapToUser(userDto, encodedPassword);
+
         userRepository.save(user);
     }
 
@@ -96,7 +100,10 @@ public class UserService {
 
     @Transactional
     public void resetPassword(String username) {
-        String encodedPassword = createPasswordAndSendEmail(username);
+        String password = generatePassword();
+        mailSenderService.sendEmail(username, password);
+
+        String encodedPassword = passwordEncoder.encode(password);
         userRepository.changePassword(encodedPassword, username);
     }
 
@@ -120,14 +127,6 @@ public class UserService {
     @Transactional
     public void activateAccount(Long id) {
         userRepository.modifyAccountActivationFlag(id, true);
-    }
-
-    private String createPasswordAndSendEmail(String username) {
-        String password = generatePassword();
-        log.info(password);
-        mailSenderService.sendEmail(username, password);
-
-        return passwordEncoder.encode(password);
     }
 
     private String generatePassword() {
