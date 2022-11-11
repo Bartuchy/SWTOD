@@ -25,14 +25,4 @@ public class PlanYearSubjectCsvReader implements CsvReader {
         }
         return records;
     }
-
-    private List<List<String>> readRecordsFromFile(BufferedReader br) throws IOException {
-        return br
-                .lines()
-                .skip(1)
-                .map(record -> Arrays
-                        .stream(record.split(SEMICOLON_DELIMITER))
-                        .toList())
-                .toList();
-    }
 }

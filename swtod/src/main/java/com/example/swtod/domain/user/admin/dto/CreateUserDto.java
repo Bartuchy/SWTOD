@@ -1,7 +1,7 @@
 package com.example.swtod.domain.user.admin.dto;
 
 import com.example.swtod.domain.user.User;
-import com.example.swtod.domain.entity.Position;
+import com.example.swtod.domain.common.entity.Position;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

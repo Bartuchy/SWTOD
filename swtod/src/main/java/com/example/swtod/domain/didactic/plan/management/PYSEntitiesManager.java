@@ -1,7 +1,7 @@
 package com.example.swtod.domain.didactic.plan.management;
 
-import com.example.swtod.domain.classes.type.ClassesType;
-import com.example.swtod.domain.classes.type.ClassesTypeRepository;
+import com.example.swtod.domain.common.classes.type.ClassesType;
+import com.example.swtod.domain.common.classes.type.ClassesTypeRepository;
 import com.example.swtod.domain.didactic.plan.PlanYearSubject;
 import com.example.swtod.domain.didactic.plan.dto.PlanYearSubjectRecordDto;
 import com.example.swtod.domain.didactic.plan.management.transfer.PYSRelatedEntitiesTransporter;

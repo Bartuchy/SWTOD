@@ -3,8 +3,8 @@ package com.example.swtod.domain.didactic.plan;
 import com.example.swtod.domain.didactic.plan.dto.PlanYearSubjectRecordDto;
 import com.example.swtod.domain.didactic.plan.management.PlanYearSubjectCsvProcessor;
 import com.example.swtod.domain.didactic.plan.management.PlanYearSubjectMapper;
-import com.example.swtod.domain.plan.year.PlanYearService;
-import com.example.swtod.domain.subject.SubjectService;
+import com.example.swtod.domain.common.plan.year.PlanYearService;
+import com.example.swtod.domain.common.subject.SubjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,13 +57,17 @@ public class PlanYearSubjectService {
         planYearSubjectRepository.saveAll(planYearSubjects);
     }
 
-    public void updatePlanYearSubjectSingle(Long subjectId, PlanYearSubjectRecordDto updatingDto) {
+    public List<PlanYearSubjectRecordDto> getDidacticPlanBySubjectId(Long subjectId) {
         List<PlanYearSubject> planYearSubjects = planYearSubjectRepository
                 .findPlanYearSubjectBySubjectId(subjectId);
-        List<PlanYearSubjectRecordDto> recordDtos = mapper.mapEntitiesToDtos(planYearSubjects);
 
+        return mapper.mapEntitiesToDtos(planYearSubjects);
+    }
 
+    public void updatePlanYearSubjectSingle(Long subjectId, PlanYearSubjectRecordDto updatingDto) {
+        List<PlanYearSubjectRecordDto> recordDtos = getDidacticPlanBySubjectId(subjectId);
         recordDtos.forEach(recordDto -> updatePlanYearSubjectData(recordDto, updatingDto));
+
         List<PlanYearSubject> planYearSubjectsUpdated = mapper.mapDtosToEntities(recordDtos);
         planYearSubjectRepository.saveAll(planYearSubjectsUpdated);
     }

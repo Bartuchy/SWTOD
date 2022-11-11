@@ -1,9 +1,9 @@
 package com.example.swtod.domain.didactic.plan.management.transfer;
 
-import com.example.swtod.domain.faculty.Faculty;
-import com.example.swtod.domain.plan.year.PlanYear;
-import com.example.swtod.domain.studies.type.StudiesType;
-import com.example.swtod.domain.subject.Subject;
+import com.example.swtod.domain.common.faculty.Faculty;
+import com.example.swtod.domain.common.plan.year.PlanYear;
+import com.example.swtod.domain.common.studies.type.StudiesType;
+import com.example.swtod.domain.common.subject.Subject;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

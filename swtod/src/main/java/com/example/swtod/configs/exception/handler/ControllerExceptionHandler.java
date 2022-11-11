@@ -2,6 +2,7 @@ package com.example.swtod.configs.exception.handler;
 
 import com.example.swtod.configs.exception.PasswordsNotEqualException;
 import com.example.swtod.configs.exception.UserNotFoundException;
+import com.example.swtod.configs.exception.UsernameTakenException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -24,6 +25,12 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     public final ResponseEntity<ErrorResponse> handlePasswordsNotEqualException(PasswordsNotEqualException exception) {
         ErrorResponse error = constructErrorResponse(exception, "Given passwords are not equal");
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UsernameTakenException.class)
+    public final ResponseEntity<ErrorResponse> handleUsernameTakenException(UsernameTakenException exception) {
+        ErrorResponse error = constructErrorResponse(exception, "This email is already taken");
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 
     private ErrorResponse constructErrorResponse(RuntimeException exception, String message) {

@@ -1,14 +1,14 @@
 package com.example.swtod.domain.didactic.plan.management.transfer;
 
 import com.example.swtod.domain.didactic.plan.dto.PlanYearSubjectRecordDto;
-import com.example.swtod.domain.faculty.Faculty;
-import com.example.swtod.domain.faculty.FacultyService;
-import com.example.swtod.domain.plan.year.PlanYear;
-import com.example.swtod.domain.plan.year.PlanYearService;
-import com.example.swtod.domain.studies.type.StudiesType;
-import com.example.swtod.domain.studies.type.StudiesTypeService;
-import com.example.swtod.domain.subject.Subject;
-import com.example.swtod.domain.subject.SubjectService;
+import com.example.swtod.domain.common.faculty.Faculty;
+import com.example.swtod.domain.common.faculty.FacultyService;
+import com.example.swtod.domain.common.plan.year.PlanYear;
+import com.example.swtod.domain.common.plan.year.PlanYearService;
+import com.example.swtod.domain.common.studies.type.StudiesType;
+import com.example.swtod.domain.common.studies.type.StudiesTypeService;
+import com.example.swtod.domain.common.subject.Subject;
+import com.example.swtod.domain.common.subject.SubjectService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;

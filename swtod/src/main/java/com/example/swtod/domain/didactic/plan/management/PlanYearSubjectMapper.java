@@ -1,7 +1,6 @@
 package com.example.swtod.domain.didactic.plan.management;
 
-import com.example.swtod.configs.csv.CsvMapper;
-import com.example.swtod.domain.classes.type.ClassesTypeRepository;
+import com.example.swtod.configs.csv.Mapper;
 import com.example.swtod.domain.didactic.plan.PlanYearSubject;
 import com.example.swtod.domain.didactic.plan.dto.PlanYearSubjectRecordDto;
 import com.example.swtod.domain.didactic.plan.management.transfer.PYSRelatedEntitiesSupplier;
@@ -16,13 +15,12 @@ import java.util.regex.Pattern;
 
 @Configuration
 @RequiredArgsConstructor
-public class PlanYearSubjectMapper implements CsvMapper {
+public class PlanYearSubjectMapper implements Mapper<PlanYearSubject, PlanYearSubjectRecordDto> {
     private final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
-
-    private final ClassesTypeRepository classesTypeRepository;
     private final PYSRelatedEntitiesSupplier supplier;
     private final PYSEntitiesManager entitiesManager;
 
+    @Override
     public List<PlanYearSubjectRecordDto> mapRecordsToDtos(List<List<String>> records, String facultyName) {
 
         List<PlanYearSubjectRecordDto> planYearSubjectRecordDtos = new ArrayList<>();
@@ -35,6 +33,7 @@ public class PlanYearSubjectMapper implements CsvMapper {
         return planYearSubjectRecordDtos;
     }
 
+    @Override
     public List<PlanYearSubject> mapDtosToEntities(List<PlanYearSubjectRecordDto> planYearSubjectRecordDtos) {
         List<PlanYearSubject> planYearSubjects = new ArrayList<>();
 
@@ -45,6 +44,7 @@ public class PlanYearSubjectMapper implements CsvMapper {
         return planYearSubjects;
     }
 
+    @Override
     public List<PlanYearSubjectRecordDto> mapEntitiesToDtos(List<PlanYearSubject> planYearSubjects) {
         List<PlanYearSubjectRecordDto> planYearSubjectRecordDtos = new ArrayList<>();
         boolean isDtoPresentInListPresent;
@@ -98,21 +98,7 @@ public class PlanYearSubjectMapper implements CsvMapper {
         entitiesManager.addSeminaryDtoIfPossible(planYearSubjectRecordDtos, planYearSubject);
     }
 
-    private List<String> mapEmptyValuesToZeros(List<String> values) {
-        List<String> mappedValues = new ArrayList<>();
-        for (String value : values) {
-            addElemToMappingList(value, mappedValues);
-        }
-        return mappedValues;
-    }
 
-    private void addElemToMappingList(String str, List<String> mappedValues) {
-        if (Objects.equals(str, "")) {
-            mappedValues.add("0");
-        } else {
-            mappedValues.add(str);
-        }
-    }
 
     private boolean isNumeric(String strNum) {
         if (strNum == null) {

@@ -1,7 +1,7 @@
 package com.example.swtod.domain.user;
 
-import com.example.swtod.domain.entity.PlanYearSubjectUser;
-import com.example.swtod.domain.entity.Position;
+import com.example.swtod.domain.teaching.staff.PlanYearSubjectUser;
+import com.example.swtod.domain.common.entity.Position;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

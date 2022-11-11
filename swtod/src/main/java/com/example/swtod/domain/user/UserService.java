@@ -2,6 +2,7 @@ package com.example.swtod.domain.user;
 
 import com.example.swtod.configs.exception.PasswordsNotEqualException;
 import com.example.swtod.configs.exception.UserNotFoundException;
+import com.example.swtod.configs.exception.UsernameTakenException;
 import com.example.swtod.configs.mailing.MailSenderService;
 import com.example.swtod.domain.user.admin.dto.AdminUpdateUserDto;
 import com.example.swtod.domain.user.admin.dto.CreateUserDto;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Slf4j
@@ -49,6 +51,8 @@ public class UserService {
                 .toList();
     }
 
+
+
     public UserDto getUserByUsername(String username) {
         User user = userRepository
                 .findUserByUsername(username)
@@ -69,6 +73,15 @@ public class UserService {
 
     @Transactional
     public void createUser(CreateUserDto userDto) {
+        Optional<User> optionalUser = userRepository
+                .findUserByUsername(userDto.getUsername());
+
+    if (optionalUser.isPresent()){
+        throw new UsernameTakenException(String.format("User with username '%s' already exists", userDto.getUsername()));
+    }
+
+
+
         String password = generatePassword();
         mailSenderService.sendEmail(userDto.getUsername(), password);
 

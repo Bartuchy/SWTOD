@@ -1,11 +1,11 @@
 package com.example.swtod.domain.didactic.plan;
 
-import com.example.swtod.domain.classes.type.ClassesType;
-import com.example.swtod.domain.entity.PlanYearSubjectUser;
-import com.example.swtod.domain.faculty.Faculty;
-import com.example.swtod.domain.plan.year.PlanYear;
-import com.example.swtod.domain.studies.type.StudiesType;
-import com.example.swtod.domain.subject.Subject;
+import com.example.swtod.domain.common.classes.type.ClassesType;
+import com.example.swtod.domain.teaching.staff.PlanYearSubjectUser;
+import com.example.swtod.domain.common.faculty.Faculty;
+import com.example.swtod.domain.common.plan.year.PlanYear;
+import com.example.swtod.domain.common.studies.type.StudiesType;
+import com.example.swtod.domain.common.subject.Subject;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
