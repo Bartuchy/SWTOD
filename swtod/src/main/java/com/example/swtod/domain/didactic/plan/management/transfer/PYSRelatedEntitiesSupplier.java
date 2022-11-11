@@ -1,6 +1,5 @@
 package com.example.swtod.domain.didactic.plan.management.transfer;
 
-import com.example.swtod.domain.didactic.plan.dto.PlanYearSubjectRecordDto;
 import com.example.swtod.domain.common.faculty.Faculty;
 import com.example.swtod.domain.common.faculty.FacultyService;
 import com.example.swtod.domain.common.plan.year.PlanYear;
@@ -9,12 +8,11 @@ import com.example.swtod.domain.common.studies.type.StudiesType;
 import com.example.swtod.domain.common.studies.type.StudiesTypeService;
 import com.example.swtod.domain.common.subject.Subject;
 import com.example.swtod.domain.common.subject.SubjectService;
-import lombok.Getter;
+import com.example.swtod.domain.didactic.plan.dto.PlanYearSubjectRecordDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@Getter
 @RequiredArgsConstructor
 public class PYSRelatedEntitiesSupplier {
     private final StudiesTypeService studiesTypeService;

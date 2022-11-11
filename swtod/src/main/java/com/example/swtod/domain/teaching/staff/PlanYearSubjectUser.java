@@ -1,7 +1,7 @@
 package com.example.swtod.domain.teaching.staff;
 
 import com.example.swtod.domain.didactic.plan.PlanYearSubject;
-import com.example.swtod.domain.common.entity.Status;
+import com.example.swtod.domain.common.status.Status;
 import com.example.swtod.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,5 +35,12 @@ public class PlanYearSubjectUser {
     @ManyToOne
     private Status status;
 
-
+    public PlanYearSubjectUser(Integer groupsNumber, String commentContent,
+                               PlanYearSubject planYearSubject, User user, Status status) {
+        this.groupsNumber = groupsNumber;
+        this.commentContent = commentContent;
+        this.planYearSubject = planYearSubject;
+        this.user = user;
+        this.status = status;
+    }
 }

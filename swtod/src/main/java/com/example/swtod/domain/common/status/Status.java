@@ -1,4 +1,4 @@
-package com.example.swtod.domain.common.entity;
+package com.example.swtod.domain.common.status;
 
 import com.example.swtod.domain.teaching.staff.PlanYearSubjectUser;
 import lombok.AllArgsConstructor;

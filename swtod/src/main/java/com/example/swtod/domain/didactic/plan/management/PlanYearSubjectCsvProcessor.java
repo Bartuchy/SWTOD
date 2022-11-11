@@ -1,6 +1,5 @@
 package com.example.swtod.domain.didactic.plan.management;
 
-import com.example.swtod.configs.csv.Mapper;
 import com.example.swtod.configs.csv.CsvReader;
 import com.example.swtod.domain.didactic.plan.PlanYearSubject;
 import com.example.swtod.domain.didactic.plan.dto.PlanYearSubjectRecordDto;
@@ -15,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PlanYearSubjectCsvProcessor {
     private final CsvReader csvReader;
-    private final Mapper mapper;
+    private final PlanYearSubjectMapper mapper;
 
     public List<PlanYearSubject> processPlanYearSubjectCsv(MultipartFile file, String facultyName) throws IOException {
         List<List<String>> records = csvReader.writeDataFromFile(file);

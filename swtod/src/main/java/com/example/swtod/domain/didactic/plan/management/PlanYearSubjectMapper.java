@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 @Configuration
@@ -18,7 +17,7 @@ import java.util.regex.Pattern;
 public class PlanYearSubjectMapper implements Mapper<PlanYearSubject, PlanYearSubjectRecordDto> {
     private final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
     private final PYSRelatedEntitiesSupplier supplier;
-    private final PYSEntitiesManager entitiesManager;
+    private final PYSEntityManager entitiesManager;
 
     @Override
     public List<PlanYearSubjectRecordDto> mapRecordsToDtos(List<List<String>> records, String facultyName) {
@@ -96,14 +95,5 @@ public class PlanYearSubjectMapper implements Mapper<PlanYearSubject, PlanYearSu
         entitiesManager.addLaboratoryDtoIfPossible(planYearSubjectRecordDtos, planYearSubject);
         entitiesManager.addProjectDtoIfPossible(planYearSubjectRecordDtos, planYearSubject);
         entitiesManager.addSeminaryDtoIfPossible(planYearSubjectRecordDtos, planYearSubject);
-    }
-
-
-
-    private boolean isNumeric(String strNum) {
-        if (strNum == null) {
-            return false;
-        }
-        return pattern.matcher(strNum).matches();
     }
 }

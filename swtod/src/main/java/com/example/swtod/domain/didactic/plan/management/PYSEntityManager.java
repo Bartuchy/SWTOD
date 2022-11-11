@@ -12,7 +12,7 @@ import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
-public class PYSEntitiesManager {
+public class PYSEntityManager {
 
     private final ClassesTypeRepository classesTypeRepository;
 
