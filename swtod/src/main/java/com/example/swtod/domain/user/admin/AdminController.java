@@ -5,6 +5,7 @@ import com.example.swtod.domain.user.UserService;
 import com.example.swtod.domain.user.admin.dto.CreateUserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
@@ -13,6 +14,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/admin")
 public class AdminController {
     private final UserService userService;
+
+    @GetMapping("/is-admin")
+    public ResponseEntity<Void> return200kIfIsAdmin() {
+        return ResponseEntity.ok().build();
+    }
 
     @PostMapping("/create-user")
     public ResponseEntity<Void> createNewUser(@RequestBody CreateUserDto userDto) {

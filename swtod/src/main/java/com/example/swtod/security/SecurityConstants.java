@@ -13,6 +13,7 @@ public final class SecurityConstants {
     };
 
     public static final String[] USER_PATHS = new String[]{
+            "/api/user/is-user",
             "/api/user/change-password",
             "/api/user/{id}/update",
             "/api/user/all",
@@ -20,6 +21,7 @@ public final class SecurityConstants {
     };
 
     public static final String[] ADMIN_PATHS = new String[]{
+            "/api/admin/is-admin",
             "/api/admin/create",
             "/api/admin/{id}/activate-account",
             "/api/admin/{id}/deactivate-account",

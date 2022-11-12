@@ -62,7 +62,7 @@ public class User {
         this.dob = dob;
         this.pensum = 0;
         this.title = title;
-        this.isAdmin = true;
+        this.isAdmin = false;
         this.position = position;
     }
 
