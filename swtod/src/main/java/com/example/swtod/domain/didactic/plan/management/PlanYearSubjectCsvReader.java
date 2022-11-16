@@ -1,6 +1,6 @@
 package com.example.swtod.domain.didactic.plan.management;
 
-import com.example.swtod.configs.csv.CsvReader;
+import com.example.swtod.common.csv.CsvReader;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -8,7 +8,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.List;
 
 @Configuration

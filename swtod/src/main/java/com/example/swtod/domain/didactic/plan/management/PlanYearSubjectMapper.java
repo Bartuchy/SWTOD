@@ -1,6 +1,6 @@
 package com.example.swtod.domain.didactic.plan.management;
 
-import com.example.swtod.configs.csv.Mapper;
+import com.example.swtod.common.csv.Mapper;
 import com.example.swtod.domain.didactic.plan.PlanYearSubject;
 import com.example.swtod.domain.didactic.plan.dto.PlanYearSubjectRecordDto;
 import com.example.swtod.domain.didactic.plan.management.transfer.PYSRelatedEntitiesSupplier;
@@ -46,16 +46,26 @@ public class PlanYearSubjectMapper implements Mapper<PlanYearSubject, PlanYearSu
     @Override
     public List<PlanYearSubjectRecordDto> mapEntitiesToDtos(List<PlanYearSubject> planYearSubjects) {
         List<PlanYearSubjectRecordDto> planYearSubjectRecordDtos = new ArrayList<>();
-        boolean isDtoPresentInListPresent;
+        boolean isDtoPresentInList;
 
         for (PlanYearSubject planYearSubject : planYearSubjects) {
-            isDtoPresentInListPresent = checkDtoPresence(planYearSubject, planYearSubjectRecordDtos);
+            isDtoPresentInList = checkDtoPresence(planYearSubject, planYearSubjectRecordDtos);
 
-            if (!isDtoPresentInListPresent)
-                addDtosIfPossible(planYearSubjectRecordDtos, planYearSubject);
+            if (!isDtoPresentInList)
+                addDtoIfPossible(planYearSubjectRecordDtos, planYearSubject);
         }
 
         return planYearSubjectRecordDtos;
+    }
+
+    public boolean checkDtoPresence(PlanYearSubject planYearSubject, List<PlanYearSubjectRecordDto> planYearSubjectRecordDtos) {
+        for (PlanYearSubjectRecordDto planYearSubjectRecordDto : planYearSubjectRecordDtos) {
+            if (planYearSubjectRecordDto.getSubjectName().equals(planYearSubject.getSubject().getName())) {
+                setDtoClassesTypeFields(planYearSubjectRecordDto, planYearSubject);
+                return true;
+            }
+        }
+        return false;
     }
 
     private void splitDtoIntoEntities(List<PlanYearSubject> planYearSubjects, PlanYearSubjectRecordDto planYearSubjectRecordDto) {
@@ -79,17 +89,7 @@ public class PlanYearSubjectMapper implements Mapper<PlanYearSubject, PlanYearSu
         entitiesManager.setDtosSeminaryFields(planYearSubjectRecordDto, planYearSubject);
     }
 
-    private boolean checkDtoPresence(PlanYearSubject planYearSubject, List<PlanYearSubjectRecordDto> planYearSubjectRecordDtos) {
-        for (PlanYearSubjectRecordDto planYearSubjectRecordDto : planYearSubjectRecordDtos) {
-            if (planYearSubjectRecordDto.getSubjectName().equals(planYearSubject.getSubject().getName())) {
-                setDtoClassesTypeFields(planYearSubjectRecordDto, planYearSubject);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void addDtosIfPossible(List<PlanYearSubjectRecordDto> planYearSubjectRecordDtos, PlanYearSubject planYearSubject) {
+    private void addDtoIfPossible(List<PlanYearSubjectRecordDto> planYearSubjectRecordDtos, PlanYearSubject planYearSubject) {
         entitiesManager.addLectureDtoIfPossible(planYearSubjectRecordDtos, planYearSubject);
         entitiesManager.addExerciseDtoIfPossible(planYearSubjectRecordDtos, planYearSubject);
         entitiesManager.addLaboratoryDtoIfPossible(planYearSubjectRecordDtos, planYearSubject);

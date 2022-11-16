@@ -1,4 +1,4 @@
-package com.example.swtod.configs.exception.handler;
+package com.example.swtod.common.exception.handler;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

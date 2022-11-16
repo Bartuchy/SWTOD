@@ -1,4 +1,4 @@
-package com.example.swtod.configs.csv;
+package com.example.swtod.common.csv;
 
 import java.util.ArrayList;
 import java.util.List;

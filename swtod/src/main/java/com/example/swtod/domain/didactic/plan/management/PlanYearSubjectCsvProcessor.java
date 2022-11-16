@@ -1,6 +1,6 @@
 package com.example.swtod.domain.didactic.plan.management;
 
-import com.example.swtod.configs.csv.CsvReader;
+import com.example.swtod.common.csv.CsvReader;
 import com.example.swtod.domain.didactic.plan.PlanYearSubject;
 import com.example.swtod.domain.didactic.plan.dto.PlanYearSubjectRecordDto;
 import lombok.RequiredArgsConstructor;

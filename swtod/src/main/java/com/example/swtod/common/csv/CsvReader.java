@@ -1,10 +1,9 @@
-package com.example.swtod.configs.csv;
+package com.example.swtod.common.csv;
 
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

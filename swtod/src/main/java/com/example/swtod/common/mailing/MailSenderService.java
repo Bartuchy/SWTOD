@@ -1,4 +1,4 @@
-package com.example.swtod.configs.mailing;
+package com.example.swtod.common.mailing;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

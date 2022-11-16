@@ -1,6 +1,6 @@
 package com.example.swtod.domain.teaching.staff.management.transfer;
 
-import com.example.swtod.configs.exception.UserNotFoundException;
+import com.example.swtod.common.exception.UserNotFoundException;
 import com.example.swtod.domain.common.status.Status;
 import com.example.swtod.domain.common.status.StatusRepository;
 import com.example.swtod.domain.didactic.plan.PlanYearSubject;

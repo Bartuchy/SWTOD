@@ -1,8 +1,8 @@
-package com.example.swtod.configs.exception.handler;
+package com.example.swtod.common.exception.handler;
 
-import com.example.swtod.configs.exception.PasswordsNotEqualException;
-import com.example.swtod.configs.exception.UserNotFoundException;
-import com.example.swtod.configs.exception.UsernameTakenException;
+import com.example.swtod.common.exception.PasswordsNotEqualException;
+import com.example.swtod.common.exception.UserNotFoundException;
+import com.example.swtod.common.exception.UsernameTakenException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

@@ -1,9 +1,9 @@
 package com.example.swtod.domain.user;
 
-import com.example.swtod.configs.exception.PasswordsNotEqualException;
-import com.example.swtod.configs.exception.UserNotFoundException;
-import com.example.swtod.configs.exception.UsernameTakenException;
-import com.example.swtod.configs.mailing.MailSenderService;
+import com.example.swtod.common.exception.PasswordsNotEqualException;
+import com.example.swtod.common.exception.UserNotFoundException;
+import com.example.swtod.common.exception.UsernameTakenException;
+import com.example.swtod.common.mailing.MailSenderService;
 import com.example.swtod.domain.user.admin.dto.AdminUpdateUserDto;
 import com.example.swtod.domain.user.admin.dto.CreateUserDto;
 import com.example.swtod.domain.user.dto.ChangePasswordDto;

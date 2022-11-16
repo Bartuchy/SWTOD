@@ -1,6 +1,6 @@
 package com.example.swtod.domain.teaching.staff.management;
 
-import com.example.swtod.configs.csv.Mapper;
+import com.example.swtod.common.csv.Mapper;
 import com.example.swtod.domain.teaching.staff.PlanYearSubjectUser;
 import com.example.swtod.domain.teaching.staff.dto.AssignedGroupsDto;
 import com.example.swtod.domain.teaching.staff.dto.PYSURecordDto;
@@ -36,8 +36,18 @@ public class PYSUMapper implements Mapper<PlanYearSubjectUser, PYSURecordDto> {
     }
 
     @Override
-    public List<PYSURecordDto> mapEntitiesToDtos(List<PlanYearSubjectUser> planYearSubjects) {
-        return null;
+    public List<PYSURecordDto> mapEntitiesToDtos(List<PlanYearSubjectUser> planYearSubjectUsers) {
+        List<PYSURecordDto> pysuRecordDtos = new ArrayList<>();
+        boolean isDtoPresentInList;
+
+        for (PlanYearSubjectUser planYearSubjectUser : planYearSubjectUsers) {
+            isDtoPresentInList = checkDtoPresence(planYearSubjectUser, pysuRecordDtos);
+            if (!isDtoPresentInList) {
+                addDtoIfPossible(pysuRecordDtos, planYearSubjectUser);
+            }
+        }
+
+        return pysuRecordDtos;
     }
 
     public List<PlanYearSubjectUser> mapRequestDataToEntity(Long userId, Long subjectId, AssignedGroupsDto groupsDto) {
@@ -48,6 +58,16 @@ public class PYSUMapper implements Mapper<PlanYearSubjectUser, PYSURecordDto> {
         return planYearSubjectUsers;
     }
 
+    private boolean checkDtoPresence(PlanYearSubjectUser planYearSubjectUser, List<PYSURecordDto> pysuRecordDtos) {
+        for (PYSURecordDto pysuRecordDto : pysuRecordDtos) {
+            if (pysuRecordDto.getUserId().equals(planYearSubjectUser.getUser().getId())) {
+                setDtoClassesTypeFieldsIfPossible(pysuRecordDto, planYearSubjectUser);
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void addEntitiesIfPossible(List<PlanYearSubjectUser> planYearSubjectUsers,
                                        AssignedGroupsDto groupsDto,
                                        PYSURelatedEntitiesTransporter transporter) {
@@ -56,5 +76,21 @@ public class PYSUMapper implements Mapper<PlanYearSubjectUser, PYSURecordDto> {
         manager.assignGroupToLaboratoryIfPossible(planYearSubjectUsers, groupsDto, transporter);
         manager.assignGroupToProjectIfPossible(planYearSubjectUsers, groupsDto, transporter);
         manager.assignGroupToSeminaryIfPossible(planYearSubjectUsers, groupsDto, transporter);
+    }
+
+    private void setDtoClassesTypeFieldsIfPossible(PYSURecordDto pysuRecordDto, PlanYearSubjectUser planYearSubjectUser) {
+        manager.setDtoLectureFields(pysuRecordDto, planYearSubjectUser);
+        manager.setDtoExerciseFields(pysuRecordDto, planYearSubjectUser);
+        manager.setDtoLaboratoryFields(pysuRecordDto, planYearSubjectUser);
+        manager.setDtoProjectFields(pysuRecordDto, planYearSubjectUser);
+        manager.setDtoSeminaryFields(pysuRecordDto, planYearSubjectUser);
+    }
+
+    private void addDtoIfPossible(List<PYSURecordDto> pysuRecordDtos, PlanYearSubjectUser planYearSubjectUser) {
+        manager.addLectureDtoIfPossible(pysuRecordDtos, planYearSubjectUser);
+        manager.addExerciseDtoIfPossible(pysuRecordDtos, planYearSubjectUser);
+        manager.addLaboratoryDtoIfPossible(pysuRecordDtos, planYearSubjectUser);
+        manager.addProjectDtoIfPossible(pysuRecordDtos, planYearSubjectUser);
+        manager.addSeminaryDtoIfPossible(pysuRecordDtos, planYearSubjectUser);
     }
 }

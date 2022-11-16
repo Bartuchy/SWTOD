@@ -1,6 +1,6 @@
 package com.example.swtod.domain.teaching.staff.management;
 
-import com.example.swtod.configs.csv.CsvReader;
+import com.example.swtod.common.csv.CsvReader;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
