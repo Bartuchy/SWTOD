@@ -23,4 +23,28 @@ public class PYSUService {
         List<PlanYearSubjectUser> planYearSubjectUsers = pysuRepository.findAll();
         return mapper.mapEntitiesToDtos(planYearSubjectUsers);
     }
+
+    public List<PYSURecordDto> getTeachingStaff(Long userId, Long subjectId) {
+        List<PlanYearSubjectUser> planYearSubjectUsers = pysuRepository
+                .findPlanYearSubjectUsersByUserIdAndSubjectId(userId, subjectId);
+
+        return mapper.mapEntitiesToDtos(planYearSubjectUsers);
+    }
+
+    public void changeGroupAssignment(Long userId, Long subjectId, AssignedGroupsDto groupsDto) {
+        List<PYSURecordDto> pysuRecordDtos = getTeachingStaff(userId, subjectId);
+        pysuRecordDtos.forEach(recordDto -> updateAssignedGroups(recordDto, groupsDto));
+
+        List<PlanYearSubjectUser> planYearSubjectUsers = mapper.mapDtosToEntities(pysuRecordDtos);
+        pysuRepository.saveAll(planYearSubjectUsers);
+    }
+
+    private void updateAssignedGroups(PYSURecordDto pysuRecordDto, AssignedGroupsDto groupsDto) {
+        pysuRecordDto.setGroupsPerLecture(groupsDto.getLectureGroupsNumber());
+        pysuRecordDto.setGroupsPerExercise(groupsDto.getExerciseGroupsNumber());
+        pysuRecordDto.setGroupsPerLaboratory(groupsDto.getLaboratoryGroupsNumber());
+        pysuRecordDto.setGroupsPerProject(groupsDto.getProjectGroupsNumber());
+        pysuRecordDto.setGroupsPerSeminary(groupsDto.getSeminaryGroupsNumber());
+
+    }
 }

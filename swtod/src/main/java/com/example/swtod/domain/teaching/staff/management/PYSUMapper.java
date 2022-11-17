@@ -32,7 +32,13 @@ public class PYSUMapper implements Mapper<PlanYearSubjectUser, PYSURecordDto> {
 
     @Override
     public List<PlanYearSubjectUser> mapDtosToEntities(List<PYSURecordDto> planYearSubjectRecordDtos) {
-        return null;
+        List<PlanYearSubjectUser> planYearSubjectUsers = new ArrayList<>();
+
+        for (PYSURecordDto recordDto: planYearSubjectRecordDtos) {
+            splitDtoIntoEntities(planYearSubjectUsers, recordDto);
+        }
+
+        return planYearSubjectUsers;
     }
 
     @Override
@@ -56,6 +62,13 @@ public class PYSUMapper implements Mapper<PlanYearSubjectUser, PYSURecordDto> {
 
         addEntitiesIfPossible(planYearSubjectUsers, groupsDto, transporter);
         return planYearSubjectUsers;
+    }
+
+    private void splitDtoIntoEntities(List<PlanYearSubjectUser> planYearSubjectUsers, PYSURecordDto recordDto) {
+        PYSURelatedEntitiesTransporter transporter = supplier.getAllRelatedEntities(recordDto);
+        AssignedGroupsDto groupsDto = new AssignedGroupsDto(recordDto);
+
+        addEntitiesIfPossible(planYearSubjectUsers, groupsDto, transporter);
     }
 
     private boolean checkDtoPresence(PlanYearSubjectUser planYearSubjectUser, List<PYSURecordDto> pysuRecordDtos) {

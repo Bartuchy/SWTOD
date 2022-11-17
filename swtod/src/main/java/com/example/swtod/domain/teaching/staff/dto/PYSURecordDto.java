@@ -9,6 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PYSURecordDto {
     private Long userId;
+    private Long subjectId;
 
     private String userNameSurname;
     private String facultyName;

@@ -6,9 +6,18 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class AssignedGroupsDto {
-    private final int lectureGroupsNumber;
-    private final int exerciseGroupsNumber;
-    private final int laboratoryGroupsNumber;
-    private final int projectGroupsNumber;
-    private final int SeminaryGroupsNumber;
+    private int lectureGroupsNumber;
+    private int exerciseGroupsNumber;
+    private int laboratoryGroupsNumber;
+    private int projectGroupsNumber;
+    private int seminaryGroupsNumber;
+
+    public AssignedGroupsDto(PYSURecordDto recordDto) {
+        this.lectureGroupsNumber = recordDto.getGroupsPerLecture();
+        this.exerciseGroupsNumber = recordDto.getGroupsPerExercise();
+        this.laboratoryGroupsNumber = recordDto.getGroupsPerLaboratory();
+        this.projectGroupsNumber = recordDto.getGroupsPerProject();
+        this.seminaryGroupsNumber = recordDto.getGroupsPerSeminary();
+
+    }
 }

@@ -107,6 +107,7 @@ public class PYSUEntityManager {
             pysuRecordDtos.add(
                     new PYSURecordDto(
                             planYearSubjectUser.getUser().getId(),
+                            planYearSubjectUser.getPlanYearSubject().getSubject().getId(),
                             planYearSubjectUser.getUser().getName() + " " + planYearSubjectUser.getUser().getSurname(),
                             planYearSubjectUser.getPlanYearSubject().getFaculty().getName(),
                             planYearSubjectUser.getPlanYearSubject().getSubject().getName(),
@@ -137,6 +138,7 @@ public class PYSUEntityManager {
             pysuRecordDtos.add(
                     new PYSURecordDto(
                             planYearSubjectUser.getUser().getId(),
+                            planYearSubjectUser.getPlanYearSubject().getSubject().getId(),
                             planYearSubjectUser.getUser().getName() + " " + planYearSubjectUser.getUser().getSurname(),
                             planYearSubjectUser.getPlanYearSubject().getFaculty().getName(),
                             planYearSubjectUser.getPlanYearSubject().getSubject().getName(),
@@ -167,6 +169,7 @@ public class PYSUEntityManager {
             pysuRecordDtos.add(
                     new PYSURecordDto(
                             planYearSubjectUser.getUser().getId(),
+                            planYearSubjectUser.getPlanYearSubject().getSubject().getId(),
                             planYearSubjectUser.getUser().getName() + " " + planYearSubjectUser.getUser().getSurname(),
                             planYearSubjectUser.getPlanYearSubject().getFaculty().getName(),
                             planYearSubjectUser.getPlanYearSubject().getSubject().getName(),
@@ -197,6 +200,7 @@ public class PYSUEntityManager {
             pysuRecordDtos.add(
                     new PYSURecordDto(
                             planYearSubjectUser.getUser().getId(),
+                            planYearSubjectUser.getPlanYearSubject().getSubject().getId(),
                             planYearSubjectUser.getUser().getName() + " " + planYearSubjectUser.getUser().getSurname(),
                             planYearSubjectUser.getPlanYearSubject().getFaculty().getName(),
                             planYearSubjectUser.getPlanYearSubject().getSubject().getName(),
@@ -227,6 +231,7 @@ public class PYSUEntityManager {
             pysuRecordDtos.add(
                     new PYSURecordDto(
                             planYearSubjectUser.getUser().getId(),
+                            planYearSubjectUser.getPlanYearSubject().getSubject().getId(),
                             planYearSubjectUser.getUser().getName() + " " + planYearSubjectUser.getUser().getSurname(),
                             planYearSubjectUser.getPlanYearSubject().getFaculty().getName(),
                             planYearSubjectUser.getPlanYearSubject().getSubject().getName(),

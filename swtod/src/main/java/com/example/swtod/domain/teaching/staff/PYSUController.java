@@ -20,8 +20,8 @@ public class PYSUController {
             @RequestParam Long userId,
             @RequestParam Long subjectId,
             @RequestBody AssignedGroupsDto groupsDto) {
-        pysuService.assignGroupToUser(userId, subjectId, groupsDto);
 
+        pysuService.assignGroupToUser(userId, subjectId, groupsDto);
         return ResponseEntity.ok().build();
     }
 
@@ -29,5 +29,15 @@ public class PYSUController {
     public ResponseEntity<List<PYSURecordDto>> getTeachingStaff() {
         List<PYSURecordDto> pysuRecordDtos = pysuService.getTeachingStaff();
         return ResponseEntity.ok(pysuRecordDtos);
+    }
+
+    @PutMapping("/change-groups")
+    public ResponseEntity<Void> changeGroupAssignment(
+            @RequestParam Long userId,
+            @RequestParam Long subjectId,
+            @RequestBody AssignedGroupsDto groupsDto) {
+
+        pysuService.changeGroupAssignment(userId, subjectId, groupsDto);
+        return ResponseEntity.ok().build();
     }
 }

@@ -5,6 +5,7 @@ import com.example.swtod.domain.common.status.Status;
 import com.example.swtod.domain.common.status.StatusRepository;
 import com.example.swtod.domain.didactic.plan.PlanYearSubject;
 import com.example.swtod.domain.didactic.plan.PlanYearSubjectRepository;
+import com.example.swtod.domain.teaching.staff.dto.PYSURecordDto;
 import com.example.swtod.domain.user.User;
 import com.example.swtod.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,14 @@ public class PYSURelatedEntitiesSupplier {
         );
     }
 
+    public PYSURelatedEntitiesTransporter getAllRelatedEntities(PYSURecordDto recordDto) {
+        return new PYSURelatedEntitiesTransporter(
+                this.getUser(recordDto.getUserId()),
+                this.getPlanYearSubject(recordDto.getSubjectId()),
+                this.getStatus(recordDto.getStatusName())
+        );
+    }
+
     private User getUser(Long userId) {
         return userRepository.findById(userId).orElseThrow(() ->
                 new UserNotFoundException(String.format("User with id '%d' not found", userId)));
@@ -41,5 +50,10 @@ public class PYSURelatedEntitiesSupplier {
         return statusRepository
                 .findById(statusId)
                 .orElseThrow();
+    }
+
+    private Status getStatus(String statusName) {
+        return statusRepository
+                .findStatusByName(statusName);
     }
 }
