@@ -31,13 +31,22 @@ public class PYSUController {
         return ResponseEntity.ok(pysuRecordDtos);
     }
 
-    @PutMapping("/change-groups")
+    @PutMapping("/change-assignment")
     public ResponseEntity<Void> changeGroupAssignment(
             @RequestParam Long userId,
             @RequestParam Long subjectId,
             @RequestBody AssignedGroupsDto groupsDto) {
 
         pysuService.changeGroupAssignment(userId, subjectId, groupsDto);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/delete-assignment")
+    public ResponseEntity<Void> deleteGroupAssignment(
+            @RequestParam Long userId,
+            @RequestParam Long subjectId) {
+
+        pysuService.deleteGroupAssignment(userId, subjectId);
         return ResponseEntity.ok().build();
     }
 }

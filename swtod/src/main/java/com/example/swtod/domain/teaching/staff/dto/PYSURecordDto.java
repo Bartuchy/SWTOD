@@ -4,10 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Map;
+
 @Getter
 @Setter
 @AllArgsConstructor
 public class PYSURecordDto {
+    private Map<String, Long> classesTypeNamespysuIds;
     private Long userId;
     private Long subjectId;
 
@@ -36,4 +39,8 @@ public class PYSURecordDto {
     private Integer groupsPerSeminary;
 
     private String statusName;
+
+    public void addId(String classTypeName, Long id) {
+        classesTypeNamespysuIds.put(classTypeName, id);
+    }
 }

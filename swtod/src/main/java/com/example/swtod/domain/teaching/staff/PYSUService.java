@@ -5,6 +5,7 @@ import com.example.swtod.domain.teaching.staff.dto.PYSURecordDto;
 import com.example.swtod.domain.teaching.staff.management.PYSUMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class PYSUService {
     private final PYSURepository pysuRepository;
     private final PYSUMapper mapper;
 
+    @Transactional
     public void assignGroupToUser(Long userId, Long subjectId, AssignedGroupsDto groupsDto) {
         List<PlanYearSubjectUser> planYearSubjectUsers = mapper.mapRequestDataToEntity(userId, subjectId, groupsDto);
         pysuRepository.saveAll(planYearSubjectUsers);
@@ -31,12 +33,18 @@ public class PYSUService {
         return mapper.mapEntitiesToDtos(planYearSubjectUsers);
     }
 
+    @Transactional
     public void changeGroupAssignment(Long userId, Long subjectId, AssignedGroupsDto groupsDto) {
         List<PYSURecordDto> pysuRecordDtos = getTeachingStaff(userId, subjectId);
         pysuRecordDtos.forEach(recordDto -> updateAssignedGroups(recordDto, groupsDto));
 
         List<PlanYearSubjectUser> planYearSubjectUsers = mapper.mapDtosToEntities(pysuRecordDtos);
         pysuRepository.saveAll(planYearSubjectUsers);
+    }
+
+    @Transactional
+    public void deleteGroupAssignment(Long userId, Long subjectId) {
+        pysuRepository.deletePlanYearSubjectUserByUserIdAndSubjectId(userId, subjectId);
     }
 
     private void updateAssignedGroups(PYSURecordDto pysuRecordDto, AssignedGroupsDto groupsDto) {

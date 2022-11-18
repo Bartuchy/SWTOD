@@ -7,8 +7,7 @@ import com.example.swtod.domain.teaching.staff.dto.PYSURecordDto;
 import com.example.swtod.domain.teaching.staff.management.transfer.PYSURelatedEntitiesTransporter;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Configuration
 public class PYSUEntityManager {
@@ -21,6 +20,7 @@ public class PYSUEntityManager {
 
             planYearSubjectUsers.add(
                     new PlanYearSubjectUser(
+                            groupsDto.getClassesTypeNamespysuIds().get("W"),
                             groupsDto.getLectureGroupsNumber(),
                             "--",
                             planYearSubject,
@@ -39,6 +39,7 @@ public class PYSUEntityManager {
 
             planYearSubjectUsers.add(
                     new PlanYearSubjectUser(
+                            groupsDto.getClassesTypeNamespysuIds().get("C"),
                             groupsDto.getExerciseGroupsNumber(),
                             "--",
                             planYearSubject,
@@ -57,6 +58,7 @@ public class PYSUEntityManager {
 
             planYearSubjectUsers.add(
                     new PlanYearSubjectUser(
+                            groupsDto.getClassesTypeNamespysuIds().get("L"),
                             groupsDto.getLaboratoryGroupsNumber(),
                             "--",
                             planYearSubject,
@@ -75,6 +77,7 @@ public class PYSUEntityManager {
 
             planYearSubjectUsers.add(
                     new PlanYearSubjectUser(
+                            groupsDto.getClassesTypeNamespysuIds().get("P"),
                             groupsDto.getProjectGroupsNumber(),
                             "--",
                             planYearSubject,
@@ -92,6 +95,7 @@ public class PYSUEntityManager {
 
             planYearSubjectUsers.add(
                     new PlanYearSubjectUser(
+                            groupsDto.getClassesTypeNamespysuIds().get("S"),
                             groupsDto.getSeminaryGroupsNumber(),
                             "--",
                             planYearSubject,
@@ -106,6 +110,7 @@ public class PYSUEntityManager {
         if (planYearSubjectUser.getPlanYearSubject().getClassesType().getName().equals("W")) {
             pysuRecordDtos.add(
                     new PYSURecordDto(
+                            new HashMap<>(Map.ofEntries(Map.entry("W", planYearSubjectUser.getId()))),
                             planYearSubjectUser.getUser().getId(),
                             planYearSubjectUser.getPlanYearSubject().getSubject().getId(),
                             planYearSubjectUser.getUser().getName() + " " + planYearSubjectUser.getUser().getSurname(),
@@ -137,6 +142,7 @@ public class PYSUEntityManager {
         if (planYearSubjectUser.getPlanYearSubject().getClassesType().getName().equals("C")) {
             pysuRecordDtos.add(
                     new PYSURecordDto(
+                            new HashMap<>(Map.ofEntries(Map.entry("C", planYearSubjectUser.getId()))),
                             planYearSubjectUser.getUser().getId(),
                             planYearSubjectUser.getPlanYearSubject().getSubject().getId(),
                             planYearSubjectUser.getUser().getName() + " " + planYearSubjectUser.getUser().getSurname(),
@@ -168,6 +174,7 @@ public class PYSUEntityManager {
         if (planYearSubjectUser.getPlanYearSubject().getClassesType().getName().equals("L")) {
             pysuRecordDtos.add(
                     new PYSURecordDto(
+                            new HashMap<>(Map.ofEntries(Map.entry("L", planYearSubjectUser.getId()))),
                             planYearSubjectUser.getUser().getId(),
                             planYearSubjectUser.getPlanYearSubject().getSubject().getId(),
                             planYearSubjectUser.getUser().getName() + " " + planYearSubjectUser.getUser().getSurname(),
@@ -199,6 +206,7 @@ public class PYSUEntityManager {
         if (planYearSubjectUser.getPlanYearSubject().getClassesType().getName().equals("P")) {
             pysuRecordDtos.add(
                     new PYSURecordDto(
+                            new HashMap<>(Map.ofEntries(Map.entry("P", planYearSubjectUser.getId()))),
                             planYearSubjectUser.getUser().getId(),
                             planYearSubjectUser.getPlanYearSubject().getSubject().getId(),
                             planYearSubjectUser.getUser().getName() + " " + planYearSubjectUser.getUser().getSurname(),
@@ -230,6 +238,7 @@ public class PYSUEntityManager {
         if (planYearSubjectUser.getPlanYearSubject().getClassesType().getName().equals("S")) {
             pysuRecordDtos.add(
                     new PYSURecordDto(
+                            new HashMap<>(Map.ofEntries(Map.entry("S", planYearSubjectUser.getId()))),
                             planYearSubjectUser.getUser().getId(),
                             planYearSubjectUser.getPlanYearSubject().getSubject().getId(),
                             planYearSubjectUser.getUser().getName() + " " + planYearSubjectUser.getUser().getSurname(),
@@ -259,6 +268,7 @@ public class PYSUEntityManager {
 
     public void setDtoLectureFields(PYSURecordDto pysuRecordDto, PlanYearSubjectUser planYearSubjectUser) {
         if (planYearSubjectUser.getPlanYearSubject().getClassesType().getName().equals("W")) {
+            pysuRecordDto.addId("W", planYearSubjectUser.getId());
             pysuRecordDto.setLectureHoursPerWeek(planYearSubjectUser.getPlanYearSubject().getHoursPerWeek());
             pysuRecordDto.setGroupsPerLecture(planYearSubjectUser.getGroupsNumber());
         }
@@ -266,6 +276,7 @@ public class PYSUEntityManager {
 
     public void setDtoExerciseFields(PYSURecordDto pysuRecordDto, PlanYearSubjectUser planYearSubjectUser) {
         if (planYearSubjectUser.getPlanYearSubject().getClassesType().getName().equals("C")) {
+            pysuRecordDto.addId("C", planYearSubjectUser.getId());
             pysuRecordDto.setExerciseHoursPerWeek(planYearSubjectUser.getPlanYearSubject().getHoursPerWeek());
             pysuRecordDto.setGroupsPerExercise(planYearSubjectUser.getGroupsNumber());
         }
@@ -273,6 +284,7 @@ public class PYSUEntityManager {
 
     public void setDtoLaboratoryFields(PYSURecordDto pysuRecordDto, PlanYearSubjectUser planYearSubjectUser) {
         if (planYearSubjectUser.getPlanYearSubject().getClassesType().getName().equals("L")) {
+            pysuRecordDto.addId("L", planYearSubjectUser.getId());
             pysuRecordDto.setLaboratoryHoursPerWeek(planYearSubjectUser.getPlanYearSubject().getHoursPerWeek());
             pysuRecordDto.setGroupsPerLaboratory(planYearSubjectUser.getGroupsNumber());
         }
@@ -280,6 +292,7 @@ public class PYSUEntityManager {
 
     public void setDtoProjectFields(PYSURecordDto pysuRecordDto, PlanYearSubjectUser planYearSubjectUser) {
         if (planYearSubjectUser.getPlanYearSubject().getClassesType().getName().equals("P")) {
+            pysuRecordDto.addId("P", planYearSubjectUser.getId());
             pysuRecordDto.setProjectHoursPerWeek(planYearSubjectUser.getPlanYearSubject().getHoursPerWeek());
             pysuRecordDto.setGroupsPerProject(planYearSubjectUser.getGroupsNumber());
         }
@@ -287,6 +300,7 @@ public class PYSUEntityManager {
 
     public void setDtoSeminaryFields(PYSURecordDto pysuRecordDto, PlanYearSubjectUser planYearSubjectUser) {
         if (planYearSubjectUser.getPlanYearSubject().getClassesType().getName().equals("S")) {
+            pysuRecordDto.addId("S", planYearSubjectUser.getId());
             pysuRecordDto.setSeminaryHoursPerWeek(planYearSubjectUser.getPlanYearSubject().getHoursPerWeek());
             pysuRecordDto.setGroupsPerSeminary(planYearSubjectUser.getGroupsNumber());
         }
