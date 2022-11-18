@@ -20,7 +20,7 @@ public class PYSUEntityManager {
 
             planYearSubjectUsers.add(
                     new PlanYearSubjectUser(
-                            groupsDto.getClassesTypeNamespysuIds().get("W"),
+                            groupsDto.getClassesTypeNamesPysuIds().get("W"),
                             groupsDto.getLectureGroupsNumber(),
                             "--",
                             planYearSubject,
@@ -39,7 +39,7 @@ public class PYSUEntityManager {
 
             planYearSubjectUsers.add(
                     new PlanYearSubjectUser(
-                            groupsDto.getClassesTypeNamespysuIds().get("C"),
+                            groupsDto.getClassesTypeNamesPysuIds().get("C"),
                             groupsDto.getExerciseGroupsNumber(),
                             "--",
                             planYearSubject,
@@ -58,7 +58,7 @@ public class PYSUEntityManager {
 
             planYearSubjectUsers.add(
                     new PlanYearSubjectUser(
-                            groupsDto.getClassesTypeNamespysuIds().get("L"),
+                            groupsDto.getClassesTypeNamesPysuIds().get("L"),
                             groupsDto.getLaboratoryGroupsNumber(),
                             "--",
                             planYearSubject,
@@ -77,7 +77,7 @@ public class PYSUEntityManager {
 
             planYearSubjectUsers.add(
                     new PlanYearSubjectUser(
-                            groupsDto.getClassesTypeNamespysuIds().get("P"),
+                            groupsDto.getClassesTypeNamesPysuIds().get("P"),
                             groupsDto.getProjectGroupsNumber(),
                             "--",
                             planYearSubject,
@@ -95,7 +95,7 @@ public class PYSUEntityManager {
 
             planYearSubjectUsers.add(
                     new PlanYearSubjectUser(
-                            groupsDto.getClassesTypeNamespysuIds().get("S"),
+                            groupsDto.getClassesTypeNamesPysuIds().get("S"),
                             groupsDto.getSeminaryGroupsNumber(),
                             "--",
                             planYearSubject,

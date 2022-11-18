@@ -11,7 +11,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/plan-year-subject-user")
+@RequestMapping("/api/plan-year-subject-user")
 public class PYSUController {
     private final PYSUService pysuService;
 
@@ -28,6 +28,36 @@ public class PYSUController {
     @GetMapping("/")
     public ResponseEntity<List<PYSURecordDto>> getTeachingStaff() {
         List<PYSURecordDto> pysuRecordDtos = pysuService.getTeachingStaff();
+        return ResponseEntity.ok(pysuRecordDtos);
+    }
+
+    @GetMapping("/filters")
+    public ResponseEntity<List<PYSURecordDto>> filterTeachingStaff(
+            @RequestParam(required = false) String userNameSurname,
+            @RequestParam(required = false) String subjectName
+    ) {
+        List<PYSURecordDto> pysuRecordDtos = pysuService.getTeachingStaff();
+
+        if (userNameSurname != null) {
+            pysuRecordDtos = pysuRecordDtos
+                    .stream()
+                    .filter(recordDto -> {
+                        String lowercaseNameSurname = recordDto.getUserNameSurname().toLowerCase();
+                        return lowercaseNameSurname.startsWith(userNameSurname.toLowerCase());
+                    })
+                    .toList();
+        }
+
+        if (subjectName != null) {
+            pysuRecordDtos = pysuRecordDtos
+                    .stream()
+                    .filter(recordDto -> {
+                        String lowercaseSubjectName = recordDto.getSubjectName().toLowerCase();
+                        return lowercaseSubjectName.startsWith(subjectName.toLowerCase());
+                    })
+                    .toList();
+        }
+
         return ResponseEntity.ok(pysuRecordDtos);
     }
 

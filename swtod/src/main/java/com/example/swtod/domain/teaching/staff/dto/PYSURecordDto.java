@@ -10,7 +10,7 @@ import java.util.Map;
 @Setter
 @AllArgsConstructor
 public class PYSURecordDto {
-    private Map<String, Long> classesTypeNamespysuIds;
+    private Map<String, Long> classesTypeNamesPysuIds;
     private Long userId;
     private Long subjectId;
 
@@ -41,6 +41,6 @@ public class PYSURecordDto {
     private String statusName;
 
     public void addId(String classTypeName, Long id) {
-        classesTypeNamespysuIds.put(classTypeName, id);
+        classesTypeNamesPysuIds.put(classTypeName, id);
     }
 }

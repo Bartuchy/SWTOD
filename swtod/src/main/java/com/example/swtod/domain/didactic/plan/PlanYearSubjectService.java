@@ -43,7 +43,7 @@ public class PlanYearSubjectService {
         planYearSubjects.forEach(planYearSubject -> planYearSubjectRepository
                 .deletePlanYearSubjectById(planYearSubject.getId()));
 
-        if (planYearSubjects.size() > 0)
+        if (!planYearSubjects.isEmpty())
             removeSingleRelatedEntities(planYearSubjects.get(0));
     }
 

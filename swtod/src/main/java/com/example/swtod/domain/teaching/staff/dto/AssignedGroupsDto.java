@@ -8,7 +8,7 @@ import java.util.Map;
 @Getter
 @AllArgsConstructor
 public class AssignedGroupsDto {
-    private Map<String, Long> classesTypeNamespysuIds;
+    private Map<String, Long> classesTypeNamesPysuIds;
 
     private int lectureGroupsNumber;
     private int exerciseGroupsNumber;
@@ -17,7 +17,7 @@ public class AssignedGroupsDto {
     private int seminaryGroupsNumber;
 
     public AssignedGroupsDto(PYSURecordDto recordDto) {
-        this.classesTypeNamespysuIds = recordDto.getClassesTypeNamespysuIds();
+        this.classesTypeNamesPysuIds = recordDto.getClassesTypeNamesPysuIds();
         this.lectureGroupsNumber = recordDto.getGroupsPerLecture();
         this.exerciseGroupsNumber = recordDto.getGroupsPerExercise();
         this.laboratoryGroupsNumber = recordDto.getGroupsPerLaboratory();

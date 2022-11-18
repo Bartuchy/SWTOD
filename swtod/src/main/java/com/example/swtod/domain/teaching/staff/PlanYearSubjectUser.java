@@ -34,13 +34,4 @@ public class PlanYearSubjectUser {
 
     @ManyToOne
     private Status status;
-
-    public PlanYearSubjectUser(Integer groupsNumber, String commentContent,
-                               PlanYearSubject planYearSubject, User user, Status status) {
-        this.groupsNumber = groupsNumber;
-        this.commentContent = commentContent;
-        this.planYearSubject = planYearSubject;
-        this.user = user;
-        this.status = status;
-    }
 }
