@@ -35,6 +35,7 @@ public final class SecurityConstants {
             "api/plan-year-subject-user/assign-groups",
             "api/plan-year-subject-user/",
             "api/plan-year-subject-user/change-assignment",
-            "api/plan-year-subject-user/delete-assignment"
+            "api/plan-year-subject-user/delete-assignment",
+            "api/plan-year-subject-user/filters"
     };
 }
