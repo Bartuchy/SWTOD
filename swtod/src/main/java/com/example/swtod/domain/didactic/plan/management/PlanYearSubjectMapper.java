@@ -9,13 +9,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.regex.Pattern;
 
 @Configuration
 @RequiredArgsConstructor
 public class PlanYearSubjectMapper implements Mapper<PlanYearSubject, PlanYearSubjectRecordDto> {
-    private final Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
     private final PYSRelatedEntitiesSupplier supplier;
     private final PYSEntityManager entitiesManager;
 
@@ -74,6 +73,9 @@ public class PlanYearSubjectMapper implements Mapper<PlanYearSubject, PlanYearSu
     }
 
     private void addEntitiesIfPossible(List<PlanYearSubject> planYearSubjects, PlanYearSubjectRecordDto planYearSubjectRecordDto, PYSRelatedEntitiesTransporter transporter) {
+        if (planYearSubjectRecordDto.getClassesTypeNamesPysIds() == null) {
+            planYearSubjectRecordDto.setClassesTypeNamesPysIds(new HashMap<>());
+        }
         entitiesManager.addLectureEntityIfPossible(planYearSubjects, planYearSubjectRecordDto, transporter);
         entitiesManager.addExerciseEntityIfPossible(planYearSubjects, planYearSubjectRecordDto, transporter);
         entitiesManager.addLaboratoryEntityIfPossible(planYearSubjects, planYearSubjectRecordDto, transporter);

@@ -3,12 +3,15 @@ package com.example.swtod.domain.didactic.plan.dto;
 import lombok.*;
 
 import java.util.List;
+import java.util.Map;
+
 @ToString
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class PlanYearSubjectRecordDto {
+    private Map<String, Long> classesTypeNamesPysIds;
     private Long id;
     private Long subjectId;
     private String facultyName;
@@ -45,10 +48,6 @@ public class PlanYearSubjectRecordDto {
     private Double hoursTotal;
 
     public PlanYearSubjectRecordDto(List<String> records, String facultyName) {
-        for(String record: records) {
-            System.out.println(record);
-        }
-
         this.facultyName = facultyName;
         this.year = Integer.parseInt(records.get(0));
         this.fieldOfStudiesName = records.get(1);
@@ -74,4 +73,10 @@ public class PlanYearSubjectRecordDto {
         this.semesterType = records.get(21);
         this.hoursTotal = Double.parseDouble(records.get(22));
     }
+
+    public void addClassTypeNamePysId(String classTypeName, Long pysId) {
+        classesTypeNamesPysIds.put(classTypeName, pysId);
+    }
+
+
 }

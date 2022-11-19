@@ -40,7 +40,7 @@ public class PYSURecordDto {
 
     private String statusName;
 
-    public void addId(String classTypeName, Long id) {
-        classesTypeNamesPysuIds.put(classTypeName, id);
+    public void addClassTypeNamePysuId(String classTypeName, Long pysuId) {
+        classesTypeNamesPysuIds.put(classTypeName, pysuId);
     }
 }
