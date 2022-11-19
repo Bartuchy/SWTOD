@@ -1,10 +1,10 @@
 package com.example.swtod.domain.didactic.plan;
 
+import com.example.swtod.domain.common.plan.year.PlanYearService;
+import com.example.swtod.domain.common.subject.SubjectService;
 import com.example.swtod.domain.didactic.plan.dto.PlanYearSubjectRecordDto;
 import com.example.swtod.domain.didactic.plan.management.PlanYearSubjectCsvProcessor;
 import com.example.swtod.domain.didactic.plan.management.PlanYearSubjectMapper;
-import com.example.swtod.domain.common.plan.year.PlanYearService;
-import com.example.swtod.domain.common.subject.SubjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,6 +62,15 @@ public class PlanYearSubjectService {
                 .findPlanYearSubjectBySubjectId(subjectId);
 
         return mapper.mapEntitiesToDtos(planYearSubjects);
+    }
+
+    public PlanYearSubjectRecordDto getSubjectBySubjectId(Long subjectId) {
+        List<PlanYearSubject> planYearSubjects = planYearSubjectRepository
+                .findPlanYearSubjectBySubjectId(subjectId);
+
+        List<PlanYearSubjectRecordDto> dtos = mapper.mapEntitiesToDtos(planYearSubjects);
+
+        return dtos.get(0);
     }
 
     public void updatePlanYearSubjectSingle(Long subjectId, PlanYearSubjectRecordDto updatingDto) {

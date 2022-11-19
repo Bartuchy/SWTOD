@@ -32,6 +32,12 @@ public class PlanYearSubjectController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<PlanYearSubjectRecordDto> getById(@PathVariable Long id) {
+        PlanYearSubjectRecordDto dto = planYearSubjectService.getSubjectBySubjectId(id);
+        return ResponseEntity.ok(dto);
+    }
+
     @GetMapping("/all")
     public ResponseEntity<List<PlanYearSubjectRecordDto>> get() {
         List<PlanYearSubjectRecordDto> planYearSubjectRecordDtos = planYearSubjectService.getDidacticPlan();
