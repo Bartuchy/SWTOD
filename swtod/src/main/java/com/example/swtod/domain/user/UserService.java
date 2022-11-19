@@ -52,7 +52,6 @@ public class UserService {
     }
 
 
-
     public UserDto getUserByUsername(String username) {
         User user = userRepository
                 .findUserByUsername(username)
@@ -71,15 +70,32 @@ public class UserService {
                 user.isActive());
     }
 
+    public UserDto getUserById(Long userId) {
+        User user = userRepository
+                .findById(userId)
+                .orElseThrow(() ->
+                        new UserNotFoundException(String.format("User with id " + userId + " not found")));
+
+        return new UserDto(
+                user.getId(),
+                user.getName(),
+                user.getSurname(),
+                user.getUsername(),
+                user.getTitle(),
+                user.getPosition().getName(),
+                user.getDob().toString(),
+                user.isAdmin(),
+                user.isActive());
+    }
+
     @Transactional
     public void createUser(CreateUserDto userDto) {
         Optional<User> optionalUser = userRepository
                 .findUserByUsername(userDto.getUsername());
 
-    if (optionalUser.isPresent()){
-        throw new UsernameTakenException(String.format("User with username '%s' already exists", userDto.getUsername()));
-    }
-
+        if (optionalUser.isPresent()) {
+            throw new UsernameTakenException(String.format("User with username '%s' already exists", userDto.getUsername()));
+        }
 
 
         String password = generatePassword();
