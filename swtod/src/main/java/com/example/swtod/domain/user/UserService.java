@@ -77,7 +77,7 @@ public class UserService {
         User user = userRepository
                 .findById(userId)
                 .orElseThrow(() ->
-                        new UserNotFoundException(String.format("User with id " + userId + " not found")));
+                        new UserNotFoundException(String.format("User with id %d not found", userId)));
 
         return new UserDto(
                 user.getId(),
@@ -136,6 +136,12 @@ public class UserService {
 
     @Transactional
     public void resetPassword(String username) {
+        userRepository
+                .findUserByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException(String.format(
+                                "User username %s not found",
+                                username)));
+
         String password = generatePassword();
         mailSenderService.sendEmail(username, password);
 
