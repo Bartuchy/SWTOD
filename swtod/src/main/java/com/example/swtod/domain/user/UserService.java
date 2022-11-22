@@ -27,11 +27,13 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final MailSenderService mailSenderService;
 
-    public User login(String username) {
+    public User getLoggedInUser(String username) {
         return userRepository
                 .findUserByUsername(username)
                 .orElseThrow(() ->
-                        new UserNotFoundException(String.format("User with username '%s' not found", username)));
+                        new UserNotFoundException(String.format(
+                                "User with username '%s' not found",
+                                username)));
     }
 
     public List<UserDto> getAllUsers() {
@@ -50,7 +52,6 @@ public class UserService {
                         user.isActive()))
                 .toList();
     }
-
 
 
     public UserDto getUserByUsername(String username) {
@@ -76,11 +77,10 @@ public class UserService {
         Optional<User> optionalUser = userRepository
                 .findUserByUsername(userDto.getUsername());
 
-    if (optionalUser.isPresent()){
-        throw new UsernameTakenException(String.format("User with username '%s' already exists", userDto.getUsername()));
-    }
-
-
+        if (optionalUser.isPresent())
+            throw new UsernameTakenException(String.format(
+                    "User with username '%s' already exists",
+                    userDto.getUsername()));
 
         String password = generatePassword();
         mailSenderService.sendEmail(userDto.getUsername(), password);
@@ -95,7 +95,9 @@ public class UserService {
     public void updateUserDataByUser(Long id, UpdateUserDto userDto) {
         User user = userRepository
                 .findById(id)
-                .orElseThrow(() -> new UserNotFoundException(String.format("User with id '%s' not found", id)));
+                .orElseThrow(() -> new UserNotFoundException(String.format(
+                        "User with id '%s' not found",
+                        id)));
 
         UpdateUserDto.mapToUser(user, userDto);
         userRepository.save(user);
@@ -105,7 +107,9 @@ public class UserService {
     public void updateUserDataByAdmin(Long id, AdminUpdateUserDto userDto) {
         User user = userRepository
                 .findById(id)
-                .orElseThrow(() -> new UserNotFoundException(String.format("User with id '%s' not found", id)));
+                .orElseThrow(() -> new UserNotFoundException(String.format(
+                        "User with id '%s' not found",
+                        id)));
 
         AdminUpdateUserDto.mapToUser(user, userDto);
         userRepository.save(user);

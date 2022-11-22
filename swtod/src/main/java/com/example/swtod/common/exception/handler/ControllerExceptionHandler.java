@@ -16,14 +16,21 @@ import java.util.List;
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
-    public final ResponseEntity<ErrorResponse> handleUserNotFoundException(UserNotFoundException exception) {
+    public final ResponseEntity<ErrorResponse> handleUserNotFoundException(
+            UserNotFoundException exception) {
+
         ErrorResponse error = constructErrorResponse(exception, "User not found");
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(PasswordsNotEqualException.class)
-    public final ResponseEntity<ErrorResponse> handlePasswordsNotEqualException(PasswordsNotEqualException exception) {
-        ErrorResponse error = constructErrorResponse(exception, "Given passwords are not equal");
+    public final ResponseEntity<ErrorResponse> handlePasswordsNotEqualException(
+            PasswordsNotEqualException exception) {
+
+        ErrorResponse error = constructErrorResponse(
+                exception,
+                "Given passwords are not equal");
+
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
