@@ -61,9 +61,10 @@ public class PlanYearSubject {
     private List<PlanYearSubjectUser> planYearSubjectUsers;
 
     public PlanYearSubject(
-            int groupsNumber, int weeksNumber, double hoursPerWeek, int studentsNumber,
-            char semester, int semesterNumber, ClassesType classesType,
+            Long id, int groupsNumber, int weeksNumber, double hoursPerWeek,
+            int studentsNumber, char semester, int semesterNumber, ClassesType classesType,
             StudiesType studiesType, PlanYear planYear, Subject subject, Faculty faculty) {
+        this.id = id;
         this.groupsNumber = groupsNumber;
         this.weeksNumber = weeksNumber;
         this.hoursPerWeek = hoursPerWeek;
