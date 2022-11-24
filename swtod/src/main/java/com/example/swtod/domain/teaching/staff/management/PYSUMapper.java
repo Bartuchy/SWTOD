@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Configuration;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.swtod.domain.common.status.StatusConst.PENDING_STATUS_ID;
+
 @Configuration
 @RequiredArgsConstructor
 public class PYSUMapper implements Mapper<PlanYearSubjectUser, PYSURecordDto> {
@@ -57,7 +59,7 @@ public class PYSUMapper implements Mapper<PlanYearSubjectUser, PYSURecordDto> {
     }
 
     public List<PlanYearSubjectUser> mapRequestDataToEntity(Long userId, Long subjectId, AssignedGroupsDto groupsDto) {
-        PYSURelatedEntitiesTransporter transporter = supplier.getAllRelatedEntities(userId, subjectId, 1L);
+        PYSURelatedEntitiesTransporter transporter = supplier.getAllRelatedEntities(userId, subjectId, PENDING_STATUS_ID);
         List<PlanYearSubjectUser> planYearSubjectUsers = new ArrayList<>();
 
         addEntitiesIfPossible(planYearSubjectUsers, groupsDto, transporter);

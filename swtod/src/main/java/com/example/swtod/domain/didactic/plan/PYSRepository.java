@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface PlanYearSubjectRepository extends JpaRepository<PlanYearSubject, Long> {
+public interface PYSRepository extends JpaRepository<PlanYearSubject, Long> {
 
     @Query("select p from plan_year_subject p where p.subject.id=:subjectId")
     List<PlanYearSubject> findPlanYearSubjectBySubjectId(long subjectId);

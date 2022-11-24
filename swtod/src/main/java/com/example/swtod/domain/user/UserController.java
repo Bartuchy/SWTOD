@@ -40,8 +40,8 @@ public class UserController {
         return ResponseEntity.ok(userDtos);
     }
 
-    @GetMapping
-    public ResponseEntity<UserDto> getUserByUsername(@RequestParam String username) {
+    @GetMapping("/{username}")
+    public ResponseEntity<UserDto> getUserByUsername(@PathVariable String username) {
         UserDto userDto = userService.getUserByUsername(username);
         return ResponseEntity.ok(userDto);
     }
@@ -53,7 +53,8 @@ public class UserController {
     }
 
     @PutMapping("{id}/update")
-    public ResponseEntity<Void> updateUserData(@PathVariable Long id, @RequestBody UpdateUserDto updateUserDto) {
+    public ResponseEntity<Void> updateUserData(@PathVariable Long id,
+                                               @RequestBody UpdateUserDto updateUserDto) {
         userService.updateUserDataByUser(id, updateUserDto);
         return ResponseEntity.ok().build();
     }
@@ -68,6 +69,22 @@ public class UserController {
     public ResponseEntity<Void> changePassword(@RequestBody ChangePasswordDto passwordDto) {
         authenticate(passwordDto.getUsername(), passwordDto.getOldPassword());
         userService.updatePassword(passwordDto);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/accept-assignment")
+    public ResponseEntity<Void> acceptGroupAssignment(
+            @RequestParam Long userId,
+            @RequestParam Long subjectId) {
+        userService.acceptGroupsAssignmentForSubject(userId, subjectId);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/reject-assignment")
+    public ResponseEntity<Void> rejectGroupAssignment(@RequestParam Long userId,
+                                                      @RequestParam Long subjectId) {
+        userService.rejectGroupsAssignmentForSubject(userId, subjectId);
         return ResponseEntity.ok().build();
     }
 

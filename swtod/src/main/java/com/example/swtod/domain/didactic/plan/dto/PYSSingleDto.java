@@ -5,5 +5,5 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class PlanYearSubjectSingleDto {
+public class PYSSingleDto {
 }

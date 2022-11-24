@@ -4,7 +4,7 @@ import com.example.swtod.common.exception.UserNotFoundException;
 import com.example.swtod.domain.common.status.Status;
 import com.example.swtod.domain.common.status.StatusRepository;
 import com.example.swtod.domain.didactic.plan.PlanYearSubject;
-import com.example.swtod.domain.didactic.plan.PlanYearSubjectRepository;
+import com.example.swtod.domain.didactic.plan.PYSRepository;
 import com.example.swtod.domain.teaching.staff.dto.PYSURecordDto;
 import com.example.swtod.domain.user.User;
 import com.example.swtod.domain.user.UserRepository;
@@ -16,7 +16,7 @@ import java.util.List;
 @Configuration
 @RequiredArgsConstructor
 public class PYSURelatedEntitiesSupplier {
-    private final PlanYearSubjectRepository planYearSubjectRepository;
+    private final PYSRepository PYSRepository;
     private final UserRepository userRepository;
     private final StatusRepository statusRepository;
 
@@ -43,7 +43,7 @@ public class PYSURelatedEntitiesSupplier {
     }
 
     private List<PlanYearSubject> getPlanYearSubject(Long subjectId) {
-        return planYearSubjectRepository.findPlanYearSubjectBySubjectId(subjectId);
+        return PYSRepository.findPlanYearSubjectBySubjectId(subjectId);
     }
 
     private Status getStatus(Long statusId) {

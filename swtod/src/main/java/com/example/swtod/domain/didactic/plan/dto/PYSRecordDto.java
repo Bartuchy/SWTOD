@@ -10,7 +10,7 @@ import java.util.Map;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PlanYearSubjectRecordDto {
+public class PYSRecordDto {
     private Map<String, Long> classesTypeNamesPysIds;
     private Long id;
     private Long subjectId;
@@ -47,7 +47,7 @@ public class PlanYearSubjectRecordDto {
 
     private Double hoursTotal;
 
-    public PlanYearSubjectRecordDto(List<String> records, String facultyName) {
+    public PYSRecordDto(List<String> records, String facultyName) {
         this.facultyName = facultyName;
         this.year = Integer.parseInt(records.get(0));
         this.fieldOfStudiesName = records.get(1);

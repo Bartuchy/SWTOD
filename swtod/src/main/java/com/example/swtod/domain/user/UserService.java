@@ -4,6 +4,8 @@ import com.example.swtod.common.exception.PasswordsNotEqualException;
 import com.example.swtod.common.exception.UserNotFoundException;
 import com.example.swtod.common.exception.UsernameTakenException;
 import com.example.swtod.common.mailing.MailSenderService;
+import com.example.swtod.domain.teaching.staff.PYSURepository;
+import com.example.swtod.domain.teaching.staff.PlanYearSubjectUser;
 import com.example.swtod.domain.user.admin.dto.AdminUpdateUserDto;
 import com.example.swtod.domain.user.admin.dto.CreateUserDto;
 import com.example.swtod.domain.user.dto.ChangePasswordDto;
@@ -19,11 +21,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+import static com.example.swtod.domain.common.status.StatusConst.ACCEPTED;
+import static com.example.swtod.domain.common.status.StatusConst.REJECTED;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final PYSURepository pysuRepository;
     private final PasswordEncoder passwordEncoder;
     private final MailSenderService mailSenderService;
 
@@ -171,9 +177,25 @@ public class UserService {
         userRepository.modifyAccountActivationFlag(id, true);
     }
 
+    public void acceptGroupsAssignmentForSubject(Long userId, Long subjectId) {
+        List<PlanYearSubjectUser> planYearSubjectUsers =
+                pysuRepository.findPlanYearSubjectUsersByUserIdAndSubjectId(userId, subjectId);
+
+        planYearSubjectUsers.forEach(pysu -> pysu.getStatus().setName(ACCEPTED));
+        pysuRepository.saveAll(planYearSubjectUsers);
+    }
+
+    public void rejectGroupsAssignmentForSubject(Long userId, Long subjectId) {
+        List<PlanYearSubjectUser> planYearSubjectUsers =
+                pysuRepository.findPlanYearSubjectUsersByUserIdAndSubjectId(userId, subjectId);
+
+        planYearSubjectUsers.forEach(pysu -> pysu.getStatus().setName(REJECTED));
+        pysuRepository.saveAll(planYearSubjectUsers);
+    }
+
     private String generatePassword() {
         return new Random()
-                .ints(10, 33, 123)
+                .ints(12, 33, 123)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
     }

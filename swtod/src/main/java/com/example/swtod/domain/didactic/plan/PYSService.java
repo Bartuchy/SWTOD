@@ -2,9 +2,9 @@ package com.example.swtod.domain.didactic.plan;
 
 import com.example.swtod.domain.common.plan.year.PlanYearService;
 import com.example.swtod.domain.common.subject.SubjectService;
-import com.example.swtod.domain.didactic.plan.dto.PlanYearSubjectRecordDto;
-import com.example.swtod.domain.didactic.plan.management.PlanYearSubjectCsvProcessor;
-import com.example.swtod.domain.didactic.plan.management.PlanYearSubjectMapper;
+import com.example.swtod.domain.didactic.plan.dto.PYSRecordDto;
+import com.example.swtod.domain.didactic.plan.management.PYSCsvProcessor;
+import com.example.swtod.domain.didactic.plan.management.PYSMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,70 +15,70 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class PlanYearSubjectService {
-    private final PlanYearSubjectRepository planYearSubjectRepository;
+public class PYSService {
+    private final PYSRepository PYSRepository;
     private final PlanYearService planYearService;
     private final SubjectService subjectService;
 
-    private final PlanYearSubjectCsvProcessor processor;
-    private final PlanYearSubjectMapper mapper;
+    private final PYSCsvProcessor processor;
+    private final PYSMapper mapper;
 
     public void savePlanYearSubjects(MultipartFile csvFile, String facultyName) throws IOException {
         List<PlanYearSubject> planYearSubjects = processor.processPlanYearSubjectCsv(csvFile, facultyName);
-        planYearSubjectRepository.saveAll(planYearSubjects);
+        PYSRepository.saveAll(planYearSubjects);
     }
 
     @Transactional
     public void removeDidacticPlan() {
-        planYearSubjectRepository.deleteAll();
+        PYSRepository.deleteAll();
         planYearService.removeAllData();
         subjectService.removeAllData();
     }
 
     @Transactional
     public void removeDidacticPlanSingle(Long subjectId) {
-        List<PlanYearSubject> planYearSubjects = planYearSubjectRepository
+        List<PlanYearSubject> planYearSubjects = PYSRepository
                 .findPlanYearSubjectBySubjectId(subjectId);
 
-        planYearSubjects.forEach(planYearSubject -> planYearSubjectRepository
+        planYearSubjects.forEach(planYearSubject -> PYSRepository
                 .deletePlanYearSubjectById(planYearSubject.getId()));
 
         if (!planYearSubjects.isEmpty())
             removeSingleRelatedEntities(planYearSubjects.get(0));
     }
 
-    public List<PlanYearSubjectRecordDto> getDidacticPlan() {
-        List<PlanYearSubject> planYearSubjects = planYearSubjectRepository.findAll();
+    public List<PYSRecordDto> getDidacticPlan() {
+        List<PlanYearSubject> planYearSubjects = PYSRepository.findAll();
         return mapper.mapEntitiesToDtos(planYearSubjects);
     }
 
-    public void savePlanYearSubjectSingle(PlanYearSubjectRecordDto recordDto) {
+    public void savePlanYearSubjectSingle(PYSRecordDto recordDto) {
         List<PlanYearSubject> planYearSubjects = mapper.mapDtosToEntities(List.of(recordDto));
-        planYearSubjectRepository.saveAll(planYearSubjects);
+        PYSRepository.saveAll(planYearSubjects);
     }
 
-    public List<PlanYearSubjectRecordDto> getDidacticPlanBySubjectId(Long subjectId) {
-        List<PlanYearSubject> planYearSubjects = planYearSubjectRepository
+    public List<PYSRecordDto> getDidacticPlanBySubjectId(Long subjectId) {
+        List<PlanYearSubject> planYearSubjects = PYSRepository
                 .findPlanYearSubjectBySubjectId(subjectId);
 
         return mapper.mapEntitiesToDtos(planYearSubjects);
     }
 
-    public PlanYearSubjectRecordDto getSubjectBySubjectId(Long subjectId) {
-        List<PlanYearSubject> planYearSubjects = planYearSubjectRepository
+    public PYSRecordDto getSubjectBySubjectId(Long subjectId) {
+        List<PlanYearSubject> planYearSubjects = PYSRepository
                 .findPlanYearSubjectBySubjectId(subjectId);
 
-        List<PlanYearSubjectRecordDto> dtos = mapper.mapEntitiesToDtos(planYearSubjects);
+        List<PYSRecordDto> dtos = mapper.mapEntitiesToDtos(planYearSubjects);
 
         return dtos.get(0);
     }
 
-    public void updatePlanYearSubjectSingle(Long subjectId, PlanYearSubjectRecordDto updatingDto) {
-        List<PlanYearSubjectRecordDto> recordDtos = getDidacticPlanBySubjectId(subjectId);
+    public void updatePlanYearSubjectSingle(Long subjectId, PYSRecordDto updatingDto) {
+        List<PYSRecordDto> recordDtos = getDidacticPlanBySubjectId(subjectId);
         recordDtos.forEach(recordDto -> updatePlanYearSubjectData(recordDto, updatingDto));
 
         List<PlanYearSubject> planYearSubjectsUpdated = mapper.mapDtosToEntities(recordDtos);
-        planYearSubjectRepository.saveAll(planYearSubjectsUpdated);
+        PYSRepository.saveAll(planYearSubjectsUpdated);
     }
 
     private void removeSingleRelatedEntities(PlanYearSubject planYearSubject) {
@@ -89,7 +89,7 @@ public class PlanYearSubjectService {
         subjectService.removeById(subjectId);
     }
 
-    private void updatePlanYearSubjectData(PlanYearSubjectRecordDto recordDto, PlanYearSubjectRecordDto updatingDto) {
+    private void updatePlanYearSubjectData(PYSRecordDto recordDto, PYSRecordDto updatingDto) {
         recordDto.setFacultyName(updatingDto.getFacultyName());
         recordDto.setYear(updatingDto.getYear());
         recordDto.setFieldOfStudiesName(updatingDto.getFieldOfStudiesName());

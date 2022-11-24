@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 @Configuration
-public class PlanYearSubjectCsvReader implements CsvReader {
+public class PYSCsvReader implements CsvReader {
     @Override
     public List<List<String>> writeDataFromFile(MultipartFile file) throws IOException {
         InputStream inputStream = file.getInputStream();

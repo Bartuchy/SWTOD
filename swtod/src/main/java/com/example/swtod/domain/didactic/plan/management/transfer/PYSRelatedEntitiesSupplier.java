@@ -8,7 +8,7 @@ import com.example.swtod.domain.common.studies.type.StudiesType;
 import com.example.swtod.domain.common.studies.type.StudiesTypeService;
 import com.example.swtod.domain.common.subject.Subject;
 import com.example.swtod.domain.common.subject.SubjectService;
-import com.example.swtod.domain.didactic.plan.dto.PlanYearSubjectRecordDto;
+import com.example.swtod.domain.didactic.plan.dto.PYSRecordDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,54 +20,54 @@ public class PYSRelatedEntitiesSupplier {
     private final SubjectService subjectService;
     private final FacultyService facultyService;
 
-    public PYSRelatedEntitiesTransporter getAllRelatedEntities(PlanYearSubjectRecordDto planYearSubjectRecordDto) {
+    public PYSRelatedEntitiesTransporter getAllRelatedEntities(PYSRecordDto PYSRecordDto) {
         return new PYSRelatedEntitiesTransporter(
-                this.getStudiesType(planYearSubjectRecordDto),
-                this.getPlanYear(planYearSubjectRecordDto),
-                this.getSubject(planYearSubjectRecordDto),
-                this.getFaculty(planYearSubjectRecordDto));
+                this.getStudiesType(PYSRecordDto),
+                this.getPlanYear(PYSRecordDto),
+                this.getSubject(PYSRecordDto),
+                this.getFaculty(PYSRecordDto));
 
     }
 
-    public StudiesType getStudiesType(PlanYearSubjectRecordDto planYearSubjectRecordDto) {
-        return studiesTypeService.getStudiesTypeByName(planYearSubjectRecordDto.getTypeOfStudiesName());
+    public StudiesType getStudiesType(PYSRecordDto PYSRecordDto) {
+        return studiesTypeService.getStudiesTypeByName(PYSRecordDto.getTypeOfStudiesName());
     }
 
-    public PlanYear getPlanYear(PlanYearSubjectRecordDto planYearSubjectRecordDto) {
-        return planYearService.saveNewPlanYear(planYearSubjectRecordDto.getSubjectName(), planYearSubjectRecordDto.getYear());
+    public PlanYear getPlanYear(PYSRecordDto PYSRecordDto) {
+        return planYearService.saveNewPlanYear(PYSRecordDto.getSubjectName(), PYSRecordDto.getYear());
     }
 
-    public Subject getSubject(PlanYearSubjectRecordDto planYearSubjectRecordDto) {
-        int degreeNumber = calculateDegreeNumber(planYearSubjectRecordDto);
-        int semesterNumber = calculateSemesterNumber(planYearSubjectRecordDto);
+    public Subject getSubject(PYSRecordDto PYSRecordDto) {
+        int degreeNumber = calculateDegreeNumber(PYSRecordDto);
+        int semesterNumber = calculateSemesterNumber(PYSRecordDto);
 
         return subjectService.saveNewSubject(
-                planYearSubjectRecordDto.getSubjectName(),
-                planYearSubjectRecordDto.getFieldOfStudiesName(),
+                PYSRecordDto.getSubjectName(),
+                PYSRecordDto.getFieldOfStudiesName(),
                 degreeNumber,
-                planYearSubjectRecordDto.getSemesterType(),
+                PYSRecordDto.getSemesterType(),
                 semesterNumber
         );
     }
 
-    public Faculty getFaculty(PlanYearSubjectRecordDto planYearSubjectRecordDto) {
-        return facultyService.getFacultyByName(planYearSubjectRecordDto.getFacultyName());
+    public Faculty getFaculty(PYSRecordDto PYSRecordDto) {
+        return facultyService.getFacultyByName(PYSRecordDto.getFacultyName());
     }
 
-    private int calculateDegreeNumber(PlanYearSubjectRecordDto planYearSubjectRecordDto) {
+    private int calculateDegreeNumber(PYSRecordDto PYSRecordDto) {
         int degreeNumber = 1;
 
-        if (planYearSubjectRecordDto.getFieldOfStudiesName().charAt(0) == 'M')
+        if (PYSRecordDto.getFieldOfStudiesName().charAt(0) == 'M')
             degreeNumber = 2;
 
         return degreeNumber;
     }
 
-    private int calculateSemesterNumber(PlanYearSubjectRecordDto planYearSubjectRecordDto) {
-        int semesterNumber = planYearSubjectRecordDto.getYear() * 2 - 1;
+    private int calculateSemesterNumber(PYSRecordDto PYSRecordDto) {
+        int semesterNumber = PYSRecordDto.getYear() * 2 - 1;
 
-        if (planYearSubjectRecordDto.getSemesterType().charAt(0) == 'L')
-            semesterNumber = planYearSubjectRecordDto.getYear() * 2;
+        if (PYSRecordDto.getSemesterType().charAt(0) == 'L')
+            semesterNumber = PYSRecordDto.getYear() * 2;
 
         return semesterNumber;
     }
