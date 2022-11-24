@@ -26,6 +26,9 @@ public class PlanYearSubjectUser {
     @Column(name = "comment_content")
     private String commentContent;
 
+//    @Column(name = "academic_year")
+//    private String academicYear;
+
     @ManyToOne
     private PlanYearSubject planYearSubject;
 
