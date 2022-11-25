@@ -74,15 +74,15 @@ public class PYSMapper implements Mapper<PlanYearSubject, PYSRecordDto> {
         addEntitiesIfPossible(planYearSubjects, PYSRecordDto, transporter);
     }
 
-    private void addEntitiesIfPossible(List<PlanYearSubject> planYearSubjects, PYSRecordDto PYSRecordDto, PYSRelatedEntitiesTransporter transporter) {
-        if (PYSRecordDto.getClassesTypeNamesPysIds() == null) {
-            PYSRecordDto.setClassesTypeNamesPysIds(new HashMap<>());
+    private void addEntitiesIfPossible(List<PlanYearSubject> planYearSubjects, PYSRecordDto pysRecordDto, PYSRelatedEntitiesTransporter transporter) {
+        if (pysRecordDto.getClassesTypeNamesPysIds() == null) {
+            pysRecordDto.setClassesTypeNamesPysIds(new HashMap<>());
         }
-        entitiesManager.addLectureEntityIfPossible(planYearSubjects, PYSRecordDto, transporter);
-        entitiesManager.addExerciseEntityIfPossible(planYearSubjects, PYSRecordDto, transporter);
-        entitiesManager.addLaboratoryEntityIfPossible(planYearSubjects, PYSRecordDto, transporter);
-        entitiesManager.addProjectEntityIfPossible(planYearSubjects, PYSRecordDto, transporter);
-        entitiesManager.addSeminaryEntityIfPossible(planYearSubjects, PYSRecordDto, transporter);
+        entitiesManager.addLectureEntityIfPossible(planYearSubjects, pysRecordDto, transporter);
+        entitiesManager.addExerciseEntityIfPossible(planYearSubjects, pysRecordDto, transporter);
+        entitiesManager.addLaboratoryEntityIfPossible(planYearSubjects, pysRecordDto, transporter);
+        entitiesManager.addProjectEntityIfPossible(planYearSubjects, pysRecordDto, transporter);
+        entitiesManager.addSeminaryEntityIfPossible(planYearSubjects, pysRecordDto, transporter);
     }
 
     private void setDtoClassesTypeFields(PYSRecordDto PYSRecordDto, PlanYearSubject planYearSubject) {

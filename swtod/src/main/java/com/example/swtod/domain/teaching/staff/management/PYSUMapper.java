@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.example.swtod.domain.common.status.StatusConst.PENDING_STATUS_ID;
@@ -86,6 +87,9 @@ public class PYSUMapper implements Mapper<PlanYearSubjectUser, PYSURecordDto> {
     private void addEntitiesIfPossible(List<PlanYearSubjectUser> planYearSubjectUsers,
                                        AssignedGroupsDto groupsDto,
                                        PYSURelatedEntitiesTransporter transporter) {
+        if (groupsDto.getClassesTypeNamesPysuIds() == null) {
+            groupsDto.setClassesTypeNamesPysuIds(new HashMap<>());
+        }
         manager.assignGroupToLectureIfPossible(planYearSubjectUsers, groupsDto, transporter);
         manager.assignGroupToExerciseIfPossible(planYearSubjectUsers, groupsDto, transporter);
         manager.assignGroupToLaboratoryIfPossible(planYearSubjectUsers, groupsDto, transporter);
