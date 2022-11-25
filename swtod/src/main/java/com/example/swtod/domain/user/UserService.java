@@ -4,6 +4,8 @@ import com.example.swtod.common.exception.PasswordsNotEqualException;
 import com.example.swtod.common.exception.UserNotFoundException;
 import com.example.swtod.common.exception.UsernameTakenException;
 import com.example.swtod.common.mailing.MailSenderService;
+import com.example.swtod.domain.common.status.Status;
+import com.example.swtod.domain.common.status.StatusRepository;
 import com.example.swtod.domain.teaching.staff.PYSURepository;
 import com.example.swtod.domain.teaching.staff.PlanYearSubjectUser;
 import com.example.swtod.domain.user.admin.dto.AdminUpdateUserDto;
@@ -30,6 +32,7 @@ import static com.example.swtod.domain.common.status.StatusConst.REJECTED;
 public class UserService {
     private final UserRepository userRepository;
     private final PYSURepository pysuRepository;
+    private final StatusRepository statusRepository;
     private final PasswordEncoder passwordEncoder;
     private final MailSenderService mailSenderService;
 
@@ -181,7 +184,9 @@ public class UserService {
         List<PlanYearSubjectUser> planYearSubjectUsers =
                 pysuRepository.findPlanYearSubjectUsersByUserIdAndSubjectId(userId, subjectId);
 
-        planYearSubjectUsers.forEach(pysu -> pysu.getStatus().setName(ACCEPTED));
+        Status acceptedStatus = statusRepository.findStatusByName(ACCEPTED);
+        planYearSubjectUsers.forEach(pysu -> pysu.setStatus(acceptedStatus));
+
         pysuRepository.saveAll(planYearSubjectUsers);
     }
 
@@ -189,7 +194,9 @@ public class UserService {
         List<PlanYearSubjectUser> planYearSubjectUsers =
                 pysuRepository.findPlanYearSubjectUsersByUserIdAndSubjectId(userId, subjectId);
 
-        planYearSubjectUsers.forEach(pysu -> pysu.getStatus().setName(REJECTED));
+        Status rejectedStatus = statusRepository.findStatusByName(REJECTED);
+        planYearSubjectUsers.forEach(pysu -> pysu.setStatus(rejectedStatus));
+
         pysuRepository.saveAll(planYearSubjectUsers);
     }
 
