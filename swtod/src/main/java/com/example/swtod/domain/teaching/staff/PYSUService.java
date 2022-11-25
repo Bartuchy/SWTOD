@@ -21,9 +21,14 @@ public class PYSUService {
         pysuRepository.saveAll(planYearSubjectUsers);
     }
 
-    public List<PYSURecordDto> getTeachingStaff() {
+    public List<PYSURecordDto> getTeachingStaff(String userNameSurname, String subjectName) {
         List<PlanYearSubjectUser> planYearSubjectUsers = pysuRepository.findAll();
-        return mapper.mapEntitiesToDtos(planYearSubjectUsers);
+        List<PYSURecordDto> pysuRecordDtos = mapper.mapEntitiesToDtos(planYearSubjectUsers);
+
+        pysuRecordDtos = filterStaffByUserNameSurname(userNameSurname, pysuRecordDtos);
+        pysuRecordDtos = filterStaffBySubjectName(subjectName, pysuRecordDtos);
+
+        return pysuRecordDtos;
     }
 
     public List<PYSURecordDto> getTeachingStaff(Long userId, Long subjectId) {
@@ -53,6 +58,33 @@ public class PYSUService {
         pysuRecordDto.setGroupsPerLaboratory(groupsDto.getLaboratoryGroupsNumber());
         pysuRecordDto.setGroupsPerProject(groupsDto.getProjectGroupsNumber());
         pysuRecordDto.setGroupsPerSeminary(groupsDto.getSeminaryGroupsNumber());
+    }
 
+    private List<PYSURecordDto> filterStaffByUserNameSurname(String userNameSurname, List<PYSURecordDto> pysuRecordDtos) {
+        if (userNameSurname != null) {
+            pysuRecordDtos = pysuRecordDtos
+                    .stream()
+                    .filter(recordDto -> {
+                        String lowercaseNameSurname = recordDto.getUserNameSurname().toLowerCase();
+                        return lowercaseNameSurname.startsWith(userNameSurname.toLowerCase());
+                    })
+                    .toList();
+        }
+
+        return pysuRecordDtos;
+    }
+
+    private List<PYSURecordDto> filterStaffBySubjectName(String subjectName, List<PYSURecordDto> pysuRecordDtos) {
+        if (subjectName != null) {
+            pysuRecordDtos = pysuRecordDtos
+                    .stream()
+                    .filter(recordDto -> {
+                        String lowercaseSubjectName = recordDto.getSubjectName().toLowerCase();
+                        return lowercaseSubjectName.startsWith(subjectName.toLowerCase());
+                    })
+                    .toList();
+        }
+
+        return pysuRecordDtos;
     }
 }

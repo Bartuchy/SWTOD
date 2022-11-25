@@ -10,11 +10,13 @@ import lombok.Data;
 public class AdminUpdateUserDto {
     private String username;
     private String title;
+    private Integer pensum;
     private Long positionId;
 
     public static void mapToUser(User user, AdminUpdateUserDto userDto) {
         user.setUsername(userDto.getUsername());
         user.setTitle(userDto.getTitle());
+        user.setPensum(userDto.getPensum());
         user.setPosition(new Position(userDto.getPositionId()));
     }
 }

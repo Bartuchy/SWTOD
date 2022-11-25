@@ -13,6 +13,7 @@ public class CreateUserDto {
     private String username;
     private String name;
     private String surname;
+    private Integer pensum;
     private LocalDate dob;
     private String title;
     private Long positionId;
@@ -23,6 +24,7 @@ public class CreateUserDto {
                 userDto.username,
                 userDto.name,
                 userDto.surname,
+                userDto.pensum,
                 userDto.dob,
                 password,
                 new Position(userDto.positionId)

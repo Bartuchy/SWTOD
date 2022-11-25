@@ -52,7 +52,7 @@ public class User {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<PlanYearSubjectUser> planYearSubjectUsers;
 
-    public User(String title, String username, String name, String surname,
+    public User(String title, String username, String name, String surname, Integer pensum,
                 LocalDate dob, String password, Position position) {
         this.username = username;
         this.name = name;
@@ -60,16 +60,17 @@ public class User {
         this.password = password;
         this.isActive = true;
         this.dob = dob;
-        this.pensum = 0;
+        this.pensum = pensum;
         this.title = title;
         this.isAdmin = false;
         this.position = position;
     }
 
-    public User(String title, String username, String name, String surname, LocalDate dob, Position position) {
+    public User(String title, String username, String name, String surname, Integer pensum, LocalDate dob, Position position) {
         this.username = username;
         this.name = name;
         this.surname = surname;
+        this.pensum = pensum;
         this.dob = dob;
         this.title = title;
         this.position = position;

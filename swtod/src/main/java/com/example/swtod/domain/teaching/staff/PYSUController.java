@@ -25,38 +25,12 @@ public class PYSUController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/")
-    public ResponseEntity<List<PYSURecordDto>> getTeachingStaff() {
-        List<PYSURecordDto> pysuRecordDtos = pysuService.getTeachingStaff();
-        return ResponseEntity.ok(pysuRecordDtos);
-    }
-
     @GetMapping("/filters")
     public ResponseEntity<List<PYSURecordDto>> filterTeachingStaff(
             @RequestParam(required = false) String userNameSurname,
             @RequestParam(required = false) String subjectName
     ) {
-        List<PYSURecordDto> pysuRecordDtos = pysuService.getTeachingStaff();
-
-        if (userNameSurname != null) {
-            pysuRecordDtos = pysuRecordDtos
-                    .stream()
-                    .filter(recordDto -> {
-                        String lowercaseNameSurname = recordDto.getUserNameSurname().toLowerCase();
-                        return lowercaseNameSurname.startsWith(userNameSurname.toLowerCase());
-                    })
-                    .toList();
-        }
-
-        if (subjectName != null) {
-            pysuRecordDtos = pysuRecordDtos
-                    .stream()
-                    .filter(recordDto -> {
-                        String lowercaseSubjectName = recordDto.getSubjectName().toLowerCase();
-                        return lowercaseSubjectName.startsWith(subjectName.toLowerCase());
-                    })
-                    .toList();
-        }
+        List<PYSURecordDto> pysuRecordDtos = pysuService.getTeachingStaff(userNameSurname, subjectName);
 
         return ResponseEntity.ok(pysuRecordDtos);
     }
