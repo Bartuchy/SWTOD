@@ -13,10 +13,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
+import static com.example.swtod.domain.common.classes.type.ClassesTypeConst.*;
+
 @Service
 @RequiredArgsConstructor
 public class PYSService {
-    private final PYSRepository PYSRepository;
+    private final PYSRepository pysRepository;
     private final PlanYearService planYearService;
     private final SubjectService subjectService;
 
@@ -25,22 +27,22 @@ public class PYSService {
 
     public void savePlanYearSubjects(MultipartFile csvFile, String facultyName) throws IOException {
         List<PlanYearSubject> planYearSubjects = processor.processPlanYearSubjectCsv(csvFile, facultyName);
-        PYSRepository.saveAll(planYearSubjects);
+        pysRepository.saveAll(planYearSubjects);
     }
 
     @Transactional
     public void removeDidacticPlan() {
-        PYSRepository.deleteAll();
+        pysRepository.deleteAll();
         planYearService.removeAllData();
         subjectService.removeAllData();
     }
 
     @Transactional
     public void removeDidacticPlanSingle(Long subjectId) {
-        List<PlanYearSubject> planYearSubjects = PYSRepository
+        List<PlanYearSubject> planYearSubjects = pysRepository
                 .findPlanYearSubjectBySubjectId(subjectId);
 
-        planYearSubjects.forEach(planYearSubject -> PYSRepository
+        planYearSubjects.forEach(planYearSubject -> pysRepository
                 .deletePlanYearSubjectById(planYearSubject.getId()));
 
         if (!planYearSubjects.isEmpty())
@@ -48,24 +50,24 @@ public class PYSService {
     }
 
     public List<PYSRecordDto> getDidacticPlan() {
-        List<PlanYearSubject> planYearSubjects = PYSRepository.findAll();
+        List<PlanYearSubject> planYearSubjects = pysRepository.findAll();
         return mapper.mapEntitiesToDtos(planYearSubjects);
     }
 
     public void savePlanYearSubjectSingle(PYSRecordDto recordDto) {
         List<PlanYearSubject> planYearSubjects = mapper.mapDtosToEntities(List.of(recordDto));
-        PYSRepository.saveAll(planYearSubjects);
+        pysRepository.saveAll(planYearSubjects);
     }
 
     public List<PYSRecordDto> getDidacticPlanBySubjectId(Long subjectId) {
-        List<PlanYearSubject> planYearSubjects = PYSRepository
+        List<PlanYearSubject> planYearSubjects = pysRepository
                 .findPlanYearSubjectBySubjectId(subjectId);
 
         return mapper.mapEntitiesToDtos(planYearSubjects);
     }
 
     public PYSRecordDto getSubjectBySubjectId(Long subjectId) {
-        List<PlanYearSubject> planYearSubjects = PYSRepository
+        List<PlanYearSubject> planYearSubjects = pysRepository
                 .findPlanYearSubjectBySubjectId(subjectId);
 
         List<PYSRecordDto> dtos = mapper.mapEntitiesToDtos(planYearSubjects);
@@ -74,11 +76,10 @@ public class PYSService {
     }
 
     public void updatePlanYearSubjectSingle(Long subjectId, PYSRecordDto updatingDto) {
-        List<PYSRecordDto> recordDtos = getDidacticPlanBySubjectId(subjectId);
-        recordDtos.forEach(recordDto -> updatePlanYearSubjectData(recordDto, updatingDto));
+        List<PlanYearSubject> planYearSubjectUsers = pysRepository.findPlanYearSubjectBySubjectId(subjectId);
+        planYearSubjectUsers.forEach(pys -> updatePlanYearSubjectData(pys, updatingDto));
+        pysRepository.saveAll(planYearSubjectUsers);
 
-        List<PlanYearSubject> planYearSubjectsUpdated = mapper.mapDtosToEntities(recordDtos);
-        PYSRepository.saveAll(planYearSubjectsUpdated);
     }
 
     private void removeSingleRelatedEntities(PlanYearSubject planYearSubject) {
@@ -89,31 +90,48 @@ public class PYSService {
         subjectService.removeById(subjectId);
     }
 
-    private void updatePlanYearSubjectData(PYSRecordDto recordDto, PYSRecordDto updatingDto) {
-        recordDto.setFacultyName(updatingDto.getFacultyName());
-        recordDto.setYear(updatingDto.getYear());
-        recordDto.setFieldOfStudiesName(updatingDto.getFieldOfStudiesName());
-        recordDto.setTypeOfStudiesName(updatingDto.getTypeOfStudiesName());
-        recordDto.setSubjectName(updatingDto.getSubjectName());
-        recordDto.setWeeksPerSemester(updatingDto.getWeeksPerSemester());
-        recordDto.setLectureHoursNumberPerWeek(updatingDto.getLectureHoursNumberPerWeek());
-        recordDto.setExerciseHoursNumberPerWeek(updatingDto.getExerciseHoursNumberPerWeek());
-        recordDto.setLaboratoryHoursNumberPerWeek(updatingDto.getLaboratoryHoursNumberPerWeek());
-        recordDto.setProjectHoursNumberPerWeek(updatingDto.getProjectHoursNumberPerWeek());
-        recordDto.setSeminaryHoursNumberPerWeek(updatingDto.getSeminaryHoursNumberPerWeek());
-        recordDto.setNumberOfStudents(updatingDto.getNumberOfStudents());
-        recordDto.setGroupsPerLecture(updatingDto.getGroupsPerLecture());
-        recordDto.setLectureHoursNumber(updatingDto.getLectureHoursNumber());
-        recordDto.setGroupsPerExercise(updatingDto.getGroupsPerExercise());
-        recordDto.setExerciseHoursNumber(updatingDto.getExerciseHoursNumber());
-        recordDto.setGroupsPerLaboratory(updatingDto.getGroupsPerLaboratory());
-        recordDto.setLaboratoryHoursNumber(updatingDto.getLaboratoryHoursNumber());
-        recordDto.setGroupsPerProject(updatingDto.getGroupsPerProject());
-        recordDto.setProjectHoursNumber(updatingDto.getProjectHoursNumber());
-        recordDto.setGroupsPerSeminary(updatingDto.getGroupsPerSeminary());
-        recordDto.setSeminaryHoursNumber(updatingDto.getSeminaryHoursNumber());
-        recordDto.setSemesterType(updatingDto.getSemesterType());
-        recordDto.setHoursTotal(updatingDto.getHoursTotal());
+    private void updatePlanYearSubjectData(PlanYearSubject pys, PYSRecordDto updatingDto) {
+        pys.getFaculty().setName(updatingDto.getFacultyName());
+        pys.getPlanYear().setYear(updatingDto.getYear());
+        pys.getSubject().getFieldOfStudies().setName(updatingDto.getFieldOfStudiesName());
+        pys.getStudiesType().setName(updatingDto.getTypeOfStudiesName());
+        pys.getSubject().setName(updatingDto.getSubjectName());
+        pys.setWeeksNumber(updatingDto.getWeeksPerSemester());
+
+        if (pys.getClassesType().getName().equals(LECTURE_NAME)) {
+            pys.setHoursPerWeek(updatingDto.getLectureHoursNumberPerWeek());
+            pys.setGroupsNumber(updatingDto.getGroupsPerLecture());
+            //recordDto.setLectureHoursNumber(updatingDto.getLectureHoursNumber());
+
+        }
+
+        if (pys.getClassesType().getName().equals(EXERCISE_NAME)) {
+            pys.setHoursPerWeek(updatingDto.getExerciseHoursNumberPerWeek());
+            pys.setGroupsNumber(updatingDto.getGroupsPerExercise());
+            //recordDto.setExerciseHoursNumber(updatingDto.getExerciseHoursNumber());
+        }
+
+        if (pys.getClassesType().getName().equals(LABORATORY_NAME)) {
+            pys.setHoursPerWeek(updatingDto.getLaboratoryHoursNumberPerWeek());
+            pys.setGroupsNumber(updatingDto.getGroupsPerLaboratory());
+           // recordDto.setLaboratoryHoursNumber(updatingDto.getLaboratoryHoursNumber());
+        }
+
+        if (pys.getClassesType().getName().equals(PROJECT_NAME)) {
+            pys.setHoursPerWeek(updatingDto.getProjectHoursNumberPerWeek());
+            pys.setGroupsNumber(updatingDto.getGroupsPerProject());
+            //recordDto.setProjectHoursNumber(updatingDto.getProjectHoursNumber());
+        }
+
+        if (pys.getClassesType().getName().equals(SEMINARY_NAME)) {
+            pys.setHoursPerWeek(updatingDto.getSeminaryHoursNumberPerWeek());
+            pys.setGroupsNumber(updatingDto.getGroupsPerSeminary());
+            //recordDto.setSeminaryHoursNumber(updatingDto.getSeminaryHoursNumber());
+        }
+        pys.setStudentsNumber(updatingDto.getNumberOfStudents());
+
+        pys.setSemester(updatingDto.getSemesterType().charAt(0));
+        //pys.set(updatingDto.getHoursTotal());
 
     }
 }

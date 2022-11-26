@@ -69,9 +69,9 @@ public class PYSMapper implements Mapper<PlanYearSubject, PYSRecordDto> {
         return false;
     }
 
-    private void splitDtoIntoEntities(List<PlanYearSubject> planYearSubjects, PYSRecordDto PYSRecordDto) {
-        PYSRelatedEntitiesTransporter transporter = supplier.getAllRelatedEntities(PYSRecordDto);
-        addEntitiesIfPossible(planYearSubjects, PYSRecordDto, transporter);
+    private void splitDtoIntoEntities(List<PlanYearSubject> planYearSubjects, PYSRecordDto pysRecordDto) {
+        PYSRelatedEntitiesTransporter transporter = supplier.getAllRelatedEntities(pysRecordDto);
+        addEntitiesIfPossible(planYearSubjects, pysRecordDto, transporter);
     }
 
     private void addEntitiesIfPossible(List<PlanYearSubject> planYearSubjects, PYSRecordDto pysRecordDto, PYSRelatedEntitiesTransporter transporter) {
