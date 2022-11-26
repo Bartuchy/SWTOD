@@ -21,8 +21,10 @@ public class PYSUService {
         pysuRepository.saveAll(planYearSubjectUsers);
     }
 
-    public List<PYSURecordDto> getTeachingStaff(String userNameSurname, String subjectName) {
-        List<PlanYearSubjectUser> planYearSubjectUsers = pysuRepository.findAll();
+    public List<PYSURecordDto> getTeachingStaff(String academicYear, String userNameSurname, String subjectName) {
+        List<PlanYearSubjectUser> planYearSubjectUsers = pysuRepository
+                .findPlanYearSubjectUsersByAcademicYear(academicYear);
+
         List<PYSURecordDto> pysuRecordDtos = mapper.mapEntitiesToDtos(planYearSubjectUsers);
 
         pysuRecordDtos = filterStaffByUserNameSurname(userNameSurname, pysuRecordDtos);

@@ -21,13 +21,14 @@ public class PYSMapper implements Mapper<PlanYearSubject, PYSRecordDto> {
     @Override
     public List<PYSRecordDto> mapRecordsToDtos(
             List<List<String>> records,
-            String facultyName) {
+            String facultyName,
+            String academicYear) {
 
         List<PYSRecordDto> PYSRecordDtos = new ArrayList<>();
 
         for (List<String> record : records) {
             List<String> recordsWithZeros = mapEmptyValuesToZeros(record);
-            PYSRecordDtos.add(new PYSRecordDto(recordsWithZeros, facultyName));
+            PYSRecordDtos.add(new PYSRecordDto(recordsWithZeros, facultyName, academicYear));
         }
 
         return PYSRecordDtos;

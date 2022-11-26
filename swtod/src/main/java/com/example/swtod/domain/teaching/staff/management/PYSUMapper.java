@@ -22,7 +22,7 @@ public class PYSUMapper implements Mapper<PlanYearSubjectUser, PYSURecordDto> {
     private final PYSUEntityManager manager;
 
     @Override
-    public List<PYSURecordDto> mapRecordsToDtos(List<List<String>> records, String facultyName) {
+    public List<PYSURecordDto> mapRecordsToDtos(List<List<String>> records, String facultyName, String academicYear) {
         List<PYSURecordDto> pysuRecordDtos = new ArrayList<>();
 
         for (List<String> record : records) {

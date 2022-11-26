@@ -16,6 +16,7 @@ public class PYSRecordDto {
     private Long subjectId;
     private String facultyName;
     private Integer year;
+    private String academicYear;
     private String fieldOfStudiesName;
     private String typeOfStudiesName;
     private String subjectName;
@@ -47,9 +48,10 @@ public class PYSRecordDto {
 
     private Double hoursTotal;
 
-    public PYSRecordDto(List<String> records, String facultyName) {
+    public PYSRecordDto(List<String> records, String facultyName, String academicYear) {
         this.facultyName = facultyName;
         this.year = Integer.parseInt(records.get(0));
+        this.academicYear = academicYear;
         this.fieldOfStudiesName = records.get(1);
         this.typeOfStudiesName = records.get(2);
         this.subjectName = records.get(3);

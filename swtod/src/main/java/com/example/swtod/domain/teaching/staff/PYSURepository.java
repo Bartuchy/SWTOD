@@ -10,6 +10,9 @@ import java.util.List;
 @Repository
 public interface PYSURepository extends JpaRepository<PlanYearSubjectUser, Long> {
 
+    @Query(value = "select pysu from plan_year_subject_user pysu where pysu.planYearSubject.planYear.name=:academicYear")
+    List<PlanYearSubjectUser> findPlanYearSubjectUsersByAcademicYear(String academicYear);
+
     @Query("select p from plan_year_subject_user p where p.user.id=:userId and p.planYearSubject.subject.id=:subjectId")
     List<PlanYearSubjectUser> findPlanYearSubjectUsersByUserIdAndSubjectId(Long userId, Long subjectId);
 

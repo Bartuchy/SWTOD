@@ -34,7 +34,7 @@ public class PYSRelatedEntitiesSupplier {
     }
 
     public PlanYear getPlanYear(PYSRecordDto PYSRecordDto) {
-        return planYearService.saveNewPlanYear(PYSRecordDto.getSubjectName(), PYSRecordDto.getYear());
+        return planYearService.saveNewPlanYear(PYSRecordDto.getAcademicYear(), PYSRecordDto.getYear());
     }
 
     public Subject getSubject(PYSRecordDto PYSRecordDto) {

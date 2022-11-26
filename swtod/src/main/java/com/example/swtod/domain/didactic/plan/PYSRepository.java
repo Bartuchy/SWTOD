@@ -8,6 +8,9 @@ import java.util.List;
 
 public interface PYSRepository extends JpaRepository<PlanYearSubject, Long> {
 
+    @Query("select p from plan_year_subject p where p.planYear.name=:academicYear")
+    List<PlanYearSubject> findPlanYearSubjectByAcademicYear(String academicYear);
+
     @Query("select p from plan_year_subject p where p.subject.id=:subjectId")
     List<PlanYearSubject> findPlanYearSubjectBySubjectId(Long subjectId);
     @Modifying

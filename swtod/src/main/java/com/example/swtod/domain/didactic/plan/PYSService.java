@@ -25,8 +25,8 @@ public class PYSService {
     private final PYSCsvProcessor processor;
     private final PYSMapper mapper;
 
-    public void savePlanYearSubjects(MultipartFile csvFile, String facultyName) throws IOException {
-        List<PlanYearSubject> planYearSubjects = processor.processPlanYearSubjectCsv(csvFile, facultyName);
+    public void savePlanYearSubjects(MultipartFile csvFile, String facultyName, String academicYear) throws IOException {
+        List<PlanYearSubject> planYearSubjects = processor.processPlanYearSubjectCsv(csvFile, facultyName, academicYear);
         pysRepository.saveAll(planYearSubjects);
     }
 
@@ -51,6 +51,11 @@ public class PYSService {
 
     public List<PYSRecordDto> getDidacticPlan() {
         List<PlanYearSubject> planYearSubjects = pysRepository.findAll();
+        return mapper.mapEntitiesToDtos(planYearSubjects);
+    }
+
+    public List<PYSRecordDto> getDidacticPlanByAcademicYear(String academicYear) {
+        List<PlanYearSubject> planYearSubjects = pysRepository.findPlanYearSubjectByAcademicYear(academicYear);
         return mapper.mapEntitiesToDtos(planYearSubjects);
     }
 

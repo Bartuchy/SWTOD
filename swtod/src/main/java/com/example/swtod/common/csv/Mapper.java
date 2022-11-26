@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public interface Mapper<T, U> {
-    List<U> mapRecordsToDtos(List<List<String>> records, String facultyName);
+    List<U> mapRecordsToDtos(List<List<String>> records, String facultyName, String academicYear);
     List<T> mapDtosToEntities(List<U> recordDtos);
     List<U> mapEntitiesToDtos(List<T> entity);
 

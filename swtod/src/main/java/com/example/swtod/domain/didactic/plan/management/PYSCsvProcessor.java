@@ -16,9 +16,9 @@ public class PYSCsvProcessor {
     private final CsvReader csvReader;
     private final PYSMapper mapper;
 
-    public List<PlanYearSubject> processPlanYearSubjectCsv(MultipartFile file, String facultyName) throws IOException {
+    public List<PlanYearSubject> processPlanYearSubjectCsv(MultipartFile file, String facultyName, String academicYear) throws IOException {
         List<List<String>> records = csvReader.writeDataFromFile(file);
-        List<PYSRecordDto> PYSRecordDtos = mapper.mapRecordsToDtos(records, facultyName);
+        List<PYSRecordDto> PYSRecordDtos = mapper.mapRecordsToDtos(records, facultyName, academicYear);
         return mapper.mapDtosToEntities(PYSRecordDtos);
     }
 }
