@@ -1,5 +1,6 @@
 package com.example.swtod.domain.user;
 
+import com.example.swtod.common.exception.AccountDisabledException;
 import com.example.swtod.common.exception.PasswordsNotEqualException;
 import com.example.swtod.common.exception.UserNotFoundException;
 import com.example.swtod.common.exception.UsernameTakenException;
@@ -37,12 +38,16 @@ public class UserService {
     private final MailSenderService mailSenderService;
 
     public User getLoggedInUser(String username) {
-        return userRepository
+        User user = userRepository
                 .findUserByUsername(username)
                 .orElseThrow(() ->
                         new UserNotFoundException(String.format(
                                 "User with username '%s' not found",
                                 username)));
+
+        if (!user.isActive()) throw new AccountDisabledException("This account is disabled");
+
+        return user;
     }
 
     public List<UserDto> getAllUsers() {

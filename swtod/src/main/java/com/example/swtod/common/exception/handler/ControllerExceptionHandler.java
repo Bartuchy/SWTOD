@@ -1,5 +1,6 @@
 package com.example.swtod.common.exception.handler;
 
+import com.example.swtod.common.exception.AccountDisabledException;
 import com.example.swtod.common.exception.PasswordsNotEqualException;
 import com.example.swtod.common.exception.UserNotFoundException;
 import com.example.swtod.common.exception.UsernameTakenException;
@@ -38,6 +39,12 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     public final ResponseEntity<ErrorResponse> handleUsernameTakenException(UsernameTakenException exception) {
         ErrorResponse error = constructErrorResponse(exception, "This email is already taken");
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(AccountDisabledException.class)
+    public final ResponseEntity<ErrorResponse> handleAccountDisabledException(AccountDisabledException exception) {
+        ErrorResponse error = constructErrorResponse(exception, "This account is disabled");
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     private ErrorResponse constructErrorResponse(RuntimeException exception, String message) {
