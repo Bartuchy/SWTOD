@@ -36,7 +36,7 @@ public class PYSController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<PYSRecordDto> getDidacticPlanById(@PathVariable Long id) {
         PYSRecordDto dto = pysService.getSubjectBySubjectId(id);
         return ResponseEntity.ok(dto);
@@ -49,8 +49,8 @@ public class PYSController {
     }
 
 
-    @GetMapping("/{academic-year}")
-    public ResponseEntity<List<PYSRecordDto>> getDidacticPlanByAcademicYear(@PathVariable("academic-year") String academicYear) {
+    @GetMapping("/academic-year")
+    public ResponseEntity<List<PYSRecordDto>> getDidacticPlanByAcademicYear(@RequestParam String academicYear) {
         List<PYSRecordDto> pysRecordDtos = pysService.getDidacticPlanByAcademicYear(academicYear);
         return ResponseEntity.ok(pysRecordDtos);
     }

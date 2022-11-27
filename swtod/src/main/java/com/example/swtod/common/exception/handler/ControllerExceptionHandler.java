@@ -16,6 +16,17 @@ import java.util.List;
 @ControllerAdvice
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @ExceptionHandler(UsernameTakenException.class)
+    public final ResponseEntity<ErrorResponse> handleUsernameTakenException(
+            UsernameTakenException exception) {
+
+        ErrorResponse error = constructErrorResponse(
+                exception,
+                "This email is already taken");
+
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(UserNotFoundException.class)
     public final ResponseEntity<ErrorResponse> handleUserNotFoundException(
             UserNotFoundException exception) {
@@ -33,12 +44,6 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
                 "Given passwords are not equal");
 
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(UsernameTakenException.class)
-    public final ResponseEntity<ErrorResponse> handleUsernameTakenException(UsernameTakenException exception) {
-        ErrorResponse error = constructErrorResponse(exception, "This email is already taken");
-        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(AccountDisabledException.class)
