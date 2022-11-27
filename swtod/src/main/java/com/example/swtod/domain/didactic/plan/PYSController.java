@@ -56,20 +56,21 @@ public class PYSController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> addPlanYearSubjectSingle(@RequestBody PYSRecordDto recordDto) {
-        pysService.savePlanYearSubjectSingle(recordDto);
+    public ResponseEntity<Void> addPlanYearSubjectRecord(@RequestBody PYSRecordDto recordDto) {
+        pysService.savePlanYearSubjectRecord(recordDto);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{subjectId}/update")
-    public ResponseEntity<Void> editPlanYearSubjectSingle(@PathVariable Long subjectId, @RequestBody PYSRecordDto recordDto) {
-        pysService.updatePlanYearSubjectSingle(subjectId, recordDto);
+    public ResponseEntity<Void> editPlanYearSubjectRecord(@PathVariable Long subjectId,
+                                                          @RequestBody PYSRecordDto recordDto) {
+        pysService.updatePlanYearSubjectRecord(subjectId, recordDto);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{subjectId}/delete")
-    public ResponseEntity<Void> deletePlanYearSubjectSingle(@PathVariable Long subjectId) {
-        pysService.removeDidacticPlanSingle(subjectId);
+    public ResponseEntity<Void> deletePlanYearSubjectRecord(@PathVariable Long subjectId) {
+        pysService.removeDidacticPlanRecord(subjectId);
         return ResponseEntity.ok().build();
     }
 }

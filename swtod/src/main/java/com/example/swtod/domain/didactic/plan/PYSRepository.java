@@ -13,11 +13,12 @@ public interface PYSRepository extends JpaRepository<PlanYearSubject, Long> {
 
     @Query("select p from plan_year_subject p where p.subject.id=:subjectId")
     List<PlanYearSubject> findPlanYearSubjectBySubjectId(Long subjectId);
-    @Modifying
-    @Query("delete from plan_year_subject where 1=1")
-    void deleteAll();
 
     @Modifying
     @Query("delete from plan_year_subject where id=:id")
     void deletePlanYearSubjectById(Long id);
+
+    @Modifying
+    @Query("delete from plan_year_subject where 1=1")
+    void deleteAll();
 }

@@ -38,7 +38,7 @@ public class PYSService {
     }
 
     @Transactional
-    public void removeDidacticPlanSingle(Long subjectId) {
+    public void removeDidacticPlanRecord(Long subjectId) {
         List<PlanYearSubject> planYearSubjects = pysRepository
                 .findPlanYearSubjectBySubjectId(subjectId);
 
@@ -59,7 +59,7 @@ public class PYSService {
         return mapper.mapEntitiesToDtos(planYearSubjects);
     }
 
-    public void savePlanYearSubjectSingle(PYSRecordDto recordDto) {
+    public void savePlanYearSubjectRecord(PYSRecordDto recordDto) {
         List<PlanYearSubject> planYearSubjects = mapper.mapDtosToEntities(List.of(recordDto));
         pysRepository.saveAll(planYearSubjects);
     }
@@ -80,7 +80,7 @@ public class PYSService {
         return dtos.get(0);
     }
 
-    public void updatePlanYearSubjectSingle(Long subjectId, PYSRecordDto updatingDto) {
+    public void updatePlanYearSubjectRecord(Long subjectId, PYSRecordDto updatingDto) {
         List<PlanYearSubject> planYearSubjectUsers = pysRepository.findPlanYearSubjectBySubjectId(subjectId);
         planYearSubjectUsers.forEach(pys -> updatePlanYearSubjectData(pys, updatingDto));
         pysRepository.saveAll(planYearSubjectUsers);
