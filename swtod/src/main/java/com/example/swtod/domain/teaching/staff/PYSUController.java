@@ -25,6 +25,12 @@ public class PYSUController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/academic-years")
+    public ResponseEntity<List<String>> getAcademicYears() {
+        List<String> academicYears = pysuService.getAcademicYearsDistinct();
+        return ResponseEntity.ok(academicYears);
+    }
+
     @GetMapping("/filters")
     public ResponseEntity<List<PYSURecordDto>> filterTeachingStaff(
             @RequestParam String academicYear,

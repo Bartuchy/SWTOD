@@ -1,5 +1,7 @@
 package com.example.swtod.domain.teaching.staff;
 
+import com.example.swtod.domain.common.plan.year.PlanYear;
+import com.example.swtod.domain.common.plan.year.PlanYearRepository;
 import com.example.swtod.domain.teaching.staff.dto.AssignedGroupsDto;
 import com.example.swtod.domain.teaching.staff.dto.PYSURecordDto;
 import com.example.swtod.domain.teaching.staff.management.PYSUMapper;
@@ -13,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PYSUService {
     private final PYSURepository pysuRepository;
+    private final PlanYearRepository planYearRepository;
     private final PYSUMapper mapper;
 
     @Transactional
@@ -52,6 +55,15 @@ public class PYSUService {
     @Transactional
     public void deleteGroupAssignment(Long userId, Long subjectId) {
         pysuRepository.deletePlanYearSubjectUserByUserIdAndSubjectId(userId, subjectId);
+    }
+
+    public List<String> getAcademicYearsDistinct() {
+        return planYearRepository
+                .findAll()
+                .stream()
+                .map(PlanYear::getName)
+                .distinct()
+                .toList();
     }
 
     private void updateAssignedGroups(PYSURecordDto pysuRecordDto, AssignedGroupsDto groupsDto) {
