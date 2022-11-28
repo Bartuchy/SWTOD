@@ -48,6 +48,11 @@ public class PYSController {
         return ResponseEntity.ok(pysRecordDtos);
     }
 
+    @GetMapping("/academic-year/all-groups")
+    public ResponseEntity<List<PYSRecordDto>> getDidacticPlanByAcademicYearWithAllGroups(@RequestParam String academicYear) {
+        List<PYSRecordDto> pysRecordDtos = pysService.getDidacticPlanByAcademicYearWithAllGroups(academicYear);
+        return ResponseEntity.ok(pysRecordDtos);
+    }
 
     @GetMapping("/academic-year")
     public ResponseEntity<List<PYSRecordDto>> getDidacticPlanByAcademicYear(@RequestParam String academicYear) {

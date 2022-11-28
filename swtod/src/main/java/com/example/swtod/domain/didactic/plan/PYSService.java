@@ -5,6 +5,8 @@ import com.example.swtod.domain.common.subject.SubjectService;
 import com.example.swtod.domain.didactic.plan.dto.PYSRecordDto;
 import com.example.swtod.domain.didactic.plan.management.PYSCsvProcessor;
 import com.example.swtod.domain.didactic.plan.management.PYSMapper;
+import com.example.swtod.domain.teaching.staff.PYSURepository;
+import com.example.swtod.domain.teaching.staff.PlanYearSubjectUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,7 @@ import static com.example.swtod.domain.common.classes.type.ClassesTypeConst.*;
 @RequiredArgsConstructor
 public class PYSService {
     private final PYSRepository pysRepository;
+    private final PYSURepository pysuRepository;
     private final PlanYearService planYearService;
     private final SubjectService subjectService;
 
@@ -54,8 +57,23 @@ public class PYSService {
         return mapper.mapEntitiesToDtos(planYearSubjects);
     }
 
+    public List<PYSRecordDto> getDidacticPlanByAcademicYearWithAllGroups(String academicYear) {
+        List<PlanYearSubject> planYearSubjects = pysRepository.findPlanYearSubjectByAcademicYear(academicYear);
+        return mapper.mapEntitiesToDtos(planYearSubjects);
+    }
+
     public List<PYSRecordDto> getDidacticPlanByAcademicYear(String academicYear) {
         List<PlanYearSubject> planYearSubjects = pysRepository.findPlanYearSubjectByAcademicYear(academicYear);
+        List<PlanYearSubjectUser> planYearSubjectUsers = pysuRepository.findAll();
+
+        for (PlanYearSubject pys: planYearSubjects) {
+            for (PlanYearSubjectUser pysu: planYearSubjectUsers) {
+                if (pys.getId().equals(pysu.getPlanYearSubject().getId())) {
+                    pys.setGroupsNumber(pys.getGroupsNumber() - pysu.getGroupsNumber());
+                }
+            }
+        }
+
         return mapper.mapEntitiesToDtos(planYearSubjects);
     }
 
