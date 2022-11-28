@@ -48,6 +48,12 @@ public class PYSController {
         return ResponseEntity.ok(pysRecordDtos);
     }
 
+    @GetMapping("/assignment-correctness")
+    public ResponseEntity<Void> checkIfAllGroupsAreAssigned(@RequestParam String academicYear) {
+        pysService.checkIfAllGroupsAreAssigned(academicYear);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/academic-year/all-groups")
     public ResponseEntity<List<PYSRecordDto>> getDidacticPlanByAcademicYearWithAllGroups(@RequestParam String academicYear) {
         List<PYSRecordDto> pysRecordDtos = pysService.getDidacticPlanByAcademicYearWithAllGroups(academicYear);

@@ -1,9 +1,6 @@
 package com.example.swtod.common.exception.handler;
 
-import com.example.swtod.common.exception.AccountDisabledException;
-import com.example.swtod.common.exception.PasswordsNotEqualException;
-import com.example.swtod.common.exception.UserNotFoundException;
-import com.example.swtod.common.exception.UsernameTakenException;
+import com.example.swtod.common.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -49,6 +46,12 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(AccountDisabledException.class)
     public final ResponseEntity<ErrorResponse> handleAccountDisabledException(AccountDisabledException exception) {
         ErrorResponse error = constructErrorResponse(exception, "This account is disabled");
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UnsignedGroupsException.class)
+    public final ResponseEntity<ErrorResponse> handleUnsignedGroupsException(UnsignedGroupsException exception) {
+        ErrorResponse error = constructErrorResponse(exception, "There are groups without assignment");
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 

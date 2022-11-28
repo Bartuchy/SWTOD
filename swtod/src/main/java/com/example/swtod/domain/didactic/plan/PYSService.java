@@ -1,5 +1,6 @@
 package com.example.swtod.domain.didactic.plan;
 
+import com.example.swtod.common.exception.UnsignedGroupsException;
 import com.example.swtod.domain.common.plan.year.PlanYearService;
 import com.example.swtod.domain.common.subject.SubjectService;
 import com.example.swtod.domain.didactic.plan.dto.PYSRecordDto;
@@ -57,6 +58,18 @@ public class PYSService {
         return mapper.mapEntitiesToDtos(planYearSubjects);
     }
 
+    public void checkIfAllGroupsAreAssigned(String academicYear) {
+        List<PlanYearSubject> planYearSubjects = pysRepository.findPlanYearSubjectByAcademicYear(academicYear);
+        List<PlanYearSubjectUser> planYearSubjectUsers = pysuRepository.findAll();
+
+        subtractAssignedGroupsFromPys(planYearSubjects, planYearSubjectUsers);
+
+        if (planYearSubjects.stream().anyMatch(pys -> pys.getGroupsNumber() > 0)) {
+            throw new UnsignedGroupsException("There are groups without assignment");
+        }
+
+    }
+
     public List<PYSRecordDto> getDidacticPlanByAcademicYearWithAllGroups(String academicYear) {
         List<PlanYearSubject> planYearSubjects = pysRepository.findPlanYearSubjectByAcademicYear(academicYear);
         return mapper.mapEntitiesToDtos(planYearSubjects);
@@ -66,14 +79,7 @@ public class PYSService {
         List<PlanYearSubject> planYearSubjects = pysRepository.findPlanYearSubjectByAcademicYear(academicYear);
         List<PlanYearSubjectUser> planYearSubjectUsers = pysuRepository.findAll();
 
-        for (PlanYearSubject pys: planYearSubjects) {
-            for (PlanYearSubjectUser pysu: planYearSubjectUsers) {
-                if (pys.getId().equals(pysu.getPlanYearSubject().getId())) {
-                    pys.setGroupsNumber(pys.getGroupsNumber() - pysu.getGroupsNumber());
-                }
-            }
-        }
-
+        subtractAssignedGroupsFromPys(planYearSubjects, planYearSubjectUsers);
         return mapper.mapEntitiesToDtos(planYearSubjects);
     }
 
@@ -111,6 +117,16 @@ public class PYSService {
 
         planYearService.removeById(planYearId);
         subjectService.removeById(subjectId);
+    }
+
+    private void subtractAssignedGroupsFromPys(List<PlanYearSubject> planYearSubjects, List<PlanYearSubjectUser> planYearSubjectUsers) {
+        for (PlanYearSubject pys: planYearSubjects) {
+            for (PlanYearSubjectUser pysu: planYearSubjectUsers) {
+                if (pys.getId().equals(pysu.getPlanYearSubject().getId())) {
+                    pys.setGroupsNumber(pys.getGroupsNumber() - pysu.getGroupsNumber());
+                }
+            }
+        }
     }
 
     private void updatePlanYearSubjectData(PlanYearSubject pys, PYSRecordDto updatingDto) {
