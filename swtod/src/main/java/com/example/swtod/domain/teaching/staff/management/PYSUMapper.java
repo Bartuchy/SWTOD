@@ -76,7 +76,8 @@ public class PYSUMapper implements Mapper<PlanYearSubjectUser, PYSURecordDto> {
 
     private boolean checkDtoPresence(PlanYearSubjectUser planYearSubjectUser, List<PYSURecordDto> pysuRecordDtos) {
         for (PYSURecordDto pysuRecordDto : pysuRecordDtos) {
-            if (pysuRecordDto.getUserId().equals(planYearSubjectUser.getUser().getId())) {
+            if (pysuRecordDto.getSubjectId().equals(planYearSubjectUser.getPlanYearSubject().getSubject().getId()) &&
+                    pysuRecordDto.getUserId().equals(planYearSubjectUser.getUser().getId())) {
                 setDtoClassesTypeFieldsIfPossible(pysuRecordDto, planYearSubjectUser);
                 return true;
             }
