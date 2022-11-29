@@ -10,6 +10,7 @@ import java.math.RoundingMode;
 @Getter
 @AllArgsConstructor
 public class PensumRecordDto {
+    private Long userId;
     private String name;
     private String surname;
     private String title;
@@ -21,6 +22,7 @@ public class PensumRecordDto {
     private BigDecimal percentOfOvertimeHours;
 
     public PensumRecordDto(User user, int actualPensum) {
+        this.userId = user.getId();
         this.name = user.getName();
         this.surname = user.getSurname();
         this.title = user.getTitle();
