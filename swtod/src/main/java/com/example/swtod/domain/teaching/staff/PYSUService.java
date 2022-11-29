@@ -24,6 +24,10 @@ public class PYSUService {
         pysuRepository.saveAll(planYearSubjectUsers);
     }
 
+    public void copyStaffForNewYear(String currentAcademicYear, String newAcademicYear) {
+
+    }
+
     public List<PYSURecordDto> getTeachingStaff(String academicYear, String userNameSurname, String subjectName) {
         List<PlanYearSubjectUser> planYearSubjectUsers = pysuRepository
                 .findPlanYearSubjectUsersByAcademicYear(academicYear);

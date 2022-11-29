@@ -37,7 +37,7 @@ public class PYSUMapper implements Mapper<PlanYearSubjectUser, PYSURecordDto> {
     public List<PlanYearSubjectUser> mapDtosToEntities(List<PYSURecordDto> planYearSubjectRecordDtos) {
         List<PlanYearSubjectUser> planYearSubjectUsers = new ArrayList<>();
 
-        for (PYSURecordDto recordDto: planYearSubjectRecordDtos) {
+        for (PYSURecordDto recordDto : planYearSubjectRecordDtos) {
             splitDtoIntoEntities(planYearSubjectUsers, recordDto);
         }
 
@@ -76,13 +76,22 @@ public class PYSUMapper implements Mapper<PlanYearSubjectUser, PYSURecordDto> {
 
     private boolean checkDtoPresence(PlanYearSubjectUser planYearSubjectUser, List<PYSURecordDto> pysuRecordDtos) {
         for (PYSURecordDto pysuRecordDto : pysuRecordDtos) {
-            if (pysuRecordDto.getSubjectId().equals(planYearSubjectUser.getPlanYearSubject().getSubject().getId()) &&
-                    pysuRecordDto.getUserId().equals(planYearSubjectUser.getUser().getId())) {
+            if (isSubjectPresentInDto(planYearSubjectUser, pysuRecordDto) &&
+                    isUserPresentInDto(planYearSubjectUser, pysuRecordDto)) {
+
                 setDtoClassesTypeFieldsIfPossible(pysuRecordDto, planYearSubjectUser);
                 return true;
             }
         }
         return false;
+    }
+
+    private boolean isSubjectPresentInDto(PlanYearSubjectUser planYearSubjectUser, PYSURecordDto pysuRecordDto) {
+        return pysuRecordDto.getSubjectId().equals(planYearSubjectUser.getPlanYearSubject().getSubject().getId());
+    }
+
+    private boolean isUserPresentInDto(PlanYearSubjectUser planYearSubjectUser, PYSURecordDto pysuRecordDto) {
+        return pysuRecordDto.getUserId().equals(planYearSubjectUser.getUser().getId());
     }
 
     private void addEntitiesIfPossible(List<PlanYearSubjectUser> planYearSubjectUsers,

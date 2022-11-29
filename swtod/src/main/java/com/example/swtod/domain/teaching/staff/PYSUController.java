@@ -25,6 +25,15 @@ public class PYSUController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/copy-staff")
+    public ResponseEntity<?> copyStaffForNewAcademicYear(
+            @RequestParam String currentAcademicYear,
+            @RequestParam String newAcademicYear) {
+
+        pysuService.copyStaffForNewYear(currentAcademicYear, newAcademicYear);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/academic-years")
     public ResponseEntity<List<String>> getAcademicYears() {
         List<String> academicYears = pysuService.getAcademicYearsDistinct();
