@@ -11,7 +11,6 @@ import java.util.Map;
 @AllArgsConstructor
 public class AssignedGroupsDto {
     private Map<String, Long> classesTypeNamesPysuIds;
-
     private int lectureGroupsNumber;
     private int exerciseGroupsNumber;
     private int laboratoryGroupsNumber;

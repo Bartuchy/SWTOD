@@ -59,8 +59,13 @@ public class PYSUMapper implements Mapper<PlanYearSubjectUser, PYSURecordDto> {
         return pysuRecordDtos;
     }
 
-    public List<PlanYearSubjectUser> mapRequestDataToEntity(Long userId, Long subjectId, AssignedGroupsDto groupsDto) {
-        PYSURelatedEntitiesTransporter transporter = supplier.getAllRelatedEntities(userId, subjectId, PENDING_STATUS_ID);
+    public List<PlanYearSubjectUser> mapRequestDataToEntity(Long userId,
+                                                            Long subjectId,
+                                                            AssignedGroupsDto groupsDto) {
+
+        PYSURelatedEntitiesTransporter transporter = supplier
+                .getAllRelatedEntities(userId, subjectId, PENDING_STATUS_ID);
+
         List<PlanYearSubjectUser> planYearSubjectUsers = new ArrayList<>();
 
         addEntitiesIfPossible(planYearSubjectUsers, groupsDto, transporter);

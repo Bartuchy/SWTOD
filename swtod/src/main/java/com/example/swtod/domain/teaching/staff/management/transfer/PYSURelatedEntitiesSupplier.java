@@ -20,7 +20,9 @@ public class PYSURelatedEntitiesSupplier {
     private final UserRepository userRepository;
     private final StatusRepository statusRepository;
 
-    public PYSURelatedEntitiesTransporter getAllRelatedEntities(Long userId, Long subjectId, Long statusId) {
+    public PYSURelatedEntitiesTransporter getAllRelatedEntities(Long userId,
+                                                                Long subjectId,
+                                                                Long statusId) {
         return new PYSURelatedEntitiesTransporter(
                 this.getUser(userId),
                 this.getPlanYearSubject(subjectId),

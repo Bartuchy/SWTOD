@@ -1,5 +1,6 @@
 package com.example.swtod.domain.pensum;
 
+import com.example.swtod.common.exception.UserNotFoundException;
 import com.example.swtod.domain.pensum.dto.PensumRecordDto;
 import com.example.swtod.domain.teaching.staff.PlanYearSubjectUser;
 import com.example.swtod.domain.user.User;
@@ -28,8 +29,14 @@ public class PensumService {
     }
 
     public PensumRecordDto getPensumByUserId(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow();
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
         return createPensumRecordDto(user);
+    }
+
+    public void updateUserPensum(Long userId, Integer pensum) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("User not found"));
+        user.setPensum(pensum);
+        userRepository.save(user);
     }
 
     private PensumRecordDto createPensumRecordDto(User user) {

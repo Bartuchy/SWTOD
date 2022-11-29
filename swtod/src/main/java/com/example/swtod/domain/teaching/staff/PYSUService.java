@@ -28,7 +28,10 @@ public class PYSUService {
 
     }
 
-    public List<PYSURecordDto> getTeachingStaff(String academicYear, String userNameSurname, String subjectName) {
+    public List<PYSURecordDto> getTeachingStaff(String academicYear,
+                                                String userNameSurname,
+                                                String subjectName) {
+
         List<PlanYearSubjectUser> planYearSubjectUsers = pysuRepository
                 .findPlanYearSubjectUsersByAcademicYear(academicYear);
 

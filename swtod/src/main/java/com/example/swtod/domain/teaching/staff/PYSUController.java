@@ -46,7 +46,9 @@ public class PYSUController {
             @RequestParam(required = false) String userNameSurname,
             @RequestParam(required = false) String subjectName) {
 
-        List<PYSURecordDto> pysuRecordDtos = pysuService.getTeachingStaff(academicYear, userNameSurname, subjectName);
+        List<PYSURecordDto> pysuRecordDtos = pysuService
+                .getTeachingStaff(academicYear, userNameSurname, subjectName);
+
         return ResponseEntity.ok(pysuRecordDtos);
     }
 

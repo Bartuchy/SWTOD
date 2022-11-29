@@ -25,4 +25,10 @@ public class PensumController {
         PensumRecordDto pensumRecordDto = pensumService.getPensumByUserId(userId);
         return ResponseEntity.ok(pensumRecordDto);
     }
+
+    @PutMapping("/{userId}/update")
+    public ResponseEntity<Void> updateUserPensum(@PathVariable Long userId, @RequestParam Integer pensum) {
+        pensumService.updateUserPensum(userId, pensum);
+        return ResponseEntity.ok().build();
+    }
 }
