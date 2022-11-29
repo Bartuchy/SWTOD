@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.swtod.domain.common.status.StatusConst.ACCEPTED;
+
 @Service
 @RequiredArgsConstructor
 public class PensumService {
@@ -49,9 +51,11 @@ public class PensumService {
         int actualPensum = 0;
 
         for (PlanYearSubjectUser pysu : planYearSubjectUsers) {
-            actualPensum += pysu.getGroupsNumber() *
-                            pysu.getPlanYearSubject().getWeeksNumber() *
-                            pysu.getPlanYearSubject().getHoursPerWeek();
+            if (pysu.getStatus().getName().equals(ACCEPTED)) {
+                actualPensum += pysu.getGroupsNumber() *
+                        pysu.getPlanYearSubject().getWeeksNumber() *
+                        pysu.getPlanYearSubject().getHoursPerWeek();
+            }
         }
 
         return actualPensum;

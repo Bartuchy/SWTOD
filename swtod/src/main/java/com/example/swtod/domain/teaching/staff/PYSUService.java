@@ -81,7 +81,8 @@ public class PYSUService {
         pysuRecordDto.setGroupsPerSeminary(groupsDto.getSeminaryGroupsNumber());
     }
 
-    private List<PYSURecordDto> filterStaffByUserNameSurname(String userNameSurname, List<PYSURecordDto> pysuRecordDtos) {
+    private List<PYSURecordDto> filterStaffByUserNameSurname(String userNameSurname,
+                                                             List<PYSURecordDto> pysuRecordDtos) {
         if (userNameSurname != null) {
             pysuRecordDtos = pysuRecordDtos
                     .stream()
@@ -95,7 +96,8 @@ public class PYSUService {
         return pysuRecordDtos;
     }
 
-    private List<PYSURecordDto> filterStaffBySubjectName(String subjectName, List<PYSURecordDto> pysuRecordDtos) {
+    private List<PYSURecordDto> filterStaffBySubjectName(String subjectName,
+                                                         List<PYSURecordDto> pysuRecordDtos) {
         if (subjectName != null) {
             pysuRecordDtos = pysuRecordDtos
                     .stream()
