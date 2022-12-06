@@ -1,6 +1,6 @@
 package com.example.swtod.domain.didactic.plan.management;
 
-import com.example.swtod.common.csv.Mapper;
+import com.example.swtod.common.Mapper;
 import com.example.swtod.domain.didactic.plan.PlanYearSubject;
 import com.example.swtod.domain.didactic.plan.dto.PYSRecordDto;
 import com.example.swtod.domain.didactic.plan.management.transfer.PYSRelatedEntitiesSupplier;

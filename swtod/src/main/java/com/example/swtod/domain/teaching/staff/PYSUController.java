@@ -3,9 +3,14 @@ package com.example.swtod.domain.teaching.staff;
 import com.example.swtod.domain.teaching.staff.dto.AssignedGroupsDto;
 import com.example.swtod.domain.teaching.staff.dto.PYSURecordDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 @CrossOrigin
@@ -50,6 +55,19 @@ public class PYSUController {
                 .getTeachingStaff(academicYear, userNameSurname, subjectName);
 
         return ResponseEntity.ok(pysuRecordDtos);
+    }
+
+    @GetMapping("/{userId}/report")
+    public ResponseEntity<Resource> getReportForUser(@PathVariable Long userId) {
+        String reportName = String.format("user_%d_report.csv", userId);
+
+        ByteArrayInputStream reportByteArray = pysuService.generateReportForUser(userId);
+        InputStreamResource reportFile = new InputStreamResource(reportByteArray);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + reportName)
+                .contentType(MediaType.parseMediaType("application/csv"))
+                .body(reportFile);
     }
 
     @PutMapping("/change-assignment")

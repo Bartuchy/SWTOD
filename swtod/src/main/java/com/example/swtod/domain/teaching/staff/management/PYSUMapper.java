@@ -1,6 +1,6 @@
 package com.example.swtod.domain.teaching.staff.management;
 
-import com.example.swtod.common.csv.Mapper;
+import com.example.swtod.common.Mapper;
 import com.example.swtod.domain.teaching.staff.PlanYearSubjectUser;
 import com.example.swtod.domain.teaching.staff.dto.AssignedGroupsDto;
 import com.example.swtod.domain.teaching.staff.dto.PYSURecordDto;

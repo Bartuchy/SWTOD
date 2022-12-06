@@ -1,14 +1,18 @@
 package com.example.swtod.domain.teaching.staff;
 
+import com.example.swtod.common.csv.CsvHelper;
 import com.example.swtod.domain.common.plan.year.PlanYear;
 import com.example.swtod.domain.common.plan.year.PlanYearRepository;
 import com.example.swtod.domain.teaching.staff.dto.AssignedGroupsDto;
 import com.example.swtod.domain.teaching.staff.dto.PYSURecordDto;
+import com.example.swtod.domain.teaching.staff.dto.ReportDto;
+import com.example.swtod.domain.teaching.staff.dto.ReportRecord;
 import com.example.swtod.domain.teaching.staff.management.PYSUMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 @Service
@@ -48,6 +52,17 @@ public class PYSUService {
                 .findPlanYearSubjectUsersByUserIdAndSubjectId(userId, subjectId);
 
         return mapper.mapEntitiesToDtos(planYearSubjectUsers);
+    }
+
+    public ByteArrayInputStream generateReportForUser(Long userId) {
+        List<PlanYearSubjectUser> planYearSubjectUsers = pysuRepository.findPlanYearSubjectUsersByUserId(userId);
+        List<PYSURecordDto> pysuRecordDtos = mapper.mapEntitiesToDtos(planYearSubjectUsers);
+        List<ReportRecord> reportRecords = pysuRecordDtos.stream().map(ReportRecord::new).toList();
+
+        ReportDto reportDto = new ReportDto(reportRecords, planYearSubjectUsers, planYearSubjectUsers.get(0).getUser());
+        CsvHelper csvHelper = new CsvHelper();
+
+        return csvHelper.tutorialsToCSV(reportDto);
     }
 
     @Transactional

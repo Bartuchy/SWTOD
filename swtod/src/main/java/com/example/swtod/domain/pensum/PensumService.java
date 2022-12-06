@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.swtod.domain.common.status.StatusConst.ACCEPTED;
+import static com.example.swtod.domain.pensum.PensumManager.countActualPensumValue;
 
 @Service
 @RequiredArgsConstructor
@@ -43,21 +43,7 @@ public class PensumService {
 
     private PensumRecordDto createPensumRecordDto(User user) {
         List<PlanYearSubjectUser> planYearSubjectUsers = user.getPlanYearSubjectUsers();
-        int actualPensum = countPensumValue(planYearSubjectUsers);
+        int actualPensum = countActualPensumValue(planYearSubjectUsers);
         return new PensumRecordDto(user, actualPensum);
-    }
-
-    private int countPensumValue(List<PlanYearSubjectUser> planYearSubjectUsers) {
-        int actualPensum = 0;
-
-        for (PlanYearSubjectUser pysu : planYearSubjectUsers) {
-            if (pysu.getStatus().getName().equals(ACCEPTED)) {
-                actualPensum += pysu.getGroupsNumber() *
-                        pysu.getPlanYearSubject().getWeeksNumber() *
-                        pysu.getPlanYearSubject().getHoursPerWeek();
-            }
-        }
-
-        return actualPensum;
     }
 }
