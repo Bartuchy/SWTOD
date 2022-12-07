@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.ByteArrayInputStream;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -26,10 +27,6 @@ public class PYSUService {
     public void assignGroupToUser(Long userId, Long subjectId, AssignedGroupsDto groupsDto) {
         List<PlanYearSubjectUser> planYearSubjectUsers = mapper.mapRequestDataToEntity(userId, subjectId, groupsDto);
         pysuRepository.saveAll(planYearSubjectUsers);
-    }
-
-    public void copyStaffForNewYear(String currentAcademicYear, String newAcademicYear) {
-
     }
 
     public List<PYSURecordDto> getTeachingStaff(String academicYear,
@@ -57,7 +54,11 @@ public class PYSUService {
     public ByteArrayInputStream generateReportForUser(Long userId) {
         List<PlanYearSubjectUser> planYearSubjectUsers = pysuRepository.findPlanYearSubjectUsersByUserId(userId);
         List<PYSURecordDto> pysuRecordDtos = mapper.mapEntitiesToDtos(planYearSubjectUsers);
-        List<ReportRecord> reportRecords = pysuRecordDtos.stream().map(ReportRecord::new).toList();
+        List<ReportRecord> reportRecords = pysuRecordDtos
+                .stream()
+                .map(ReportRecord::new)
+                .sorted(Comparator.comparing(ReportRecord::getStudiesTypeName))
+                .toList();
 
         ReportDto reportDto = new ReportDto(reportRecords, planYearSubjectUsers, planYearSubjectUsers.get(0).getUser());
         CsvHelper csvHelper = new CsvHelper();

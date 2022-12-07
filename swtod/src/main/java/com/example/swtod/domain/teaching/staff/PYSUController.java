@@ -30,15 +30,6 @@ public class PYSUController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/copy-staff")
-    public ResponseEntity<?> copyStaffForNewAcademicYear(
-            @RequestParam String currentAcademicYear,
-            @RequestParam String newAcademicYear) {
-
-        pysuService.copyStaffForNewYear(currentAcademicYear, newAcademicYear);
-        return ResponseEntity.ok().build();
-    }
-
     @GetMapping("/academic-years")
     public ResponseEntity<List<String>> getAcademicYears() {
         List<String> academicYears = pysuService.getAcademicYearsDistinct();
@@ -57,7 +48,7 @@ public class PYSUController {
         return ResponseEntity.ok(pysuRecordDtos);
     }
 
-    @GetMapping("/{userId}/report")
+    @GetMapping(value = "/{userId}/report", produces = "text/csv")
     public ResponseEntity<Resource> getReportForUser(@PathVariable Long userId) {
         String reportName = String.format("user_%d_report.csv", userId);
 
@@ -66,7 +57,7 @@ public class PYSUController {
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + reportName)
-                .contentType(MediaType.parseMediaType("application/csv"))
+                .contentType(MediaType.parseMediaType("text/csv"))
                 .body(reportFile);
     }
 
